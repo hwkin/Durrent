@@ -1,0 +1,542 @@
+Stochastic Process Notes 
+
+1. ### Martingales
+
+   1. **conditional expectation** 
+
+      **conditional expectation in $L^2$**: Given $(\Omega,\mathcal{F},\mathbb{P})$, $\mathcal{G}$ be the sub-$\sigma$-algebra of $\mathcal{F}$. If $X\in\mathcal{G}$, then $X\in\mathcal{F}$,which indicates an inclusion $L^2(\mathcal{G},\mathbb{P})\hookrightarrow L^2(\mathcal{F},\mathbb{P})$, actually this is a isometry. In particular, $L^2(\mathcal{G},\mathbb{P})$ is a closed subspace of $L_2(\mathcal{F},\mathbb{P})$, and we can consider the orthogonal projection $\Pi_\mathcal{G}$. 
+
+      Given $X\in L^2(\mathcal{F},\mathbb{P})$, $\Pi_\mathcal{G}(X)$ is called the **conditional expectation** of $X$ given $\mathcal{G}$.
+
+      For instance, if $\mathcal{G}=\mathcal{F}$, $\Pi_\mathcal{G}(X)=X$ since we know all information. If $\mathcal{G}=\sigma\{\emptyset\}$, $\Pi_\mathcal{G}(X)=\mathbb{E}(X)$ since we know no information.
+
+      _Note_: By Cauchy-Schwarz inequality, $L^2(\mathbb{P})\subset L^1(\mathbb{P})$ (Since the measure of whole space is 1) .
+
+       ***Definition*** (global) Let $X\in L^1(\mathbb{P})$, a conditional expectation of X given $\mathcal{G}$ is a $\mathcal{G}$-measurable random variable $Y$ such that $\mathbb{E}[\mathbb{1}_A X]=\mathbb{E}[\mathbb{1}_A Y]\ \forall A \in \mathcal{G}$, such $Y$ is called a **version** of $\mathbb{E}[X|\mathcal{G}]$. (unique up to a.s. equal)
+
+      Link with previous approach: If $X\in L^2(\mathbb{P})$, $X=\Pi_{\mathcal{G}}(X)+Z$, with Z in the orthogonal completion of $L^2(\mathcal{G},\mathbb{P})$. For all $A\in\mathcal{G}$, $\mathbb{1}_A\in L^2(\mathcal{G},\mathbb{P})$, hence 
+      $$
+      \mathbb{E}[X\mathbb{1}_A]=\mathbb{E}[\Pi_\mathcal{G}(X)\mathbb{1}_A]+\mathbb{E}[Z\mathbb{1}_A]=\mathbb{E}[\Pi_\mathcal{G}(X)\mathbb{1}_A]
+      $$
+      since $\langle Z,\mathbb{1}_A\rangle=0$. So $\Pi_\mathcal{G}$ is a version of $\mathbb{E}[X|\mathcal{G}]$ 
+
+      **Lemma** Let $Y$ be a version of $\mathbb{E}[X|\mathcal{G}]$, then $\mathbb{E}|Y|\leq\mathbb E |X|$, in particular $Y\in L^1(\mathbb P)$.
+
+      <font color='red'>_proof_</font> 
+      $$
+      \mathbb E |Y| = \mathbb E [Y\mathbb 1_{\{Y>0\}}]-\mathbb E[Y\mathbb 1_{\{Y\leq 0\}}] = \mathbb E [X\mathbb 1_{\{Y>0\}}]-\mathbb E[X\mathbb 1_{\{Y\leq 0\}}]\\\leq\mathbb E [|X|\mathbb 1_{\{Y>0\}}]+\mathbb E[|X|\mathbb 1_{\{Y\leq 0\}}]=\mathbb E |X|
+      $$
+      **Uniqueness** 
+
+      <font color='red'>_proof_</font> Let $Y_1,Y_2$ be two version. Let $\varepsilon>0$, 
+      $$
+      \varepsilon\mathbb P(Y_1-Y_2)\leq\varepsilon\mathbb E [(Y_1-Y_2)\mathbb 1_{Y_1-Y_2\geq\varepsilon}]=\mathbb E [(X_1-X_2)\mathbb 1_{Y_1-Y_2\geq\varepsilon}]=0
+      $$
+      So $\mathbb P (Y_1-Y_2\geq\varepsilon)=0$, by symmetry $\mathbb P (|Y_1-Y_2|\geq\varepsilon)=0$, so $Y_1=Y_2$ a.s.
+
+      **Existence** 
+
+      <font color='red'>_proof_</font> 
+
+      Case: $L^2(\mathbb P) $ is dense in $L^1(\mathbb P)$ (the most common case). 
+
+      In this case, for all $X\in L^2(\mathbb P)$, $\Pi_\mathcal G(X)$ is the unique version. Now let $X\in L^1(\mathbb P)$ and $(X_n)\in L^2(\mathbb P)$, s.t. $X_n\rightarrow X$ in $ L^1$, so from the present lemma,
+      $$
+      \mathbb E|\mathbb E[X_n|\mathcal G]-\mathbb E[X_m|\mathcal G]|\leq \mathbb E|\mathbb E[X_n-X_m|\mathcal G]|\leq \mathbb E|X_n-X_m|
+      $$
+      Since $X_n$ converges in $ L^1$, $\mathbb E[X_n|\mathcal G]$ is also Cauchy, so it converges in $ L^1$ to some variable, say $Y$. $Y$ is $\mathcal G$-measurable as a limit and it's easy to verify it's surely a version.
+
+      Case: density is not assumed. Suppose $X\geq 0$
+
+      ***Definition*** We say a measure $\mathbb Q$ is **absolutely continuous** w.r.t. $\mathbb P$ if $\mathbb P (A)=0$ imply $\mathbb P (B) =0$.
+
+      **Theorem (Radon Nikodym)** If $\mathbb Q \ll \mathbb P$, there exists a measurable function $Z$ s.t. $\int_A Z d\mathbb P = \mathbb Q (A) \ \forall\ A\in\mathcal F$, usually we write $Z=\frac{d\mathbb Q}{d\mathbb P}$.
+
+      For all $A\in\mathcal G$, define $\mathbb Q (A)=\int_A X d\mathbb P$,
+
+      *claim*: $\mathbb Q$ is a measure. 
+
+      Indeed, give a countable family of disjoint sets $\{A_n\}$, 
+      $$
+      \mathbb Q(\cup_{n=1}^N A_n)=\sum_{n=0}^N \int_{A_n} X d\mathbb P=\sum_{n=0}^N \mathbb Q (A_n)\rightarrow \sum_{n=0}^\infty \mathbb Q (A_n)
+      $$
+      By DCT, $LHS\rightarrow Q(\cup_{n=0}^\infty A_n)$. Meanwhile, $\mathbb Q\ll\mathbb P$.
+
+      By **Radon-Nikodym theorem**, there exists a version $\frac{d\mathbb Q}{d \mathbb P}$.
+
+      In general case, write $X=X_+-X_-$.
+
+   2. Properties of conditional expectation.
+
+      **Theorem** Let $X,Y\in L^1(\mathbb P)$
+
+      (i) $\mathbb E[aX+Y|\mathcal G]=a\mathbb E[X|\mathcal G]+\mathbb E[Y|\mathcal G]$ 
+
+      (ii) If $X\leq Y$ then $\mathbb E [X|\mathcal G]\leq\mathbb E [Y|\mathcal G]$ 
+
+      <font color='red'>_proof_</font> (i) Verify directly by test sets.
+
+      (ii) From (i) it suffices to show if $X\leq 0$, then $\mathbb E [X|\mathcal G]\leq 0$ a.s. The technique is similar to the proof of uniqueness.
+
+      **Theorem ** Suppose $\mathcal G_1\subset\mathcal G_2\subset F$, then 
+      $$
+      \mathbb E[\mathbb E[X|\mathcal G_1]|\mathcal G_2]=\mathbb E[\mathbb X|\mathcal G_1]=\mathbb E[\mathbb E[X|\mathcal G_2]|\mathcal G_1]
+      $$
+      <font color='red'>_proof_</font> All random variables are $\mathcal G_1$ measurable, so verify using test sets.
+
+      **Theorem** (Taking out what's known) Let $X,Y\in L^1(\mathbb{P})$ with $XY\in L^1(\mathbb P)$ and $X$ is $\mathcal G$-measurable, then $\mathbb E[XY|\mathcal G]=X\mathbb E[Y|\mathcal G]$ 
+
+      <font color='red'>_proof_</font> First suppose X is an indicator function and verify, then for finite linear combination of indicator functions it holds, and take limit.
+
+      **Theorem** Suppose $X_n\downarrow 0$ a.s., then $\mathbb E [X_n|\mathcal G]\rightarrow 0$ a.s.
+
+      <font color='red'>_proof_</font> since LHS is nondecreasing, it has a limit, say Y. Use DCT to verify.
+
+      **Theorem Conditional Jensen inequality** Let $\varphi:\mathbb R\rightarrow\mathbb R$ convex, and suppose $X,\varphi(X)\in L^1$, then $\varphi(\mathbb E[X|\mathcal G])\leq \mathbb E[\varphi(X)|\mathcal G]$.
+
+      **Corollary** $\|\mathbb E[X|\mathcal G]\|_p\leq\|X\|_p$.
+
+2. ### Continuous martingale
+
+   1. deterministic preliminaries
+
+      1.  Finite variation
+
+         ***Definition*** Let $f:\mathbb R\rightarrow \mathbb R$, continuous. For $n\in\mathbb N$, $T>0$, $V_n(T)=\sum_{k=0}^{2^n-1} |f((k+1)2^{-n}T)-f(k2^{-n}T)|$ then $V(T)=\lim_{n\rightarrow\infty}V_n(T)$ exists for all $T$ and is non-decreasing. If the limit is finite, we say that $f$ has **finite variation**.
+
+         $V(T)$ is a continuous and non-decreasing function.
+
+         **Lemma** $f$ has finite variation $\Leftrightarrow$ f is the difference of two continuous non-decreasing functions.
+
+         <font color='red'>_proof_</font> $\Leftarrow$ verify. $\Rightarrow$ $f=1/2(f+V)+1/2(f-V)$ 
+
+         _Remark_ By Lebesgue's theorem, every increasing function is differentiable a.e., and this gives an 1-1 map: Probability measure $\mu$ on $[0,1]$ to homeomorphisms of $[0,1]$ $f$ such that $f(t)=\mu([0,t])$. So by the previous lemma, we can integrate functions against the differential of finite variation functions.
+
+      2. Quadratic variation
+
+         ***Definition*** Let $f\in C^0(R_+)$, define for $n\in\mathbb N$ and $T>0$, $[f]_t^n=\sum_{k=0}^{2^n-1} (f((k+1)2^{-n}T)-f(k2^{-n}T))^2$. $[f]_t=\lim [f]_t^n$. If the limit exists, we call it the **quadratic variation** of $f$ in $[0,t]$
+
+         _Remark_ Finite variation functions have 0 quadratic function.
+
+   2. Continuous time martingales
+
+      Given $(\Omega,\mathcal F,\mathbb P)$.
+
+      ***Definition*** A **filtration** is a family $(\mathcal F_t)_{t\geq 0}$ of sub-$\sigma$-algebras of $\mathcal F$ s.t. $\mathcal F_s\subset\mathcal F_t$ if $s<t$.We say $(\mathcal F_t)$ satisfy the **usual condition** if: (i) $\mathcal F_t$ contains all P-null sets (ii) $\mathcal F_t$ is right-continuous.
+
+      ***Definition*** A **process** is a measurable map $X:\Omega\times\mathbb R_+\rightarrow\mathbb R$. A process is **adapted** with $(\mathcal F_t)_{t\geq 0}$ if $X_t=X( ,t)$ is $\mathcal F_t$ measurable for all $t$.
+
+      ***Definition*** The **previsible** $\sigma$-algebra $\mathcal P$ is the $\sigma$-algebra generated by the sets $E\times[s,t)$ for $E\in\mathcal F_s$ and $t>s$. A process is **previsible** if it's $\mathcal P$-measurable. In particular, continuous adapted process are previsible. Here continuous means for every $\omega$, $X_t(\omega)$ is a continuous map of $t$.
+
+      Given any process X we can define a filtration $\mathcal F_t=\sigma((X_s)_{0\leq s\leq t})$.
+
+      ***Definition*** A **continuous $(\mathcal F_t)$-martingale** is a continuous adapted, integrable process $X$ s.t. $\mathbb E [X_t|\mathcal F_s]=X_s$ for all $t\geq s$. It's a sub/super-martingale if $\geq$ /$\leq$.
+
+      Let $(t_n)_{n\in\mathbb N}$ s.t. $t_n\uparrow\infty$, then $(X_{t_n})$ is a discrete time $(\mathcal F_{t_n})$-martingale.
+
+      ***Definition*** A **stopping time** is a random variable $T:\Omega\rightarrow\mathbb R_+$, s.t. $\{T\leq t\}\in \mathcal F_t$ for all $t\geq 0$. If X is a martingale, so is $X_t^T:=X_{t\wedge T}$. 
+
+      **Theorem Optional Stopping** TFAE:
+
+      (i) $X$ is a martingale
+
+      (ii) $X^T$ is a martingale
+
+      (iii) For all bounded stopping times $T$, $\mathbb E X_T=\mathbb E X_0$.
+
+      ***Definition*** A **continuous local martingale** is a continuous adapted process s.t. $\exist (T_n)_{n\in\mathbb N}$ stopping time with $T_n\rightarrow\infty$ a.s. and $X^{T_n}$ is a martingale for all $n\geq 1$. In this case, we say $(T_n)$ **reduces** $X$. (there are local martingales which aren't martingales.)
+
+      **Lemma** If $X$ is a local martingale and for all $t$ it's nonnegative, then $X$ is a supermartingale.
+
+      <font color='red'>_proof_</font> Pick any reducing sequence. By conditional Fatou's lemma, $\forall\ t\geq s\geq 0$, 
+      $$
+      \mathbb E [X_t|\mathcal F_s]=\mathbb E[\liminf_{n\rightarrow\infty}X_t^{T_n}|\mathcal F_s]\leq \liminf_{n\rightarrow\infty}\mathbb E[X_t^{T_n}|\mathcal F_s]=\liminf_{n\rightarrow\infty} X_s^{T_n}=X_s
+      $$
+      **Corollary** Every bounded local martingale is a true martingale.
+
+      **Corollary** Given any local martingale $X$, $T_n=\inf\{t\geq 0,|X_t|\geq n\}$ is a reducing sequence.
+
+   3. $L^2$ theory
+
+      **Theorem** Let $X$ be a continuous martingale
+      $$
+      \lambda^p\mathbb P(|X_t|\geq \lambda)\leq\sup_{t\geq 0} \mathbb E[|X_t|^p]\ \forall p\geq1
+      \\(\mathbb E \sup_{t\geq 0} |X_t|^p)^{1/p}\leq \frac{p}{p-1}\sup_{t\geq 0} \mathbb E [|X_t|^p]\ \forall\ p\geq1
+      $$
+      And $X_t\rightarrow X$ for some $X$ in $L^p$.
+      
+      _Warning_ For $p=1$, need extent requirement $\lim_{\lambda\rightarrow\infty}\sup_{t\geq 0} \mathbb E[|X_k|\mathbb 1_{|X_t|\geq\lambda}]<\infty$, i.e., uniformly integrable.
+      
+      Now our goal is to put a Hilbert space structure on $L^2$-bounded martingales:
+      
+      Let $\mathcal H$ be the set of all continuous martingale such that $\mathbb E [\sup_{t\geq 0}|X_t|^2]<\infty$, endowed with the Euclidean norm $\mathbb E [X_\infty^2]$. This is a norm more than a seminorm: 
+      
+      if $\mathbb E [X_\infty^2]=0$, then for all $t>0$, $\mathbb E X_t^2 \leq \mathbb E[\mathbb E[X_\infty^2|\mathcal F_t]] = 0$.
+      
+      **Lemma** If $X$ is a martingale and is not constant, then $X$ has infinite total variation.
+      
+      <font color='red'>_proof_</font> Observe that for a martingale $M$,  for all partitions $0=t_0<t_1<...<t_n=t$, suppose $M_0=0 a.s.$
+      $$
+      \begin{aligned}
+      \mathbb E[M_t^2]&=\mathbb E [(\sum_{k=0}^{n-1} M_{t_{k+1}}-M_{t_k})^2]
+      \\&=\sum_{k=0}^{n-1} \mathbb E (M_{t_{k+1}}-M_{t_k})^2+2\sum_{k=0}^{n-1}\mathbb E[(M_{t_{k+1}}-M_{t_k})\sum_{j=k+1}^{n-1}(M_{t_{j+1}}-M_{t_j})]
+      \\&=\sum_{k=0}^{n-1} \mathbb E (M_{t_{k+1}}-M_{t_k})^2
+      \end{aligned}
+      $$
+      since we notice: 
+      $$
+      \mathbb E[(M_{t_{k+1}}-M_{t_k})(M_{t_{j+1}}-M_{t_j})]=\mathbb E [(M_{t_{k+1}}-M_{t_k})\mathbb E (M_{t_{j+1}}-M_{t_j}|\mathcal F_{t_k})]=0
+      $$
+      This is quite tricky and useful. After this, 
+      $$
+      RHS\leq\mathbb E [\sup_{0\leq k\leq n-1} |M_{t_{k+1}}-M_{t_k}|\sum_{k=0}|M_{t_{k+1}}-M_{t_k}|]
+      $$
+      Since LHS is positive and $M_t$ is continuous, it must have infinite variation.
+      
+      On the other hand, if a martingale has finite variation, it must be a constant.
+      
+      **Theorem** $\mathcal H$ is a Hilbert space.
+      
+      <font color='red'>_proof_</font> The last thing to prove is that $\mathcal H$ is complete.
+      
+      We introduce another norm $\left\lvert\!\left\lvert\!\left\lvert X \right\rvert\!\right\rvert\!\right\rvert=\mathbb E [\sup |X_t|^2]$ 
+      
+      Clearly $\|X_\infty^2\|\leq \left\lvert\!\left\lvert\!\left\lvert X \right\rvert\!\right\rvert\!\right\rvert$  and $\left\lvert\!\left\lvert\!\left\lvert X \right\rvert\!\right\rvert\!\right\rvert\leq 2\|X_\infty^2\|$. So they are equivalent. Now we prove the space is complete under this norm.
+      
+      Pick a Cauchy sequence $(X^n)$ in $\mathcal H$, then extract a subseries which converges fast enough and get a continuous process $X$, and verify it is a martingale.
+      
+      **Theorem** Let $M$ be a continuous local martingale, then $M$ has finite quadratic variation, denoted by $[M]$. Moreover, $[M]$ is the unique increasing, adapted process such that $M^2-[M]$ is a continuous local martingale (up to a constant) .
+      
+      _Remark_ The prod variation gives a way to reparametrize $M_t$,i.e., define $N_t=M_{\phi(t)}$ then $\phi(t)$ is the unique time s.t. $[M]_{\phi(t)}=t$.
+      
+      <font color='red'>_proof_</font> 
+      
+      Uniqueness: If if we are given two increasing adapted process $A,B$ s.t. $M^2-A,M^2-B$ are local martingale, then $A-B$ is also a local martingale. But it's of finite variation, so it's a constant.
+      
+      Existence: the idea is to discretize and put to the limits using $L^2$ inequalities. 
+      
+      The detail is left to other references. 
+      
+      
+      
+      The property of finite quadratic variation function: 
+      
+      Intuitively, if $f$ is of nonzero and finite quadratic variation, $f(t+\varepsilon)-f(t)\approx\sqrt{\varepsilon}\gg\varepsilon$, which implies have wild conditions.
+      
+      Recall $(\xi_n)~\mathcal N(0,1)$, i.i.d., Then $S_n/n\rightarrow 0$ a.s. by SLLN, and $S_n/\sqrt{n}=_d \mathcal N(0,1)$. So if we fix $n$ and let $f(k/n)=\sum_{j=0}^k \frac{\xi_j}{\sqrt{n}}$, the variation of f in $[k/n,(k+1)/n]$ is typically of order $1/\sqrt{n}$ .
+
+3. ### Markov chain 
+
+   Given $(\Omega,\mathcal F,\mathbb P)$ and $(S,\mathcal S)$ measurable space where $\mathcal S$ is finitely generated.
+
+   ***Definition*** A **Markov chain** is a process $X:\Omega\times\mathbb N\rightarrow S$ s.t. $\mathbb P(X_{n+1}\in A|\sigma(X_1,...,X_n))=\mathbb P(X_{n+1}\in A|\sigma(X_n))$.
+
+   ***Definition*** A **transition probability** is a map $p:S\times\mathcal S\rightarrow R_+$ s.t.
+
+   (i) a.e. $x\in S$, $p(x,)$ is a probability on $(S,\mathcal S)$ 
+
+   (ii) For all $A\in\mathcal S$, $x\rightarrow p(x,A)$ is measurable.
+
+   _Note_ Given a transition probability $p$, we can define
+
+   (i) A new measure $\mu p$ by $(\mu p)(B)=\int_S p(x,B)\mu(dx)$.
+
+   (ii) an operator $P$ on the space of bounded measurable function by $Pf(x):=\int f(y)p(x,dy)$. This operator has norm 1,and satisfies $\int_\mathbb R f(y)(\mu p)(dy)=\int _S Pf(x) \mu(dx)$.
+
+   (iii) We can also think of a transition probability as an operator$P^*$ on the space of probability measure on $(S,\mathcal S)$: for all bounded measurable function $f$, $P^*\mu(f)=\int f P^*\mu=\int Pf \mu$ 
+
+   **Example** Simple random walk: Let $S=\mathbb Z$ with usual $\sigma$-algebra and $p(n,n+1)=p(n,n-1)=1/2$, $p(n,m)=0$ if $n=m$ or $|n-m|>1$.
+
+   More generally, given a transition probability $p$ and a probability measure $\mu$, we can define a family of probability measure $P_n$ on $S^n$ by $P_n(A_0\times\cdots\times A_n)=\int_{A_0\times\cdots\times A_n } d\mu(x_0)p(x_0,dx_1)\cdots p(x_{n-1},dx_n)$ . By Kolmogorov's extension theorem, $(P_n)$ extends to a probability measure on $S^{\mathbb N}$
+
+   **Claim** This defines a Markov chain with state space $S$.
+
+   Suppose S is a discrete set,
+   $$
+   \mathbb P(X_0=x_0,...,X_n=x_n)=p(x_0,x_1)...p(x_{n-1},x_n)
+   $$
+    On the other hand, 
+   $$
+   LHS=\mathbb P(X_n=x_n|X_{n-1}=x_{n-1},...,X_0=x_0)\mathbb P(X_{n-1}=x_{n-1},...,X_0=x_0)
+   $$
+   whence
+   $$
+   p(x_{n-1},x_n)=\mathbb P(X_n=x_n|X_{n-1}=x_{n-1},...,X_0=x_0)
+   $$
+   independent of the values of the process up to time $n-2$, which is a Markov chain.
+
+   **Definition** A **stopping time** is a measurable, $\mathbb N$-valued function $N$ s.t. $\{N=n\}$ is $\mathcal F$-measurable.
+
+   **Theorem Strong Markov Property** Let $N$ be an a.s. finite stopping time. $\mathcal F_N$ is the $\sigma$-algebra generated by $\{N\leq n\}\cap \mathcal F_n$, then $\mathbb P(X_{N+1}\in A|\mathcal F_N)=\mathbb P(X_{N+1}\in A| X_N)\ \forall\ A\in\mathcal S$.
+
+   <font color='red'>_proof_</font> 
+   $$
+   \begin{aligned}
+   LHS&=\sum_k \mathbb P(X_{N+1}\in A,N=k|\mathcal F_N)\mathbb P(N=k)
+   \\&=\sum_k \mathbb P(X_{N+1}\in A|X_k)\mathbb P(N=k)
+   \\&=\mathbb P(X_{N+1}\in A|X_N)
+   \end{aligned}
+   $$
+   **Definition** **Important stopping times** Let $A\in\mathcal S$. Define $T_A^0=0$, $T_A^{k+1}:=\inf\{n>T_A^k\ s.t. X_n\in A\}$ 
+
+   **Lemma** Let $y\in S$. $\mathbb P_x (T_y^k<\infty)=\mathbb P_x(T_y^1<\infty)\mathbb P_y(T_y^1<\infty)^{k-1}$ ($\mathbb P_x$ means initial probability distribution $\mu$ is $\delta_x$, more clearly, $\mathbb P_x(A)=\mathbb P(A|X_0=x))$ 
+
+   <font color='red'>_proof_</font> 
+   $$
+   \mathbb P_x(T_y^k<\infty)=\mathbb P_x(T_y^k<\infty|T_y^{k-1}<\infty)\mathbb P_x(T_y^{k-1}<\infty)=\mathbb P_y(T_y^1<\infty)\mathbb P_x(T_y^{k-1}<\infty)
+   $$
+   Since we can regard this as restart Markov chain at $k-1$. By induction the proof is complete.
+
+   **Theorem Reflection principle for SRW** Let $(\xi_n)_{n\in\mathbb N}$ be i.i.d. $\mathbb R$-valued random variables, and $S_n=\sum_{k=1}^n \xi_k$, then $\mathbb P(\sup_{1\leq k\leq n} S_k\geq a)\leq 2\mathbb P(S_n\geq a)$ 
+
+   <font color='red'>_proof_</font> Define 
+   $$
+   \tilde \xi_k=\left\{\begin{array}{rcl}\xi_k \ &if&\ k\leq T:=\min\{n:S_n\geq a\}\\-\xi_k \ &if&\ k>T\end{array}\right.
+   $$
+   i.e., the new process is defined so that when the primary process hit a, it turn back.
+
+   Then the process $(\tilde{S_n})=_d (S_n)$ by symmetry of $\xi$. 
+
+   So $\{T\leq n\}\subset\{S_n\geq a\}\sqcup\{\tilde S_n\geq a\}$, and take probability.
+
+   Here is a plot:
+
+   <img src="C:\Users\m1500\Desktop\Durrent\images\reflection_principle_simple.png" style="zoom: 15%;" />
+
+4. Recurrence and Transience
+
+   Given a discrete state space $S$.
+
+   ***Definition*** A state $y\in S$ is **recurrent** if $\mathbb P_y(T_y<\infty)=1$ where $T_y=\min\{n>0:X_n=y\}$, **transient** otherwise.
+
+   In other words, If $y$ is recurrent, $\mathbb P(X_n$ visits $y$ i.o.$)=1$.
+
+   Let $N(y)=\sum_{n=0}^\infty \mathbb 1_{X_n=y}$ be the number of visits to $y$. 
+
+   **Theorem** $\mathbb E[N(y)]=\infty \Leftrightarrow y$ is recurrent. 
+
+   If $y$ is recurrent, $\mathbb E[N(y)]=\sum_n \mathbb 1_{X_n=y}=\infty$.
+
+   If $y$ is transcient,
+   $$
+   \mathbb E[N(y)]=\mathbb E\sum_{n=1}^\infty \mathbb 1_{N(y)\geq n}=\sum_n \mathbb P_x(T_y^n<\infty)=\frac{\mathbb P_x(T_y^1<\infty)}{1-\mathbb P_y(T_y^1<\infty)}<\infty
+   $$
+   **Theorem** If $x$ is recurrent and $\mathbb P_x(T_y<\infty)>0$, then $y$ is recurrent.
+
+   <font color='red'>_proof_</font> Since $\mathbb P_x(T_y<\infty)>0$, we can pick a finite path $\gamma$ from $x$ to $y$ occuring with positive possibility.
+
+   So $\mathbb P_x(T_x=\infty)\geq \mathbb P_x(\gamma)\mathbb P_y(T_x=\infty)$, and since $LHS=0$, so $\mathbb P_y(T_x=\infty)=0$.
+
+   This implies we can find another finite path $\gamma'$ from $y$ to $x$ occuring with positive probability.
+
+   define $p^n(x,y)$ to be the possibility that $x$ moves to $y$ in $n$ steps, then $p^{L+n+K}(y,y)\geq \mathbb P(\gamma')p^n(x,x)\mathbb P(\gamma)$, where $\gamma'$ is of length L and $\gamma$ is of length K. 
+
+   So $\sum_{n=0}^\infty p^{L+n+K}(y,y)\geq \mathbb P(\gamma')\sum_{n=0}^\infty p^n(x,x) \mathbb P(\gamma)=\infty$ since $x$ is recurrent and the series is just $\mathbb E[N(x)]$.
+
+   So $\mathbb E[N(y)]=\infty$, $y$ is recurrent.
+
+   **Definition** Say a subset $C\subset S$ is **closed** if  for all $x\in C$ and $\mathbb P_x(T_y<\infty)>0$, $y\in C$. Say a subset $D\in S$ is **irreducible** if $\forall\ x,y,\mathbb P_x(T_y<\infty)>0$.
+
+   **Theorem** Suppose $C$ is finite and closed then it contains a recurrent state. 
+
+   <font color='red'>_proof_</font> Since $\sum_{y\in C}\mathbb E[N(y)]=\infty$ and $|C|<\infty$, there is some $y$ such that $\mathbb E[N(y)]=\infty$, so $y$ is recurrent.
+
+   **Theorem** Let $R$ be the set of all recurrent states, then $R$ is the union of all irreducible closed components.
+
+   <font color='red'>_proof_</font> If we interduce relation $x\sim y$ if $\mathbb P_x(T_y<\infty)>0$, by definition of recurrence and above theorem, it's a equivalent relation, so each equivalent class is closed and irreducible. Moreover, given $x\in R$, the equivalent class of $x$ is $\{y:\mathbb P_x(T_y<\infty)>0\}$.
+
+   Example
+
+    <img src="C:\Users\m1500\Desktop\Durrent\images\markov_classes.png" style="zoom:50%;" />
+
+   **Recurrence of random walk**
+
+   We now study random walk on $\mathbb R^d$, $d\geq 1$. Let $(X_n)_{n\in\mathbb N}$ be i.i.d. random variables on $\mathbb R^d$ of arbitrary distribution, and $S_n=\sum_{k=0}^n X_k$.
+
+   ***Definition*** say $x\in \mathbb R^d$ is a **recurrent value** if $\forall\varepsilon>0, \mathbb P(\|S_n-x\|<\varepsilon\ i.o.)=1$. say $x\in \mathbb R^d$ is a **possible value** if $\forall\varepsilon>0,\exist n\geq 1, \mathbb P(\|S_n-x\|<\varepsilon)>0$.
+
+   Let $U\subset\mathbb R^d$ be the set of recurrent values.
+
+   **Theorem** $U$ is either empty or a closed subgroup of $(\mathbb R^d,+)$. In the second case, $U$ coincides with the set of possible values.
+
+   _Remark_ For common Markov chains, the two sets may not coincide.
+
+   <font color='red'>_proof_</font> suppose $U\neq \emptyset$.
+
+   (i) To prove $U$ is closed, we prove $U^c$ is open. Let $x\in U^c$ and by definition $\exist\varepsilon>0$, $(S_n)$ visits $\mathbb B(x,\varepsilon)$ finite times with positive probability. Then $\forall y\in \mathbb B(x,\varepsilon/2)$, $(S_n)$ visits $\mathbb B(y,\varepsilon/2)$ finite times with positive possibility, so it's open.
+
+   (ii) To prove $U$ is a group, pick $x\in U$. Let $\varepsilon>0$ and $T$ be the first visit time of $\mathbb B(x,\varepsilon)$, so $T<\infty$ a.s.. Now consider $(S_{T+n}-S_T)_{n\geq 0}$ conditionally on $T$, which has the same distribution with $(S_n)$, so $0\in U$.Adapting the argument and we can see addition, inverse are both closed operation.
+
+   (iii) Due to spatial homogeneity, if $S_n$ can visit $x$, then it can visit it infinitely times since $0\in U$, and after hitting it just moves like considering $x$ as the origin.
+
+   We now turn to **simple random walk** in $\mathbb R^d$ defined by $p(x,x\pm e_k)=1/2d\ \forall 1\leq k\leq d$ and $p(x,y)=0$ otherwise. The sequence of stopping times is defined by $\xi_k=0, \xi_k=\min\{n>\xi_{k-1}: S_n=0\}$,i.e., the kth time hitting 0.
+
+   **Lemma** TFAE:
+
+   (i) $\mathbb P(\xi_1<\infty)=1$
+
+   (ii) $\mathbb P(S_n=0\ i.o.)=1$
+
+   (iii) $\sum_{m=0}^\infty \mathbb P(S_m=0)=\infty$ 
+
+   <font color='red'>_proof_</font> 
+
+   (i)$\Leftrightarrow$(ii): $\mathbb P(S_n=0\ i.o.)=\mathbb P(\bigcap_{n=1}^\infty \{\xi_k<\infty)\}=\lim_{k\rightarrow\infty}\mathbb P(\xi_k<\infty)=\lim_{k\rightarrow\infty} \mathbb P(\xi_1<\infty)^k$ by strong Markov property.
+
+   (ii)$\Leftrightarrow$(iii): LHS in (iii) is just the expectation of return times. Use above theorem:
+
+   > **Theorem** $\mathbb E[N(y)]=\infty \Leftrightarrow y$ is recurrent. 
+
+   **Theorem** SRW is recurrent for $d\leq 2$ and transient for $d\geq 3$.
+
+   <font color='red'>_proof_</font> Actually, we just need to show the case for $d=2$ and $d=3$.
+
+   (i) d=2: First to observe $\mathbb P(S_{2m+1}=0)=0$. To come back to 0 after 2n steps we must make as many up/down and as many left/right steps.
+   $$
+   \mathbb P(S_{2n}=0)=4^{-2n}\sum_{k=0}^n C_{2n}^{2k}C_{2k}^kC_{2n-2k}^{n-k}=4^{-2n}(C_{2n}^n)^2\sim\frac{1}{\pi n}
+   $$
+   since $\sum_n \mathbb P(S_{2n}=0)=\infty$, $S_m=0$ i.o..
+
+   (ii) d=3: 
+   $$
+   \mathbb P(S_{2n}=0)=6^{-2n}\sum_{k=0}^n\sum_{j=0}^{n-k}C_{2n}^{2k}C_{2n-2k}^{2j}C_{2k}^kC_{2j}^jC_{2n-2k-2j}^{n-k-j}=6^{-2n}C_{2n}^n\sum_{k=0}^n\sum_{j=0}^{n-k}(\frac{n!}{k!j!(n-k-j)!})^2\\\leq 6^{-2n}C_{2n}^n\max_{k,j}\frac{n!}{k!j!(n-k-j)!}\sum_{k=0}^n\sum_{j=0}^{n-k}\frac{n!}{k!j!(n-k-j)!}\lesssim cn^{-3/2}
+   $$
+   since $\sum_n \mathbb P(S_{2n}=0)<\infty$, $(S_m)$ is transient.
+
+   Now we return to random walk on $\mathbb R^d$.
+
+   **Theorem** Let $\epsilon>0$ be fixed, 
+
+   (i) If $\sum_{n=0}^\infty \mathbb P(\|S_n\|<\epsilon)<\infty$, then it's transient.
+
+   (ii) If $\sum_{n=0}^\infty \mathbb P(\|S_n\|<\epsilon)=\infty$, then it's recurrent.
+
+   <font color='red'>_proof_</font> (i) This follows from Borel-Cantelli lemma directly.
+
+   (ii) This result needs two lemmas: First, there is some epsilon such that $S_n$ returns the ball i.o.; Second, if there is one such epsilon then it holds for any epsilon. This is a powerful result.
+
+   **Lemma 1** If $\sum_{n=0}^\infty \mathbb P(\|S_n\|<\epsilon)=\infty$, then $\mathbb P(\|S_n\|<2\epsilon\ i.o.)=1$.
+
+   <font color='red'>_proof_</font> We are slightly expanding the ball. To prove this, we consider what can happen if $\|S_n\|>2\epsilon$ and how it relates with the transience of random walk.
+
+   For $m,k\in\mathbb N$, consider the event $A_{m,k}=\{\|S_n\|<\epsilon\}\cap\{\|S_{m+n}\|\geq \epsilon, n\geq k-1\}$, i.e., $S_n$ stays in the ball and after $k$ steps it escape and never turn back.
+
+   First, we can see for a fixed $k$, if $A_{m_1,k},A_{m_2,k}$ both occur, then $|m_1-m_2|<k$.
+
+   Next, we estimate:
+   $$
+   k\geq \sum_{m=0}^\infty\mathbb P(A_{m,k})\geq \sum_{m=0}^\infty\mathbb P(\|S_m\|<\epsilon, \|S_n-S_m\|\geq2\epsilon, n\geq m+k-1)
+   $$
+   By Markov chain property, we can make a copy independent of $S_n-S_m$ and independent of $S_n$, $\tilde S_n$:
+   $$
+   RHS=\sum_{m=0}^\infty\mathbb P(\|S_m\|<\epsilon)\sum_{n=k-1}^\infty\mathbb P(\|\tilde{S_n}\|\geq 2\epsilon)=\mathbb P(\|\tilde{S_n}\|\geq 2\epsilon, n\geq k-1)\sum_{m=0}^\infty\mathbb P(\|S_m\|<\epsilon)
+   $$
+   But the infinite summary diverges, so $\mathbb P(\|S_n\|\geq 2\epsilon\ \forall n\geq k-1)=0$. This implies $\|S_n\|<2\epsilon$ i.o. since k is arbitrary.
+
+   **Lemma 2** Let $m\geq 2$, then $\sum_{n=0}^\infty \mathbb P(\|S_n\|<m\epsilon)\leq (2m)^d\sum_{n=0}^\infty \mathbb P(\|S_n\|<\epsilon)$. The norm is infinite norm in $\mathbb R^d$.
+
+   <font color='red'>_proof_</font> Given $x\in \mathbb B(0,m\epsilon)$. 
+
+   First we segment $\mathbb B(0,\epsilon)$ into some pieces: Let $\Lambda_\epsilon:=\epsilon \mathbb Z^d\cap[-m\epsilon,m\epsilon)^d$, then we have covering $\mathbb B(0,m\epsilon)\subset \cup_{x\in\Lambda_\epsilon}(x+[0,\epsilon)^d)$ . So
+   $$
+   \sum_{n=0}^\infty\mathbb P(\|S_n\|<m\epsilon)\leq \sum_{n=0}^\infty\sum_{x\in\Lambda_\epsilon} \mathbb P(S_n\in x+[0,\epsilon)^d)
+   $$
+   Given $x\in \Lambda_\epsilon$, let $T_x$ be the hitting time of $S_n$ to $x+[0,\epsilon)^d$. Then
+   $$
+   \begin{aligned}
+   \sum_{n=0}^\infty\mathbb P(S_n\in x+[0,\epsilon)^d)=&\sum_{n=0}^\infty\sum_{l=0}^\infty\mathbb P(S_n\in x+[0,\epsilon)^d, T_x=l)\\=&\sum_{l=0}^\infty\sum_{n=0}^\infty\mathbb P(\|S_{n+l}-S_l\|<\epsilon, T_x=l)\\=&\sum_{n=0}^\infty\mathbb P(\|S_n\|<\epsilon)
+   \end{aligned}
+   $$
+   And $\#\Lambda_\epsilon=(2m)^d$, so the proof is complete.
+
+   This indicates when we consider smaller ball, the sum of probability is still infinite. 
+
+   Finally by definition, the proof is complete.
+
+   **Theorem Random walk in $\mathbb R^2$** If $\frac{S_n}{\sqrt{n}}\rightarrow_d \mathcal N(0,\sigma^2)$ where $\infty>\sigma>0$, then the random walk is recurrent.
+
+   _Recall_ If $\mu$ is a measure defined on $\mathbb R^d$, its characteristic function is function $\hat{\mu}$ defined by $\hat{\mu}(t)=\int_{\mathbb R^d} e^{itx}d\mu(x)$, i.e., the Fourier transformation.
+
+   Note $\hat{\mu}(0)=\int_{\mathbb R^d}\mu(x)$ is the total measure, for probability measure this is 1. 
+
+   **Theorem** Let $\delta>0$, then $(S_n)$ is recurrent iff $\sup_{\delta<1}\int_{(-\delta,\delta)^d} \Re \frac{1}{1-\hat{\mu}(y)}dy=\infty$, where $\hat{\mu}(y)$ is the characteristic function of $\xi$ and $S_n=\xi_1+...+\xi_n$.
+
+   _Remark_ $\frac{1}{1-\hat{\mu}}$ diverges as $y\rightarrow 0$ since $\hat{\mu}(0)=1$. So for the integral to be infinite, the integrand should blow up at least as $y^{-\alpha}$ for $\alpha>d$ as $y\rightarrow 0$. Commonly, if characteristic function is nearly $\exp(-|t|^\alpha)$, then it is approximately $1-|t|^\alpha$.
+
+5. Invariant measures
+
+   _Recall_ a transition probability $p$ defines an operator $P^*$ on the space of measure on state space. Now we are interested in the fixed points $P^*\mu=\mu$.
+
+   If the law of Markov chains converge weakly as $n\rightarrow\infty$, then it must be a fixed point of $P^*$.
+
+   For discrete state spaces, $P^*\mu=\mu$ is just $\forall y\in S, \sum_x \mu(x)p(x,y)=\mu(y)$.
+
+   **Example simple random walk on $\mathbb Z/n\mathbb Z$** $p([l],[l\pm 1])=1/2$ and 0 otherwise.
+
+   Check that the uniform measure $\Pi([l])=1/N$ is invariant.
+
+   As $n\rightarrow\infty$, this Markov chain "looks like" SRW on $\mathbb Z$ and setting $\mu_k=1$ defines an invariant measure with infinite mass. (notice this is not a probability measure!)
+
+   <img src="C:\Users\m1500\Desktop\Durrent\images\simple random walk on znz.png" style="zoom:25%;" /> 
+
+   A variation of this: 2-circle: Once we reach one cycle, we stayed there forever. Both the uniform measure on the first and second circle are invariant (not pass the bridge), so there is no uniqueness in this case.
+
+   ![](C:\Users\m1500\Desktop\Durrent\images\2-cycle invariant.png)
+
+   In general, if we have several irreducible components, we many have an invariant distribution in each component and any convex combination is also invariant(among different component). This is why most would be stated for irreducible chains.
+
+   **Theorem** Let $\mu$ be an invariant measure (not necessarily a prob. measure) and let $n\in \mathbb N$ and define $Y_n=X_{n-m}$, $0\leq m\leq n$ with $(X_n)$ having initial distribution $\mu$. Then $Y_n$ is a Markov chain with dual transition $q(x,y)=p(y,x)\frac{\mu(y)}{\mu(x)}$
+
+   _Remark_ We are reversing the Markov chain.
+
+   <font color='red'>_proof_</font> We apply the definition, 
+   $$
+   \mathbb P(Y_{m+1}=y|Y_n=x)=\mathbb P(X_{n-m-1=y}|X_m=x)=\mathbb P(X_{n-m}=x|X_{n-m-1}=y)\frac{\mathbb P(X_{n-m-1}=y)}{\mathbb P(X_{n-m}=x)}\\=\mathbb P(X_1=x|X_0=y)\frac{\mu(y)}{\mu(x)}=p(y,x)\frac{\mu(y)}{\mu(x)}
+   $$
+   ***Definition*** we say $\mu$ is reversible if $q=p$. 
+
+   If $\mu$ is reversible, then $\mu(x)p(x,y)=\mu(y)p(y,x)$. This equation is called **detailed balance**. In general it can be hard to check.
+
+   Now we consider the **Existence** of invariant measure.
+
+   _Intuitively_, when we run the Markov chain, the fraction of time spent at each point x should give a/the stationary measure. More precisely, the limit of $\mathbb E\sum_{n=0}^{N-1} 1_{X_n=m}/N$.
+
+   **Theorem** Let $x$ be recurrent and $X$ be irreducible. Let $T_x$ be the hitting time of $x$. Define $\mu_x(y)=\mathbb E_x[\sum_{n=0}^{T_x-1}1_{X_n=y}]=\sum_{n=0}^\infty\mathbb P_x(X_n=y,T_x>n)$, then $\mu$ is an invariant measure.
+
+   <font color='red'>_proof_</font> 
+
+   Note $\mu_x(x)=\sum_{n=0}^\infty \mathbb P_x(X_n=x, T_x>n)=\mathbb P_x(X_0=x)=1$ by the definition of hitting time.
+
+   Now we check the definition of stationary: let $z\in S$, then
+   $$
+   \sum_{y\in S} \mu_n(y)p(y,z)=\sum_y\sum_{n=0}^\infty\mathbb P_x(X_n=y,T_x>n)p(y,z)=\sum_{n=0}^\infty \mathbb P_x(X_{n+1}=z, T_x>n)\\=\left\{\begin{aligned}&\sum_{n=0}^\infty\mathbb P_x(X_n=z, T_x>n)&if\ z\neq x\\&\sum_{n=0}^\infty \mathbb P_x(T_x=n+1)=1=\mu_x(x)&if\ z=x\end{aligned}\right.
+   $$
+   some details: the change from $\mathbb P_x(X_{n+1}=z, T_x>n)$ to $\mathbb P_x(X_{n}=z, T_x>n)$ since (i) when $n=0$, the second is 0; when $n\neq 0$, since $X_{n+1}=z$ and $T_x>n$, $T_x>n+1$, so it's reasonable.
+
+   Actually, we should argue that $\mu_x(y)<\infty$: Since $\mu_x p=\mu_x$, then for all $n\geq 1$, $\mu_x p^n=\mu_x$, and $\mu_x(x)=1$. Recall that $x$ is recurrent, and $X$ is irreducible implies there is a path from $x$ to $y$ and from $y$ to $x$ both of positive prob., so there is some $p^n(y,x)>0$, and since $\mu_x(y)p^n(y,x)\leq\mu_x(x)$, $\mu_x(y)$ must be finite.
+
+   Now we consider **Uniqueness**.
+
+   **Theorem** Suppose p is irreducible and all states are recurrent. Then the stationary measure is unique up to constant multiples.
+
+   <font color='red'>_proof_</font> Let $\nu$ be a stationary measure. Assume wlog $\mu(a)=1$, where $a\in S$ is a fixed state. We want to show that $\nu=\mu_a$. 
+
+   For any $z\in S$ and $n\in\mathbb N$, 
+   $$
+   \nu(z)=\sum_y\nu(y)p(y,z)=\nu(a)p(a,z)+\sum_{y\neq a}\nu(y)p(y,z)\\=\nu(a)p(a,z)+\sum_{y\neq a}\nu(a)p(a,y)p(y,z)+\sum_{x\neq a}\sum_{y\neq a}\nu(x)p(x,y)p(y,z)\\=\nu(a)\mathbb P_a(X_1=z)+\nu(a)\mathbb P_a(X_1\neq a, X_2=z)+\mathbb P_\nu (X_0\neq a, X_1\neq a, X_2=z)
+   $$
+   Continue this process, we get
+   $$
+   \nu(z)=\nu(a)\sum_{m=1}^n\mathbb P_a(X_k\neq a, 1\leq k<m, X_m=z)+\mathbb P_\nu (X_j\neq a, 0\leq j<n, X_n=z)
+   $$
+   Let n tends to infinity, we have $\nu(z)\geq \nu(a)\mu_a(z)$, since the first sum has each entry the prob. of $X_m=z, T_a>m$ and the second term $\geq 0$.
+
+   So to claim the equation holds, we want $\mathbb P_\nu (X_j\neq a, 0\leq j<n)\rightarrow 0$. But $\nu$ can be an infinite measure, so this may not work.
+
+   We turn to a little tricky way. Consider
+   $$
+   \nu(a)=\sum_x\nu(x)p^n(x,a)\geq \nu(a)\sum_x\mu_a(x)p^n(x,a)=\nu(a)\mu_a(a)=\nu(a)
+   $$
+   since $\nu$ is stationary. And the equality must hold. whenever $p^n(x,a)>0$ for some $n,x$. Since $X$ is irreducible, such $n,x$ must exist, so our proof is complete.
+
+   In summary, for an irreducible Markov chain with one state recurrent, there is a unique stationary measure by construction.
