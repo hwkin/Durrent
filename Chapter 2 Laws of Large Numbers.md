@@ -171,6 +171,44 @@ the following are examples.
 
 _A short lemma_: $\log n\leq\sum_{m=1}^n \frac{1}{m}\leq\log n+1$.
 
-**Example 2.2.7 Coupon collector's problem** Let $X_1,...$ be i.i.d. uniform on ${1,2,...,n}$. 
+**Example 2.2.7 Coupon collector's problem** Let $X_1,...$ be i.i.d. uniform on $\{1,2,...,n\}$. Consider this as collecting coupons. Suppose that the $i$th item we collect is chosen at random from the set of possibilities and is independent of the previous choices. Let $\tau_k^n$ be the first time that we have collected $k$ different items. In this problem we are interested in the asymptotic behavior of $T_n=\tau_n^n$, the time to collect a complete set. 
 
- 
+First, $\tau_1^n=1$ and we set $\tau_0^n=0$. Let $X_{n,k}=\tau_k^n-\tau_{k-1}^n$ represents the time to get a choice different from our first $k-1$ items, so it has a geometry distribution with parameter $1-(k-1)/n$ and is independent of the earlier waiting times $X_{n,j},1\leq j<k$. So
+$$
+ET_n=\sum_{k=1}^n[1-(k-1)/n]^{-1}=n\sum_{m=1}^nm^{-1}\approx n\ln n
+\\var(T_n)\leq\sum_{k=1}^n[1-(k-1)/n]^{-2}=n^2\sum_{m=1}^n m^{-2}<Cn^2
+$$
+So using **Theorem 2.2.6** we have $\frac{T_n-ET_n}{n\ln n}\rightarrow 0$ in prob, so $T_n/n\ln n\rightarrow 1$ in prob.
+
+#### 2.2.3 Truncation
+
+To truncate a r.v. means to consider $\bar{X}=X1_{|X|\leq M}$. To extend the weak law of r.v. without a finite second moment, we will truncate and use Chebyshev's inequality. Now we introduce a very general and useful theorem, which can be directly applied to many cases.
+
+**Theorem 2.2.11 Weak law for triangular arrays** For each n let triangular array $X_{n,k}$ be independent in each row. Let $b_n>0$ and $b_n\rightarrow\infty$, and $\bar{X}_{n,k}=X_{n,k}1_{|X_{n,k}|\leq b_n}$. Suppose that as $n\rightarrow\infty$, 
+
+(i) $\sum_{k=1}^n P(|X_{n,k}|>b_n)\rightarrow 0$
+
+(ii) $b_n^{-2}\sum_{k=1}^n E\bar{X}^2_{n,k}\rightarrow 0$.
+
+let $S_n=X_{n,1}+...+X_{n,n}$ and $a_n=\sum_{k=1}^n E\bar{X}_{n,k}$ then $(S_n-a_n)/b_n\rightarrow 0$ in prob.
+
+<font color='red'>_proof of Theorem 2.2.11_</font> Let $\bar{S_n}=\bar{X}_{n,1}+...+\bar{X}_{n,n}$. 
+$$
+P(|\frac{S_n-a_n}{b_n}|>\epsilon)\leq P(S_n\neq \bar{S_n})+P(|\frac{\bar S_n-a_n}{b_n}|>\epsilon)
+\\P(S_n\neq \bar S_n)\leq \sum_{k=1}^nP(X_n\neq \bar X_n)=\sum_{k=1}^n P(|X_n|>b_n)\rightarrow 0
+\\P(|\frac{\bar S_n-a_n}{b_n}|>\epsilon)\leq \epsilon^{-2} E(\frac{\bar S_n-a_n}{b_n})^2\leq \epsilon^{-2}b_n^{-2}\sum_{=1}^n E(\bar{X}_{n,k}^2)\rightarrow 0
+$$
+**Theorem 2.2.12 WLLN** Let $X_1,...,X_n$ be i.i.d. with $xP(|X_i|>x)\rightarrow 0$ as $x\rightarrow\infty$. Let $S_n=X_1+...+X_n$ and $\mu_n=E(X_11_{|X_1|\leq n})$, then $S_n/n-\mu_n$ in prob.
+
+_Remark_ $E|X|<\infty\Rightarrow xP(|X|>x)\rightarrow 0$ but not vise versa. So in this case $L^2$ convergence is not assured, and $\mu_n$ doesn't necessarily converges to a finite limit (However they do exist in this condition). But actually $E|X|^{1-\epsilon}<\infty$ in this condition for any $\epsilon>0$.
+
+<font color='red'>_proof of Theorem 2.2.12_</font> Verify using **Theorem 2.2.11**. A lemma is helpful.
+
+**Lemma 2.2.13** If $Y\geq 0$ and $p>0$ then $EY^p=\int_0^\infty py^{p-1}P(Y>y)dy.$
+
+**Theorem 2.2.14** Let $X_1,...$ be i.i.d. and $E|X_1|<\infty$. Then $S_n/n\rightarrow \mu$ in prob.
+
+_Remark_ This is the most familiar form for us. In i.i.d. case, finite variation is not necessary for convergence in prob.
+
+**Example 2.2.15 WLLN doesn't hold** Consider $X_1,...$ are i.i.d. with Cauchy distribution $p(x)=\frac{1}{\pi(1+x^2)}$, then $P(|X_1|>x)\sim \frac{2}{\pi}x^{-1}$, so it doesn't satisfy the condition above. Actually its expectation doesn't exist, so there isn't $\mu_n$ such that $S_n/n-\mu_n\rightarrow 0$
+

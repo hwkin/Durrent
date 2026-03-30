@@ -248,7 +248,7 @@ Now we begin our step to define a stochastic integration.
    $$
    d|\vec{B_t}|=\frac{\vec{B_t}}{|\vec{B_t}|}d\vec{B_t}+\frac{1}{2}\frac{d-1}{|\vec{B_t}|}dt
    $$
-   It satisfies the SDE: $dY_t=\frac{a}{Y_t}dt+d\tilde{B_t}$ where $a=\frac{d-1}{2}$. $Y_t$ is called a Bessel-d process.
+   It satisfies the SDE: $dY_t=\frac{a}{Y_t}dt+d\tilde{B_t}$ where $a=\frac{d-1}{2}$, and $\tilde B_t$ is a standard Brownian motion (Notice on above equation, $\int_0^T\frac{\vec{B_t}}{|\vec{B_t}|}d\vec{B_t}$ has quadratic variation $t$, so it's Brownian). $Y_t$ is called a Bessel-d process.
 
    _attachment_ a chart:
 
@@ -257,4 +257,53 @@ Now we begin our step to define a stochastic integration.
    | d$B_t$ | dt     | 0    |
    | dt     | 0      | 0    |
 
+   _Remark_ As above we have seen the integration of adapted cts process is always a local martingale. Is the inverse true?
    
+   **Theorem Martingale representation theorem** Suppose $M_t$ is an $\mathcal F_t$-martingale (w.r.t. $\mathbb P$) and $M_t\in L^2(\mathbb P)$ for all $t\geq 0$. Then there exists a unique stochastic progress $g(s,\omega)$ such that $g$ is measurable, adapted, square integrable process and 
+   $$
+   M_t(\omega)=\mathbb E[M_0]+\int_0^t g(s,\omega)dB_s,\text{a.s. for all }t\geq 0
+   $$
+
+### Class 2 Stochastic calculus, Bessel process and Overview of SLE
+
+1. time change of martingales
+
+   Fluctuation is determined by its parameterization, e.g., (the realization of) $B(t)$ and $B(2t)$ have different fluctuation. However, for $B(2t)$, if the time run in a rate of $t'=\frac{1}{2}t$, then it recovers to a standard BM. Actually, (local) martingales have its "intrinsic clock", while under this clock, the (local) martingale run in the same way as $B(t)$.
+
+   **Proposition** Suppose $\lim_{t\rightarrow\infty}\langle Z\rangle_t=\lim_{t\rightarrow\infty}\int_0^t H_s^2ds=\infty$, and $\tau_r=\inf\{t:\langle Z\rangle_t=r\}$. Let $W_r=Z_{\tau_r}$, then $W_r$ is a SBM w.r.t. $\mathcal F_{t_r}$.
+
+   <font color='red'>_proof_</font> It suffices to show that for every $r_0<r$, that the distribution of $W_r-W_{r_0}$ conditioned on $\mathcal F_{\tau_{r_0}}$ is normal, mean 0 and variance $r-r_0$, and it's independent increment process.
+
+   To examine it's a normal distribution, we use characteristic function: Let $M_t=e^{iyZ_t+\frac{y^2}{2}\langle Z\rangle_t}$, then 
+   $$
+   dM_t=M_t(iydZ_t+\frac{y^2}{2}d\langle Z\rangle_t)+\frac{1}{2}M_t(iydZ_t+\frac{y^2}{2}d\langle Z\rangle_t)^2=iyM_tdZ_t
+   $$
+   (Use Ito's formular and the "multiplication table")
+
+   So $M_t$ is a local martingale. By Optional stopping theorem, use the stopping time $\tau$, we have $\mathbb E e^{iyZ_{\tau_r}+\frac{y^2}{2}r}=\mathbb E M_t=\mathbb EM_0=1$, so $Z_{\tau_r}$ has char. function $e^{-\frac{y^2}{2}r}$, it's of mean 0 and variance r. After slight arguments, we can complete the proof.
+
+2. Girsanov's transformation
+
+   The aim is to construct a good measure to deal better with drift.
+
+   Suppose $K_s\in b\mathcal I$ and $|K_s|\leq N\ \forall s$, and $X_t=B_t-\int_0^t K_r dr$. I want to construct a measure, where $X_t$ is a martingale on it.
+
+   The construction is as follows: 
+
+   Let $M_t=\exp\{\int_0^t K_sdB_s-\frac{1}{2}\int_0^t K_s^2ds\}$. Since it's a local martingale (by Ito's formular; as above), and $0\leq M_t\leq e^{NB_t}$, so it's uniformly integrable on every bounded interval. So it's a positive martingale. 
+
+   Let $M_t=\frac{d\mathbb Q_t}{d\mathbb P}$, and $\mathbb E_{\mathbb Q_t}$ be the expectation w.r.t. $\mathbb Q_t$, then for every $\mathcal F_t$-measurable $Y$, we have $\mathbb E_{\mathbb Q_t}[Y]=\mathbb E[Y M_t]$. Moreover, if $s<t$ and $Y$ is $\mathcal F_s$-measurable, we have $\mathbb E[Y M_t]=\mathbb E[\mathbb E[Y M_t|\mathcal F_s]]=\mathbb E[Y \mathbb E[M_t|\mathcal F_s]]=\mathbb E[Y M_s]$. So $\mathbb Q_t\mid_{\mathcal F_s}=\mathbb Q_s $, we can extend it to $\mathbb Q$ such that for all $t$, $\mathbb Q\mid_{\mathcal F_t}=\mathbb Q_t$.
+
+   Or from another perspective, since $M_t$ is a positive martingale, it must converge to $M_\infty$. Define $M_\infty=\frac{d\mathbb Q}{d\mathbb P}$.
+   
+   **Proposition** $X_t$ is a martingale w.r.t. $(\mathbb Q,\mathcal F)$.
+   
+   <font color='red'>_proof_</font> It suffices to show $\mathbb E_{\mathbb Q}(X_t\mid \mathcal F_s)=X_s$. By definition, it suffices to show for all $A\in\mathcal F_s$, $\mathbb E_\mathbb Q X_t1_A=\mathbb E_\mathbb Q X_s1_A$, i.e., $\mathbb EX_t1_AM_t=\mathbb EX_s1_AM_s$. To prove this, we prove $X_tM_t$ is a martingale.
+   
+   By the formular of changing of variable, $dX_tM_t=X_tdM_t+M_tdX_t+d\langle X,M\rangle_t=...dB_t$, we can verify $X_tM_t$ is a martingale.
+   
+   For n-dim case, let $Z_t=\sum_{j=1}^d\int_0^t H_s^jdB_s^j$ , $M_t=\exp\{Z_t-\langle Z\rangle_t/2\}$, and $X_t=Z_t-\int_0^t M_r^{-1}d\langle Z\rangle_r$.
+   
+   **Example** Suppose $B_0=x>0$, let $M_t=B_t$ and let $T=\inf\{t:B_t=0\}$. Then for $0\leq t<T$, $dM_t=dB_t$ and hence $K_t=1/B_t$. 
+   
+   Let $\mathbb Q_t$ be such that $\frac{d\mathbb Q_t}{\mathbb P}=x^{-1}M_{t\wedge T}$. The process $\tilde{B}_s=B_s-\int_0^s\frac{1}{B_r}dr$, $0\leq s\leq t$ is a standard Brownian motion w.r.t. $\mathbb Q_t$. In other form, $dB_s=\frac{1}{B_s}ds+d\tilde{B}_s$. This is the Bessel equation for $d=3$.

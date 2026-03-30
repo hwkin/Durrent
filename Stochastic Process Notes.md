@@ -540,3 +540,123 @@ Stochastic Process Notes
    since $\nu$ is stationary. And the equality must hold. whenever $p^n(x,a)>0$ for some $n,x$. Since $X$ is irreducible, such $n,x$ must exist, so our proof is complete.
 
    In summary, for an irreducible Markov chain with one state recurrent, there is a unique stationary measure by construction.
+
+   We should be careful that, until now we are discussing "measure" not a probability measure. The measure of the whole space can be infinite. So now we turn to the problem: When is a stationary measure a prob. measure?
+
+   (i) If $Z_a=\sum_{z\in S} \mu_a(z)<\infty$, then $\pi(z)=\frac{\mu_a(z)}{Z_a}$ is a stationary **distribution**.
+
+   (ii) Otherwise, since the uniqueness tells us that those stationary measures are multiples of $\mu_a$, so there can't be a stationary distribution. 
+
+   **Theorem** If there is a stationary distribution $\pi$ then all states $y$ s.t. $\pi(y)>0$ are recurrent.
+
+   <font color='red'>_proof_</font> Using that $\pi$ is invariant under $p^n$ for all n, $\sum_{x}\sum_{n\in \mathbb N}\pi(x)p^n(x,y)=\sum_{n\in\mathbb N}\pi(y)=\infty$. 
+
+   On the other hand, $\sum_{n=1}^\infty p^n(x,y)=\frac{\mathbb P_x(T_y<\infty)}{1-\mathbb P_y(T_y<\infty)}$.
+
+   So $\infty=\sum_x \pi(x)\frac{\mathbb P_x(T_y<\infty)}{1-\mathbb P_y(T_y<\infty)}\leq \frac{1}{1-\mathbb P_y(y)}$, since $\sum_x \pi(x)=1$ and $\mathbb P_x(T_y<\infty)\leq 1$.
+
+   So $\mathbb P_y(T_y<\infty)=1$, and our proof is complete.
+
+   Next, we find an expression for the stationary distribution.
+
+   **Theorem** If $p$ is irreducible with stationary distribution $\pi$, then then $\pi(x)=\frac{1}{\mathbb E_x(T_x)}\forall x\in S$
+
+   _Remark_ For recurrent states, $\mathbb P_x(T_x<\infty)=1$ but we may have $\mathbb E_x(T_x)=\infty$. This theorem says that, the stationary measure $\mu_x$ can be normalized to a stationary distribution iff $\mathbb E_x(T_x)<\infty$.
+
+   <font color='red'>_proof_</font> define $\pi(x)=\frac{\mu_x(x)}{\sum_{z\in S}\mu_x(z)}$, then
+   $$
+   \sum_{y\in S}\mu_x(y)=\sum_{y\in S}\sum_{n=0}^\infty \mathbb P_x(X_n=y, T_x>n)=\sum_{n=0}^\infty \mathbb P_x(T_x>n)=\mathbb E_x(T_x)
+   $$
+   So $\pi(x)=\frac{1}{\mathbb E_x(T_x)}$.
+
+   ***Definition*** We say that $x$ is **positive recurrent** if $\mathbb E_x(T_x)<\infty$ and **null recurrent** otherwise.
+
+   **Theorem** If $S$ is irreducible, then TFAE:
+
+   (i) Some $x\in S$ is positive recurrent.
+
+   (ii) There exists a stationary distribution.
+
+   (iii) All states are positive recurrent.
+
+   <font color='red'>_proof_</font> (ii)$\Rightarrow$(iii)$\Rightarrow$(i) is trivial. For (i)$\Rightarrow$(ii), it's just above theorem. Define $\pi(y)=\frac{\mu_x(y)}{\sum_{z\in S}\mu_x(z)}=\frac{\mu_x(y)}{\mathbb E_x T_x}$.
+
+   **Example M/G/1 queue** We have one desk where client are being serviced.
+
+   (i) Service time has distribution $F$ which is arbitrary and $(T_n)$ i.i.d. representing all serving times.
+
+   (ii) Client arrives as a Poisson point process with parameter $\lambda>0$.
+
+   > Poisson point process: Conditionally on $T_1$, there are $Possion(\lambda T)$ clients awaiting in the interval $[0,T_n]$. 
+
+   $$
+   \mathbb P(\text{k new arrivals in }[0,T])=\int_0^T \mathbb P(\text{ k new arrivals in }[0,t])dF(t)=\int_0^T e^{-\lambda t}\frac{(\lambda t)^k}{k!}dF(t):=a_k
+   $$
+
+   If $X_n:=$ \# customs when $n$th client enters service, then $X_n$ is a Markov chain transition:
+
+   (i) $p(0,0)=a_0+a_1$ (ii) $p(n,n+k-1)=a_k$.
+
+   Let $\mu=\sum_{k=0}^\infty ka_k$ be the average number of clients in time $T$.
+
+   Intuitively, the chain has a drift of value $\mu-1$ (arrive $\mu$, leave 1). So we are expecting it's transient for $\mu>1$ and recurrent for $\mu\leq 1$. (for $\mu=1$, we know that RW in $1D$ is recurrent)
+
+   (i) We can compare $X_n$ with RW $S_n=X_0+\sum_{j=1}^n \xi_j$ with $\xi_j$ i.i.d. and $\mathbb P(\xi_1=j-1)=a_j\forall j\geq 0$. So $\mathbb E\xi=\mu -1$.
+
+   Notice $S_n$ and $X_n$ coincide up to hitting time of 0. After this, we always have $S_n\geq X_n$ since $S_n$ can come to negative axis.
+
+   On the other hand, $S_n-(\mu-1)n$ is a martingale. So $X_n$ is a super-martingale when $\mu>1$.So it's transient.
+
+   (ii) When $\mu=1$, 0 is recurrent. We show this by **optional stopping theorem**.
+
+   For all $x\in\mathbb N$, $M\in\mathbb N$​
+   $$
+   x=\mathbb E_x[X_{T_0\wedge T_M}]=\mathbb E_x[X_{T_0\wedge T_M}|T_0<T_M]\mathbb P(T_0<T_m)+\mathbb E_x[X_{T_0\wedge T_M}|T_0>T_M]\mathbb P_x(T_0>T_M)=M\mathbb P_x(T_0>T_M)
+   $$
+   Push M to infinity, we can conclude $\mathbb P_x(T_0>\infty)=0$
+
+   (iii) Now we consider strong recurrence for $\mu\leq 1$. 
+
+   1. Observe that $\mathbb E_x(T_{x-1})$ is independent of $x$ (since before hitting 0, we can always consider this as a RW), So $\mathbb E_x(T_0)=\mathbb E_x(T_{x-1})+\mathbb E_{x-1}(T_{x-2})+...+\mathbb E_1(T_0)=x\mathbb E_1(T_0)$. 
+
+   2. When $\mu<1$, $\mathbb E[X_{n+1}-X_n|X_n=x]=\mu-1<0$.
+
+      Stopping at $T_0\wedge n:=\tau_n$, we have
+      $$
+      \mathbb E_1[X_{\tau_n}]=\mathbb E_1[X_0+\sum_{m=0}^{\tau_n-1}X_{m+1}-X_m]=1+\mathbb E_1\sum_{m=0}^{\tau_n-1}(X_{m+1}-X_m)=1+\mathbb E_1[\tau_n-1](\mu-1)\geq 0
+      $$
+       so $\mathbb E_1[T_0\wedge n]\leq \frac{1}{1-\mu}$. Let n tend to infinity, we can conclude $\mathbb E_1[T_0]$ is bounded.
+
+   3. On the other hand,
+
+   $$
+   \mathbb E_1(T_0)=\sum_{k=0}^\infty a_k\mathbb E_1[T_0|X_1=k]=a_0+\sum_{k=1}^\infty a_k\mathbb E_k[1+T_0]=1+\sum_{k=1}^\infty a_k k\mathbb E_1[T_0]=1+\mu\mathbb E_1[T_0]
+   $$
+
+   So $\mathbb E_1[T_0]=\frac{1}{1-\mu}$ when $\mu<1$, infinite when $\mu=1$.
+
+   4. Now consider returning to 0,
+      $$
+      \mathbb E_0[T_0]=(a_0+a_n)\cdot 1+\sum_{k=2}^\infty a_k\mathbb E_{k-1}[1+T_0]=1+\mathbb E_1[T_0]\sum_{k=2}^\infty(k-1)a_k=\frac{a_0}{1-\mu}
+      $$
+      
+
+      So when $\mu<1$, it's positive recurrent and when $\mu=1$, it's null recurrent.
+
+6. Asymptotic behavior 
+
+   _Note_ If y is transient, then $p^n(x,y)\rightarrow 0$ as $n\rightarrow\infty$. So we only get interested for recurrent state.
+
+   **Theorem** Let $y$ be recurrent, then $\forall x\in S$, as $n\rightarrow\infty$, $\frac{N_n(y)}{n}\rightarrow \frac{1_{\{T_y<\infty\}}}{\mathbb E_y(T_y)}$ ($\mathbb P_x$ a.s.), where $N_n(y)=\sum_{m=1}^n 1_{\{X_n=y\}}$.
+
+   <font color='red'>_proof_</font> Set $\tau_0=0, \tau_{k+1}=\inf \{n>\tau_k:X_n=y\}$. Then r.v. $(\tau_{k+1}-\tau_k)_{k\geq 1}$ are i.i.d. and $\frac{\tau_k}{k}\rightarrow \mathbb E_y[T_y]$ by SLLN. For each n, there is a unique $k_n\in \mathbb N$ such that $\tau_{k_n}\leq n<\tau_{k_{n+1}}$. So we have $\frac{k_n}{\tau_{k_n}}\leq \frac{N_n(y){n}}\leq \frac{k_n+1}{\tau_{k_n}}$. Since both side converges to $\frac{1}{\mathbb E_y[T_y]}$, we get our conclusion. (If $\tau_n=\infty$, the limit is 0.)
+
+   **Example SRW on $\mathbb Z/N\mathbb Z, N\geq 2$** (Periodicity) In this loop, we can come back to $[0]$ after $2n$ steps, and I can also come back to 0 after a whole loop. 
+
+   i) If N is even, always come back after *even* number of steps
+
+   ii) If N is odd, can come back after *odd* numbers ($\geq N$) as well.
+
+   Return times are the "positive ideal" generated by smallest periods. 
+
+   In general, $I_x=\{n\in \mathbb N\ s.t.\ p^n(x,x)>0\}$. In this example, $d_x=\gcd(I_x)=2, \ if\ 2|N; 1\ if \ 2\nmid N$.
