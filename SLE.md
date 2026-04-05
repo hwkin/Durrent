@@ -295,15 +295,46 @@ Now we begin our step to define a stochastic integration.
    Let $M_t=\frac{d\mathbb Q_t}{d\mathbb P}$, and $\mathbb E_{\mathbb Q_t}$ be the expectation w.r.t. $\mathbb Q_t$, then for every $\mathcal F_t$-measurable $Y$, we have $\mathbb E_{\mathbb Q_t}[Y]=\mathbb E[Y M_t]$. Moreover, if $s<t$ and $Y$ is $\mathcal F_s$-measurable, we have $\mathbb E[Y M_t]=\mathbb E[\mathbb E[Y M_t|\mathcal F_s]]=\mathbb E[Y \mathbb E[M_t|\mathcal F_s]]=\mathbb E[Y M_s]$. So $\mathbb Q_t\mid_{\mathcal F_s}=\mathbb Q_s $, we can extend it to $\mathbb Q$ such that for all $t$, $\mathbb Q\mid_{\mathcal F_t}=\mathbb Q_t$.
 
    Or from another perspective, since $M_t$ is a positive martingale, it must converge to $M_\infty$. Define $M_\infty=\frac{d\mathbb Q}{d\mathbb P}$.
-   
+
    **Proposition** $X_t$ is a martingale w.r.t. $(\mathbb Q,\mathcal F)$.
-   
+
    <font color='red'>_proof_</font> It suffices to show $\mathbb E_{\mathbb Q}(X_t\mid \mathcal F_s)=X_s$. By definition, it suffices to show for all $A\in\mathcal F_s$, $\mathbb E_\mathbb Q X_t1_A=\mathbb E_\mathbb Q X_s1_A$, i.e., $\mathbb EX_t1_AM_t=\mathbb EX_s1_AM_s$. To prove this, we prove $X_tM_t$ is a martingale.
-   
-   By the formular of changing of variable, $dX_tM_t=X_tdM_t+M_tdX_t+d\langle X,M\rangle_t=...dB_t$, we can verify $X_tM_t$ is a martingale.
-   
+
+   By the formular of changing of variable, $dX_tM_t=X_tdM_t+M_tdX_t+d\langle X,M\rangle_t=M_t(1+K_tX_t)dB_t$, we can verify $X_tM_t$ is a martingale.
+
    For n-dim case, let $Z_t=\sum_{j=1}^d\int_0^t H_s^jdB_s^j$ , $M_t=\exp\{Z_t-\langle Z\rangle_t/2\}$, and $X_t=Z_t-\int_0^t M_r^{-1}d\langle Z\rangle_r$.
-   
+
    **Example** Suppose $B_0=x>0$, let $M_t=B_t$ and let $T=\inf\{t:B_t=0\}$. Then for $0\leq t<T$, $dM_t=dB_t$ and hence $K_t=1/B_t$. 
-   
-   Let $\mathbb Q_t$ be such that $\frac{d\mathbb Q_t}{\mathbb P}=x^{-1}M_{t\wedge T}$. The process $\tilde{B}_s=B_s-\int_0^s\frac{1}{B_r}dr$, $0\leq s\leq t$ is a standard Brownian motion w.r.t. $\mathbb Q_t$. In other form, $dB_s=\frac{1}{B_s}ds+d\tilde{B}_s$. This is the Bessel equation for $d=3$.
+
+   Let $\mathbb Q_t$ be such that $\frac{d\mathbb Q_t}{d\mathbb P}=x^{-1}M_{t\wedge T}$. The process $\tilde{B}_s=B_s-\int_0^s\frac{1}{B_r}dr$, $0\leq s\leq t$ is a standard Brownian motion w.r.t. $\mathbb Q_t$. In other form, $dB_s=\frac{1}{B_s}ds+d\tilde{B}_s$. This is the Bessel equation for $d=3$.
+
+   Now we want to extend this to all time. Fix some $r>s$ and consider stopping time $T_r=\inf\{t:B_t=r\}$. Again, for each $t$, $\mathbb Q_t$ concentrates on paths with $t\wedge T_r<T$. As t tend to infinity, $\mathbb P_{\mathbb Q_t}(T_r<t)\rightarrow 1$. We therefore get a limiting measure $\mathbb Q=\mathbb Q_\infty$ on paths starting at x and ending at the first time they reach $r$. 
+
+   From the construction, we can see this is the same as the conditional measure on usual BM given that $T_r<T$. Hence the Bessel 3 process can be considered as "Brownian motion conditioned to stay positive always." We can start a Bessel-3 process with $B_0=0$, or more easily, let $B_t=|\vec{B_t}|$ where dim=3.
+
+3. Bessel Processes
+
+   Let $B_t$ be a standard BM with $B_0=0$, and for each $x>0$ Let $X_t^x$ denote a Bessel d-process starting at $x$ driven by B_t, i.e., the solution of 
+   $$
+   dX_t^x=\frac{a}{X_t^x}dt+dB_t,\ X_0^x=x
+   $$
+   where $a=(d-1)/2$. We write $X_t$ for $X_t^1$. The solution is well defined at least up to $T_x:=\inf\{t:X_t^x=0\}$. Note we have chosen the same BM for each $x$ (i.e. be "coupled"). If $t\leq T_x$, then 
+   $$
+   X_t^x=x+B_t+a\int_a^t\frac{ds}{X_s^x}
+   $$
+   If $x<y$, then $X_t^x<X_t^y$ for all $t<T_x$ (Given a $\omega\in\Omega$, this is actually an ODE). In particular $T_x\leq T_y$. A concrete example follows from the absolute value of Brownian motion.
+
+   **Lemma Scaling** If $x>0$ and $Y_t=x^{-1}X_{x^2t}^x$, then $Y_t=_d X_t$.
+
+   <font color='red'>_proof_</font> notice $dY_t=\frac{a}{Y_t}dt+d\tilde{B}_t$, where $\tilde{B}_t=x^{-1}B_{x^2t}$.
+
+   **Proposition** 
+
+   * If $a\geq 1/2$, then $T_x=\infty$ a.s. for all $x>0$
+   * If $a=1/2$, then $\inf_t X_t^x=0$ a.s. for all $x>0$
+   * If $a>1/2$, then $X_t^x\rightarrow\infty$ a.s. for all $x>0$
+   * If $a<1/2$, then $T_x<\infty$ a.s. for all $x>0$
+   * If $1/4<a<1/2$ and $x<y$, then $\mathbb P(T_x=T_y)>0$
+   * If $a\leq 1/4$, then $T_x<T_y$ a.s. for all $x,y$.
+
+   <font color='red'>_proof_</font> Suppose $0<x_1<x<x_2<\infty$, and let $\sigma=\inf\{t:X_t^x\in\{x_1,x_2\}\}$, i.e., the first hitting time of $x_1$ or $x_2$. Let $\phi(x)=\phi(x;x_1,x_2)=\mathbb P(X_\sigma^x=x_2)$, i.e. the probability of hitting $x_2$ first. Note that $\phi(X_{t\wedge\sigma}^x)=\mathbb E[\phi(X_\sigma^x)|\mathcal F_t]$ 
