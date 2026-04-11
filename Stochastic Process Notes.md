@@ -765,9 +765,9 @@ Stochastic Process Notes
    > $$
    > by DCT and $\mathbb E[X^2]=1$. So the infinitesimal generator is $\frac{1}{2} \frac{d^2}{dx^2}$ with domain $\mathcal C_0(\mathbb R)$.
    >
-   > _Note_ The semigroup property depends only on the stability of Gaussian. Cauchy distribution also defines a "Cauchy process"
+   > _Note_ The semigroup property depends only on the stability of Gaussian. Cauchy distribution also defines a "Cauchy process
 
-7. Ergodic theorems
+   ### 3. Ergodic theorems
 
    > [!TIP]
    >
@@ -943,8 +943,30 @@ Stochastic Process Notes
    \mathbb E(t_1|X_0\in A)=\sum_{k=1}^\infty\mathbb P(t_1\geq k|X_0\in A)=\mathbb P(X_0\in A)^{-1}\sum_{k=1}^\infty \mathbb P(t_1\geq k,X_0\in A)
    \\=\mathbb P(X_0\in A)^{-1}\sum_{k=1}^\infty \mathbb P(C_k)=1/\mathbb P(X_0\in A)
    $$
+   It's useful to introduce subadditive ergodic theorems.
+
+   **Theorem subadditive ergodic theorem** Suppose $X_{m,n},0\leq m<n$ satisfy:
+
+   (i) $X_{0,m}+X_{m,n}\geq X_{0,n}$
+
+   (ii) $\{X_{nk,(n+1)k},n\geq 1\}$ is a stationary sequence for each k.
+
+   (iii) The distribution of $\{X_{m,m+k},k\geq 1\}$ doesn't depend on m.
+
+   (iv) $\mathbb E X_{0,1}^+<\infty$ and for each $n$, $\mathbb E X_{0,n}\geq \gamma_0 n$, where $\gamma_0>-\infty$.
+
+   Then 
+
+   (a) $\lim_{n\rightarrow\infty} \mathbb E X_{0,n}/n=\inf_m \mathbb E X_{0,m}/m=\gamma$
+
+   (b) $X=\lim_{n\rightarrow\infty} X_{0,n}/n$ exists a.s. and in $ L^1$, so $\mathbb E X=\gamma$.
+
+   (c) If all the stationary sequence in (ii) are ergodic then $X=\gamma$ a.s.
+
+   **Example** to show a concrete example, consider the range of r.w. Suppose $\xi_1,\xi_2,...$ is a stationary sequence and let $S_n=\xi_1+...+\xi_n$. Let $X_{m,n}=|\{S_{m+1},...,S_n\}|$. It's clear that $X_{0,m}+X_{m,n}\geq X_{0,n}$. Moreover, $0\leq X_{0,n}\leq n$, so (iv) holds. the theorem says there is a limit distribution though we don't know what it is.
+
    **Example Random permutations and integer partitions** Let $n\in \mathbb N^*$, a partition of $n$ is a nonincreasing sequence $(\lambda_1,...,\lambda_l)$ s.t. $\sum \lambda_i=n$. In this case, we say $\lambda$ partitions $n$ and has length $l$. This can be represented by a Young diagram. A Young tableau is a filling of Young diagram by number $1,2,...,n$ s.t. rows and columns increase. Let $f_\lambda$ be the number of Young tableau with shape $\lambda$, i.e., ways to fill in Young diagram. 
-   
+
    > [!NOTE]
    >
    > **Robinson–Schensted correspondence** $S_n\leftrightarrow \{(P,Q):\text{P and Q are two standard Young tableau with same shape}\}$.
@@ -963,5 +985,43 @@ Stochastic Process Notes
    > Moreover, if we create another tableau simultaneously by filling n at the place where a new box is created, then this also gives a Young tableau, since we only add boxes at the end of a row. 
    >
    > For a permutation $\sigma\in S_n$, we say $\sigma(1)\sigma(2)...\sigma(n)$ is a word. Insert this word into a Young tableau by RSK algorithm, we have P the insertion and Q the recording. So $S_n\rightarrow (P,Q)$ is well-defined. Meanwhile, this procedure can be reversed. So the map is a bijection. 
-   
+
    The **Plancherel measure** is the pushforward of the uniform measure on $S_n$ to the set of partitions of n, given by $\mathbb P(\lambda)=\frac{1}{Z} f_\lambda^2$, with $Z=\sum_{\lambda \text{ partitions of n }} f_\lambda^2=|S_n|=n!$ by the bijection. 
+
+   The length of the first row is the length of the longest increasing subsequence of $\sigma(1)...\sigma(n)$, call it $L_n$ and give it measure induced by Plancherel measure. 
+
+   **Proposition** $\frac{L_n}{\sqrt{n}}\rightarrow_d c$.
+
+   <font color='red'>_proof_</font> The idea is to sample $L_n$ using a Poisson point process with intensity Lebesgue measure on $\mathbb R^2$. 
+
+   Define $\tau(n)=\inf\{x>0: [0,x]^2 \text{ contains exactly n points}\}$. We can label the points $(x_j,y_j)$ in $[0,\tau(n)]^2$ s.t. $x_i\uparrow$. Then there is a unique permutation $\pi$ s.t. $y_{\pi(n)}\uparrow$. Then $\pi(n)$  has uniform distribution. 
+
+   Notice an increasing subsequence of $\pi(n)$ corresponds to an increasing path on $\mathbb R^2$. Now let $Y_{s,t}$ be the number of increasing paths in the rectangle $[s,t]^2$, then $-Y_{s,t}$ satisfy (i) in the subadditive ergodic thm. (ii) is also satisfied by the independence. By transition invariance of Poisson point process, (iii) is satisfied. actually ,(iv) is also satisfied trivially. So by the subadditive ergodic thm, $\lim_{n\rightarrow\infty}\frac{Y_{0,n}}{n}\rightarrow r$ for some $r\in\mathbb R\cup\{\infty\}$.
+
+   On the other hand, we consider $\tau(n)$:
+
+   **Lemma** $\frac{\tau(n)}{\sqrt{n}}\rightarrow 1$ a.s.
+
+   <font color='red'>_proof_</font> Let $S_n$ be the number of points in $[0,\sqrt{n}]^2$. Then $S_n-S_{n-1}$ are independent Poisson r.v. with mean 1, so SLLN shows $S_n/n\rightarrow 1$ a.s.. Then if $\epsilon>0$ then for large $n$, $S_{n(1-\epsilon)}<n<S_{n(1+\epsilon)}$, and siv=nce $\tau$ is an increasing function, $\sqrt{(1-\epsilon)n}\leq \tau(n)\leq \sqrt{(1+\epsilon)n}$. So $\tau(n)/\sqrt{n}\rightarrow 1$ a.s.
+
+   So $\frac{L_n}{\sqrt{n}}=\frac{Y_{0,\tau(n)}}{\tau(n)} \frac{\tau(n)}{\sqrt{n}}\rightarrow r\cdot 1$. a.s. 
+
+   Actually, we have constructed a coupling of all uniform measure on $S_n$ and PPP.
+
+   #### 4. Brownian motion
+
+   ***Definition*** A standard Brownian Motion is a probability measure on $C^0(\mathbb R_+,\mathbb R)$ s.t. paths $(B_t)_{t\geq 0}$ satisfy:
+
+   (i) $B_0=0$ a.s.
+
+   (ii) (stationary increments) $\forall t,s\geq 0$, $B_{t+s}-B_t\sim\mathcal N(0,t-s)$.
+
+   (iii) (independent increments) $\forall t_1<s_1<t_2<s_2$, $B_{s_2}-B_{s_1}$ is independent of $B_{s_1}-B_{t_1}$.
+
+   (iv) (From PTE) $t\rightarrow B_t$ is continuous a.s..
+
+   Naturally we care about its existence. Now we give a claim:
+
+   **Theorem** standard Brownian motion exists and is unique. 
+
+   As for the detail of construction, I don't think more space should be occupied. Refer [Proswit](https://www.proswit.com/levyConstruction) to the construction of Levy.
