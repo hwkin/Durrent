@@ -767,261 +767,245 @@ Stochastic Process Notes
    >
    > _Note_ The semigroup property depends only on the stability of Gaussian. Cauchy distribution also defines a "Cauchy process
 
-   ### 3. Ergodic theorems
 
-   > [!TIP]
-   >
-   > Here are some preliminaries about ergodicity from PTE.
-   >
-   > ***Definition*** $X_0,X_1,...$ is said to be a **stationary sequence** if for every $k$, the shifted sequence $(X_{k+n})_{n\geq 0}$ has the same distribution with $(X_n)_{n\geq 0}$.
-   >
-   > ***Examples*** 
-   >
-   > (i) $X_i$ are i.i.d.
-   >
-   > (ii) $X_n$ is a Markov chain with transition prob. $p(x,A)$ and stationary distribution $\pi$. Then if $X_0$ has distribution $\pi$, $X_i$ is a stationary sequence.
+### 3. Ergodic theorems
 
-   In general, we want to prove results of form "time average converges to spatial average". 
+> [!TIP]
+>
+> Here are some preliminaries about ergodicity from PTE.
+>
+> ***Definition*** $X_0,X_1,...$ is said to be a **stationary sequence** if for every $k$, the shifted sequence $(X_{k+n})_{n\geq 0}$ has the same distribution with $(X_n)_{n\geq 0}$.
+>
+> ***Examples*** 
+>
+> (i) $X_i$ are i.i.d.
+>
+> (ii) $X_n$ is a Markov chain with transition prob. $p(x,A)$ and stationary distribution $\pi$. Then if $X_0$ has distribution $\pi$, $X_i$ is a stationary sequence.
 
-   E.g., if $(X_n)$ stationary sequence. $f:\Omega\rightarrow\mathbb R$, then $\frac{1}{n}\sum_{k=0}^{n-1} f(X_k)\rightarrow\int fd\pi$ a.s..
+In general, we want to prove results of form "time average converges to spatial average". 
 
-   ***Definition*** A measurable function $\phi:\Omega\rightarrow\Omega$ is **measure preserving** if $\mathbb P_*\varphi=\mathbb P$,.i.e., $\mathbb P(\varphi^{-1}(A))=\mathbb P(A)\forall A\in\mathcal F$. 
+E.g., if $(X_n)$ stationary sequence. $f:\Omega\rightarrow\mathbb R$, then $\frac{1}{n}\sum_{k=0}^{n-1} f(X_k)\rightarrow\int fd\pi$ a.s..
 
-   **Example** (From PTE) Let $\phi$ be a measure preserving function, and let $\phi^0=id, \phi^1(\omega)=\omega, \phi^n(\omega)=\phi\circ\phi^{n-1}(\omega)$, then $(X_n)$ defined by $X_n(\omega)=X(\phi^n(\omega))$ is a stationary sequence when $X\in\mathcal F$, since let $B\in\mathcal R^{n+1}$ and $A=\{\omega: (X_0(\omega),...,X_n(\omega))\in B\}$, we have
-   $$
-   \mathbb P((X_k,...,X_{k+n})\in B)=\mathbb P(\phi^k\omega\in A)=\mathbb P(\omega\in A)=\mathbb P((X_0,...,X_n)\in B)
-   $$
-   Actually, reversely for any stationary sequence, we can directly get $\phi$: 
+***Definition*** A measurable function $\phi:\Omega\rightarrow\Omega$ is **measure preserving** if $\mathbb P_*\varphi=\mathbb P$,.i.e., $\mathbb P(\varphi^{-1}(A))=\mathbb P(A)\forall A\in\mathcal F$. 
 
-   First Kolmogorov's extension theorem allows us to construct a measure $\mathbb P$ on $(S^\mathbb N, \mathcal S^\mathbb N)$, then the sequence $X_n(\omega)=\omega_n$ has the same distribution as $X_{n+k}(\omega)=\omega_{n+k}$, then let $\phi$ be the shift operator, $\phi(\omega_0,...)=(\omega_1,...)$ and $X(\omega)=\omega_0$. 
+**Example** (From PTE) Let $\phi$ be a measure preserving function, and let $\phi^0=id, \phi^1(\omega)=\omega, \phi^n(\omega)=\phi\circ\phi^{n-1}(\omega)$, then $(X_n)$ defined by $X_n(\omega)=X(\phi^n(\omega))$ is a stationary sequence when $X\in\mathcal F$, since let $B\in\mathcal R^{n+1}$ and $A=\{\omega: (X_0(\omega),...,X_n(\omega))\in B\}$, we have
+$$
+\mathbb P((X_k,...,X_{k+n})\in B)=\mathbb P(\phi^k\omega\in A)=\mathbb P(\omega\in A)=\mathbb P((X_0,...,X_n)\in B)
+$$
+Actually, reversely for any stationary sequence, we can directly get $\phi$: 
 
-   The setting of ergodic theorems are just given by this example: We are given $(\Omega,\mathcal F, \mathbb P)$, and a map $\phi$ preserve $\mathbb P$, and $X_n(\omega)=X(\phi^n(\omega))$.
+First Kolmogorov's extension theorem allows us to construct a measure $\mathbb P$ on $(S^\mathbb N, \mathcal S^\mathbb N)$, then the sequence $X_n(\omega)=\omega_n$ has the same distribution as $X_{n+k}(\omega)=\omega_{n+k}$, then let $\phi$ be the shift operator, $\phi(\omega_0,...)=(\omega_1,...)$ and $X(\omega)=\omega_0$. 
 
-   ***Definition*** A set $A\in\mathcal F$ is **invariant** if $\varphi^{-1}(A)=A$ up to $\mathbb P$-null sets.
+The setting of ergodic theorems are just given by this example: We are given $(\Omega,\mathcal F, \mathbb P)$, and a map $\phi$ preserve $\mathbb P$, and $X_n(\omega)=X(\phi^n(\omega))$.
 
-   It's easy to check that the collection $\mathcal I$ of $\varphi$-invariant sets is a sub-$\sigma$-algebra of $\mathcal F$.
+***Definition*** A set $A\in\mathcal F$ is **invariant** if $\varphi^{-1}(A)=A$ up to $\mathbb P$-null sets.
 
-   ***Definition*** Say $\varphi$ is **ergodic** if $\mathcal I$ is trivial, i.e., for every $A\in\mathcal I$, $\mathbb P(A)\in\{0,1\}$. 
+It's easy to check that the collection $\mathcal I$ of $\varphi$-invariant sets is a sub-$\sigma$-algebra of $\mathcal F$.
 
-   If $\phi$ is not ergodic, the space can be split into two sets $A$ and $A^c$, each having positive measure. So $\phi(A)=A$ and $\phi(A^c)=A^c$. In words, $\phi$ is not irreducible. In this sense, ergodicity is a generalization of irreducibility.
+***Definition*** Say $\varphi$ is **ergodic** if $\mathcal I$ is trivial, i.e., for every $A\in\mathcal I$, $\mathbb P(A)\in\{0,1\}$. 
 
-   > [!NOTE]
-   >
-   > **Theorem Kolmogorov's 0-1 law** If $X_i$ i.i.d., $A\in\mathcal T:=\cap_{n=1}^\infty \sigma(X_n,X_{n+1},...)$, then $\mathbb P(A)=0,1$.
-   >
-   > **Theorem Levy's 0-1 law** If $\mathcal F_n$ is a filtration, $A\in\mathcal F_\infty$, then $\lim_{n\rightarrow\infty} \mathbb P(A|\mathcal F_n)=1_A$ a.s..
+If $\phi$ is not ergodic, the space can be split into two sets $A$ and $A^c$, each having positive measure. So $\phi(A)=A$ and $\phi(A^c)=A^c$. In words, $\phi$ is not irreducible. In this sense, ergodicity is a generalization of irreducibility.
 
-   **Example i.i.d. sequence** (From PTE) If $\Omega=\mathbb R^\mathbb N$, $\phi$ is the shift operator, then an invariant set $A$ has $\{omega:\omega\in A\}=\{\omega:\phi\omega \in A \}\in \sigma(X_1,...)$, so $A\in\cap_{n=1}^\infty\sigma(X_n,X_{n+1},...)=\mathcal T$, the tail $\sigma$-alg. By Kolmogorov's 0-1 law, $\mathbb P(A)=0\ or\ 1$.
+> [!NOTE]
+>
+> **Theorem Kolmogorov's 0-1 law** If $X_i$ i.i.d., $A\in\mathcal T:=\cap_{n=1}^\infty \sigma(X_n,X_{n+1},...)$, then $\mathbb P(A)=0,1$.
+>
+> **Theorem Levy's 0-1 law** If $\mathcal F_n$ is a filtration, $A\in\mathcal F_\infty$, then $\lim_{n\rightarrow\infty} \mathbb P(A|\mathcal F_n)=1_A$ a.s..
 
-   **Example Markov chains ** (From PTE) Suppose the state space $S$ is countable and stationary distribution has $\pi(x)>0\ \forall x\in S$, when all states are recurrent. Then we can write $S=\cup R_i$, where $R_i$ are disjoint irreducible closed sets. If $X_0\in R_i$, then $X_n\in R_i$ a.s., so $\{\omega: X_0(\omega)\in R_i\}\in\mathcal I$. This indicates not irreducible $\Rightarrow$ not ergodic.
+**Example i.i.d. sequence** (From PTE) If $\Omega=\mathbb R^\mathbb N$, $\phi$ is the shift operator, then an invariant set $A$ has $\{omega:\omega\in A\}=\{\omega:\phi\omega \in A \}\in \sigma(X_1,...)$, so $A\in\cap_{n=1}^\infty\sigma(X_n,X_{n+1},...)=\mathcal T$, the tail $\sigma$-alg. By Kolmogorov's 0-1 law, $\mathbb P(A)=0\ or\ 1$.
 
-   On the other hand, if $A\in\mathcal I$, then $1_A\circ \theta_n=1_A$, where $\theta$ is shift operator. So if let $\mathcal F_n=\sigma(X_0,...,X_n)$, 
-   $$
-   \mathbb E_\pi(1_A|\mathcal F_n)=\mathbb E_\pi (1_A\circ\theta_n|\mathcal F_n)=\mathbb E_{X_n}1_A
-   $$
-   by strong Markov property. Now $LHS\rightarrow 1_A$ by Levy's 0-1 law. Meanwhile, when $X_n$ is irreducible, for any $y\in S$, $RHS=\mathbb E_y1_A$ i.o., so actually $\mathbb P_\pi (A)=0\ or\ 1$. So irreducible $\Rightarrow$ ergodic.
+**Example Markov chains ** (From PTE) Suppose the state space $S$ is countable and stationary distribution has $\pi(x)>0\ \forall x\in S$, when all states are recurrent. Then we can write $S=\cup R_i$, where $R_i$ are disjoint irreducible closed sets. If $X_0\in R_i$, then $X_n\in R_i$ a.s., so $\{\omega: X_0(\omega)\in R_i\}\in\mathcal I$. This indicates not irreducible $\Rightarrow$ not ergodic.
 
-   Notice $\mathcal I$, the invariant sets and $\mathcal T$, the tail events, aren't always the same, for example, when the chain is periodic. 
+On the other hand, if $A\in\mathcal I$, then $1_A\circ \theta_n=1_A$, where $\theta$ is shift operator. So if let $\mathcal F_n=\sigma(X_0,...,X_n)$, 
+$$
+\mathbb E_\pi(1_A|\mathcal F_n)=\mathbb E_\pi (1_A\circ\theta_n|\mathcal F_n)=\mathbb E_{X_n}1_A
+$$
+by strong Markov property. Now $LHS\rightarrow 1_A$ by Levy's 0-1 law. Meanwhile, when $X_n$ is irreducible, for any $y\in S$, $RHS=\mathbb E_y1_A$ i.o., so actually $\mathbb P_\pi (A)=0\ or\ 1$. So irreducible $\Rightarrow$ ergodic.
 
-   **Example** $\mathbb S=\{z\in\mathbb C: |z|=1\}$ with $\sigma$-algebra of uniform measure. Given $\theta\in\mathbb R$, $R_\theta (z)=ze^{i\theta\pi}$ is measure preserving.
+Notice $\mathcal I$, the invariant sets and $\mathcal T$, the tail events, aren't always the same, for example, when the chain is periodic. 
 
-   For $z\in\mathbb S$, $O_z:=\{R_\theta^n(z): n\geq 0\}$ orbit of $z$. 
+**Example** $\mathbb S=\{z\in\mathbb C: |z|=1\}$ with $\sigma$-algebra of uniform measure. Given $\theta\in\mathbb R$, $R_\theta (z)=ze^{i\theta\pi}$ is measure preserving.
 
-   When $\theta\in\mathbb Q$, $O_z$ is finite, hence for all $\epsilon>0$, $A_\epsilon:=\cup_{0\leq\alpha<\epsilon}O_{e^{i\alpha}}$ is invariant. We can pick $\epsilon$ small enough s.t. $A_\epsilon\neq \mathbb S$, so $\mathcal I$ is nontrivial.
+For $z\in\mathbb S$, $O_z:=\{R_\theta^n(z): n\geq 0\}$ orbit of $z$. 
 
-   When $\theta\notin \mathbb Q$, $O_z$ is dense, so any open interval interacts $O_z$, so $\mathcal I$ is trivial.
+When $\theta\in\mathbb Q$, $O_z$ is finite, hence for all $\epsilon>0$, $A_\epsilon:=\cup_{0\leq\alpha<\epsilon}O_{e^{i\alpha}}$ is invariant. We can pick $\epsilon$ small enough s.t. $A_\epsilon\neq \mathbb S$, so $\mathcal I$ is nontrivial.
 
-   ***Another proof from PTE*** consider on $[0,1)$, take $A\in \mathcal I$, and use Fourier expansion: $1_A=\sum_k c_k e^{i2\pi kx}$ in $L^2$​ convergence. Since the coefficient is unique, 
-   $$
-   1_A\circ R_\theta=\sum_k (c_ke^{2\pi ik\theta})e^{2\pi ikx}
-   $$
-   when $\theta$ is rational, only finite terms of $c_k$ need to be 0; otherwise every term should be 0, which indicates $1_A=0$ a.e.
+When $\theta\notin \mathbb Q$, $O_z$ is dense, so any open interval interacts $O_z$, so $\mathcal I$ is trivial.
 
-   Usually, ergodic system get arbitrary close to any point in the state space. (i.e., the orbits are dense.)
+***Another proof from PTE*** consider on $[0,1)$, take $A\in \mathcal I$, and use Fourier expansion: $1_A=\sum_k c_k e^{i2\pi kx}$ in $L^2$​ convergence. Since the coefficient is unique, 
+$$
+1_A\circ R_\theta=\sum_k (c_ke^{2\pi ik\theta})e^{2\pi ikx}
+$$
+when $\theta$ is rational, only finite terms of $c_k$ need to be 0; otherwise every term should be 0, which indicates $1_A=0$ a.e.
 
-   **Theorem Ergodic theorem** If $\varphi$ is measure preserving, and $X\in L^1(\mathbb P)$, then 
-   $$
-   \frac{1}{n}\sum_{k=0}^{n-1}X(\varphi^k\omega)\rightarrow\mathbb E[X|\mathcal I]
-   $$
-   a.s. and in $ L^1$.
+Usually, ergodic system get arbitrary close to any point in the state space. (i.e., the orbits are dense.)
 
-   In particular, the limit is just constant $\mathbb EX$ if $\mathcal I$ is trivial.
+**Theorem Ergodic theorem** If $\varphi$ is measure preserving, and $X\in L^1(\mathbb P)$, then 
+$$
+\frac{1}{n}\sum_{k=0}^{n-1}X(\varphi^k\omega)\rightarrow\mathbb E[X|\mathcal I]
+$$
+a.s. and in $ L^1$.
 
-   We rely on the following propositions.
+In particular, the limit is just constant $\mathbb EX$ if $\mathcal I$ is trivial.
 
-   **Proposition Maximal inequality for positive operators** Let $U:L^1\rightarrow L^1$ be the positive operator, and let $F_N:=\max\{f_n,1\leq n\leq N\}$, where $f_n=\sum_{k=0}^{n-1} U^k f$, then $\int_{F_N>0}fd\mathbb P\geq 0$.
+We rely on the following propositions.
 
-   We will apply this proposition to $U_\varphi$, where $U_\varphi f(\omega)=f(\varphi(\omega))$. Obviously $U\geq 0$ and $\int |Uf|d\mathbb P=\int|f(\varphi(\omega))|d\mathbb P=\int |f(\omega)|d\mathbb P$, so $\|U\|=1$.
+**Proposition Maximal inequality for positive operators** Let $U:L^1\rightarrow L^1$ be the positive operator, and let $F_N:=\max\{f_n,1\leq n\leq N\}$, where $f_n=\sum_{k=0}^{n-1} U^k f$, then $\int_{F_N>0}fd\mathbb P\geq 0$.
 
-   <font color='red'>_proof of Maximal Inequality for positive operators_</font> 
+We will apply this proposition to $U_\varphi$, where $U_\varphi f(\omega)=f(\varphi(\omega))$. Obviously $U\geq 0$ and $\int |Uf|d\mathbb P=\int|f(\varphi(\omega))|d\mathbb P=\int |f(\omega)|d\mathbb P$, so $\|U\|=1$.
 
-   For $0\leq n\leq N$, we have $UF_N^++f\geq Uf_n+f=f_{n+1}$. Since this hold for those $n$, $UF_N^++f\geq \max_{1\leq k\leq N}\{f_k\}=F_N$ So on $\{F_N>0\}$, $UF_N^++f\geq F_N^+$, and since $U$ is positive $UF_N^+\geq 0$, we have 
-   $$
-   \int_{F_N>0}fd\mathbb P\geq \int_{F_N>0}F_N^+-UF_N^+d\mathbb P\geq \int F_N^+-UF_N^+d\mathbb P=\|F_N^+\|_1-\|UF_N^+\|_1\geq 0
-   $$
-   <font color='red'>_proof of Ergodic theorem_</font> 
+<font color='red'>_proof of Maximal Inequality for positive operators_</font> 
 
-   First we prove convergence a.s.
+For $0\leq n\leq N$, we have $UF_N^++f\geq Uf_n+f=f_{n+1}$. Since this hold for those $n$, $UF_N^++f\geq \max_{1\leq k\leq N}\{f_k\}=F_N$ So on $\{F_N>0\}$, $UF_N^++f\geq F_N^+$, and since $U$ is positive $UF_N^+\geq 0$, we have 
+$$
+\int_{F_N>0}fd\mathbb P\geq \int_{F_N>0}F_N^+-UF_N^+d\mathbb P\geq \int F_N^+-UF_N^+d\mathbb P=\|F_N^+\|_1-\|UF_N^+\|_1\geq 0
+$$
+<font color='red'>_proof of Ergodic theorem_</font> 
 
-   Assume WLOG that $\mathbb E [X|\mathcal I]=0$. Let $S_n=\sum_{k=0}^{n-1} X(\phi^k \omega)$, we want to prove $\frac{1}{n} S_n\rightarrow 0$.
+First we prove convergence a.s.
 
-   Let $\epsilon>0$ , $\bar X=\limsup_{n\rightarrow\infty}\frac{S_n}{n}$, and $D_\epsilon=\{\bar X>\epsilon\}$. Since $\bar X(\phi\omega)=\bar X(\omega)$, $D_\epsilon\in\mathcal I$. 
+Assume WLOG that $\mathbb E [X|\mathcal I]=0$. Let $S_n=\sum_{k=0}^{n-1} X(\phi^k \omega)$, we want to prove $\frac{1}{n} S_n\rightarrow 0$.
 
-   Introduce $X^*=(X-\epsilon)1_{D_\epsilon}$, then $S_n^*=\sum_{k=0}^{n-1} X^*(\phi^k)$, $M_k^*=\max\{0,S_1^*,...,S_n^*\}$, $F_n=\{M_n^*>0\}$, $F=\cup F_n$. Then $\frac{S_n^*}{n}=(\frac{S_n}{n}-\epsilon)1_{D_\epsilon}$ and $F=\{\sup_{n} \frac{S_n^*}{n}>0\}$, so actually $F$ is just $D_\epsilon$.
+Let $\epsilon>0$ , $\bar X=\limsup_{n\rightarrow\infty}\frac{S_n}{n}$, and $D_\epsilon=\{\bar X>\epsilon\}$. Since $\bar X(\phi\omega)=\bar X(\omega)$, $D_\epsilon\in\mathcal I$. 
 
-   Apply the proposition for $f=X^*$, we have $\int_{F_n}X^*d\mathbb P\geq 0$. Take n to infinity, we have $\int_{D_\epsilon} X^* d\mathbb P\geq 0$.
+Introduce $X^*=(X-\epsilon)1_{D_\epsilon}$, then $S_n^*=\sum_{k=0}^{n-1} X^*(\phi^k)$, $M_k^*=\max\{0,S_1^*,...,S_n^*\}$, $F_n=\{M_n^*>0\}$, $F=\cup F_n$. Then $\frac{S_n^*}{n}=(\frac{S_n}{n}-\epsilon)1_{D_\epsilon}$ and $F=\{\sup_{n} \frac{S_n^*}{n}>0\}$, so actually $F$ is just $D_\epsilon$.
 
-   It follows that $0\leq \int_{D_\epsilon} X^*d\mathbb P=\int_{D_\epsilon}Xd\mathbb P-\epsilon\mathbb P(D_\epsilon)$. But $\int_{D_\epsilon} Xd\mathbb P=\mathbb E[\mathbb E[X|\mathbb I];D_\epsilon]=0$, so $\mathbb P(D_\epsilon)=0$. That is, $\bar X<\epsilon$ a.s.. Since $\epsilon$ is arbitrary, $\bar X\leq 0$. The same arguments indicate $\bar X\geq 0$. SO $\bar X=0$ a.s..
+Apply the proposition for $f=X^*$, we have $\int_{F_n}X^*d\mathbb P\geq 0$. Take n to infinity, we have $\int_{D_\epsilon} X^* d\mathbb P\geq 0$.
 
-   Next we prove convergence in $ L^1$. Pick $\epsilon>0,M>1$
-   $$
-   \mathbb E|\frac{1}{n}\sum_{k=0}^{n-1}X(\phi^k)|\leq \mathbb E|\frac{1}{n}\sum_{k=0}^{n-1}X(\phi^k)1_{|X(\phi^k)|\leq M}|+\mathbb E|\frac{1}{n}\sum_{k=0}^{n-1}X(\phi^k)1_{|X(\phi^k)|> M}|
-   $$
-   The first converges to 0 by convergence a.s. and DCT, so take $n_0$ s.t. $\forall n>n_0$ the first term  $\leq\epsilon/2$. For the second term, it $\leq \mathbb E X1_{X\geq M}$. Since $X\in L^1$, we cam take M s.t. it $\leq \epsilon/2$. So $LHS<\epsilon$ for large enough $n$. So it converges in $ L^1$.
+It follows that $0\leq \int_{D_\epsilon} X^*d\mathbb P=\int_{D_\epsilon}Xd\mathbb P-\epsilon\mathbb P(D_\epsilon)$. But $\int_{D_\epsilon} Xd\mathbb P=\mathbb E[\mathbb E[X|\mathbb I];D_\epsilon]=0$, so $\mathbb P(D_\epsilon)=0$. That is, $\bar X<\epsilon$ a.s.. Since $\epsilon$ is arbitrary, $\bar X\leq 0$. The same arguments indicate $\bar X\geq 0$. SO $\bar X=0$ a.s..
 
-   **Example** (from PTE) For i.i.d. sequence, since $\mathcal I$ is trivial, the theorem says $\frac{1}{n}\sum_{m=0}^{n-1} X_m\rightarrow \mathbb E X_0$ a.s. and in $ L^1$. This is just SLLN.
+Next we prove convergence in $ L^1$. Pick $\epsilon>0,M>1$
+$$
+\mathbb E|\frac{1}{n}\sum_{k=0}^{n-1}X(\phi^k)|\leq \mathbb E|\frac{1}{n}\sum_{k=0}^{n-1}X(\phi^k)1_{|X(\phi^k)|\leq M}|+\mathbb E|\frac{1}{n}\sum_{k=0}^{n-1}X(\phi^k)1_{|X(\phi^k)|> M}|
+$$
+The first converges to 0 by convergence a.s. and DCT, so take $n_0$ s.t. $\forall n>n_0$ the first term  $\leq\epsilon/2$. For the second term, it $\leq \mathbb E X1_{X\geq M}$. Since $X\in L^1$, we cam take M s.t. it $\leq \epsilon/2$. So $LHS<\epsilon$ for large enough $n$. So it converges in $ L^1$.
 
-   **Example** (from PTE) For a irreducible Markov chain on a countable state space $X_n$ with stationary distribution $\pi$, let f be a function with $\sum_x |f(x)|\pi(x)\leq\infty$, then since $\mathcal I$ is trivial, $\frac{1}{n} \sum_{m=0}^{n-1} f(X_m)\rightarrow\sum_x f(x)\pi(x)$ a.s. and in $ L^1$.
+**Example** (from PTE) For i.i.d. sequence, since $\mathcal I$ is trivial, the theorem says $\frac{1}{n}\sum_{m=0}^{n-1} X_m\rightarrow \mathbb E X_0$ a.s. and in $ L^1$. This is just SLLN.
 
-   **Recurrence**
+**Example** (from PTE) For a irreducible Markov chain on a countable state space $X_n$ with stationary distribution $\pi$, let f be a function with $\sum_x |f(x)|\pi(x)\leq\infty$, then since $\mathcal I$ is trivial, $\frac{1}{n} \sum_{m=0}^{n-1} f(X_m)\rightarrow\sum_x f(x)\pi(x)$ a.s. and in $ L^1$.
 
-   We will study the recurrence properties of stationary sequences. The settings are as before.
+**Recurrence**
 
-   Consider random walk on $\mathbb R^d$. let $S_n=X_1+...+X_n$ and $A=\{S_n\neq 0, \forall n\geq 1\}$, $R_n=\#\{S_1,...,S_n\}$. we wonder how often does $S_n$ come back to 0 and how much space does it visit.
+We will study the recurrence properties of stationary sequences. The settings are as before.
 
-   **Theorem** $\frac{R_n}{n}\rightarrow \mathbb E[1_A|\mathcal I]$.
+Consider random walk on $\mathbb R^d$. let $S_n=X_1+...+X_n$ and $A=\{S_n\neq 0, \forall n\geq 1\}$, $R_n=\#\{S_1,...,S_n\}$. we wonder how often does $S_n$ come back to 0 and how much space does it visit.
 
-   _Remark_ when $\mathcal I$ is trivial, $\frac{R_n}{n}\rightarrow \mathbb P(A)$.
+**Theorem** $\frac{R_n}{n}\rightarrow \mathbb E[1_A|\mathcal I]$.
 
-   <font color='red'>_proof_</font> we have $R_n\geq \sum_{m=1}^n 1_A(\phi^m\omega)$, since $\phi^m\omega\in A$ iff $S_n(\phi^m\omega)\neq 0 \forall k\geq 1$, but $S_n(\phi^m\omega)=S_{n+k}-S_k$, so actually RHS is $|\{m: 1\leq m\leq n, S_l\neq S_m\forall l>m\}|$. 
+_Remark_ when $\mathcal I$ is trivial, $\frac{R_n}{n}\rightarrow \mathbb P(A)$.
 
-   Use ergodic theorem, $\liminf_{n\rightarrow\infty} R_n/n\geq \mathbb E(1_A|\mathcal I)$.
+<font color='red'>_proof_</font> we have $R_n\geq \sum_{m=1}^n 1_A(\phi^m\omega)$, since $\phi^m\omega\in A$ iff $S_n(\phi^m\omega)\neq 0 \forall k\geq 1$, but $S_n(\phi^m\omega)=S_{n+k}-S_k$, so actually RHS is $|\{m: 1\leq m\leq n, S_l\neq S_m\forall l>m\}|$. 
 
-   To prove the opposite, Let $A_k=\{S_1\neq 0,...,S_k \neq 0\}$. Then $R_n\leq k+\sum_{m=1}^{n-k} 1_{A_k}(\phi^m\omega)$, since RHS is $k+|\{m:1\leq m\leq n-k, S_l\neq S_m \forall m\leq l\leq m+k \}|$.
+Use ergodic theorem, $\liminf_{n\rightarrow\infty} R_n/n\geq \mathbb E(1_A|\mathcal I)$.
 
-   Use ergodic theorem, $\limsup_{n\rightarrow\infty}R_n/n\leq \mathbb E(1_{A_k}|\mathcal I)$. Since as $k\uparrow\infty$, $A_k\downarrow A$, MCT for conditional expectation gives $\mathbb E(1_{A_k}|\mathcal I)\downarrow \mathbb E(1_A|\mathcal I)$. The proof is complete.
+To prove the opposite, Let $A_k=\{S_1\neq 0,...,S_k \neq 0\}$. Then $R_n\leq k+\sum_{m=1}^{n-k} 1_{A_k}(\phi^m\omega)$, since RHS is $k+|\{m:1\leq m\leq n-k, S_l\neq S_m \forall m\leq l\leq m+k \}|$.
 
-   **Theorem** Let $(X_i)$ be a stationary sequence taking values in $Z$ and $X_i\in L^1$. Let $A=\{S_1\neq 0, S_2\neq 0,... \}$.
+Use ergodic theorem, $\limsup_{n\rightarrow\infty}R_n/n\leq \mathbb E(1_{A_k}|\mathcal I)$. Since as $k\uparrow\infty$, $A_k\downarrow A$, MCT for conditional expectation gives $\mathbb E(1_{A_k}|\mathcal I)\downarrow \mathbb E(1_A|\mathcal I)$. The proof is complete.
 
-   (i) If $\mathbb E(X_1|\mathcal I)=0$ then $\mathbb P(A)=0$. 
+**Theorem** Let $(X_i)$ be a stationary sequence taking values in $Z$ and $X_i\in L^1$. Let $A=\{S_1\neq 0, S_2\neq 0,... \}$.
 
-   (ii) if $\mathbb P(A)=0$, then $\mathbb P(S_n=0 i.o.)=1$. 
+(i) If $\mathbb E(X_1|\mathcal I)=0$ then $\mathbb P(A)=0$. 
 
-   (mean zero implies recurrence.)
+(ii) if $\mathbb P(A)=0$, then $\mathbb P(S_n=0 i.o.)=1$. 
 
-   <font color='red'>_proof_</font> (i) If $\mathbb E(X_1|\mathcal I)=0$ then the ergodic theorem implies $S_n/n\rightarrow 0$ a.s..
+(mean zero implies recurrence.)
 
-   Now for any $K$, 
-   $$
-   \limsup_{n\rightarrow\infty}(\max_{1\leq k\leq n}|S_k|/n)=\limsup_{n\rightarrow\infty}(\max_{K\leq k\leq n}|S_k|/n)\leq (\max_{k\geq K}|S_k|/k)
-   $$
-   Since as $K\uparrow\infty$, $RHS\downarrow 0$, we have $\lim_{n\rightarrow\infty}\max_{1\leq k\leq n}|S_k|/n=0$.
+<font color='red'>_proof_</font> (i) If $\mathbb E(X_1|\mathcal I)=0$ then the ergodic theorem implies $S_n/n\rightarrow 0$ a.s..
 
-   Since $X_n\in \mathbb Z$, $R_n\leq 1+2\max_{1\leq k\leq n}|S_k|$, so $R_n/n\rightarrow 0$. a.s., so $\mathbb E[1_A|\mathcal I]=0$, so $\mathbb P(A)=0$.
+Now for any $K$, 
+$$
+\limsup_{n\rightarrow\infty}(\max_{1\leq k\leq n}|S_k|/n)=\limsup_{n\rightarrow\infty}(\max_{K\leq k\leq n}|S_k|/n)\leq (\max_{k\geq K}|S_k|/k)
+$$
+Since as $K\uparrow\infty$, $RHS\downarrow 0$, we have $\lim_{n\rightarrow\infty}\max_{1\leq k\leq n}|S_k|/n=0$.
 
-   (ii) Let $F_j=\{S_i\neq 0\ \forall 1\leq i<j, S_j=0 \}$ and $G_{j,k}=\{S_{j+i}-S_j\neq 0\ \forall 1\leq i<k, S_{j+k}-S_j=0 \}$. Notice $F_k$ are disjoint and since $\mathbb P(A)=0$, $\sum \mathbb P(F_k)=1$. Moreover, stationarity implies $\mathbb P(G_{j,k})=\mathbb P(F_k)$, and for fixed $j$, $G_{j,k}$ are disjoint, so actually $\cup_k G_{j,k}=\Omega$ a.s..
+Since $X_n\in \mathbb Z$, $R_n\leq 1+2\max_{1\leq k\leq n}|S_k|$, so $R_n/n\rightarrow 0$. a.s., so $\mathbb E[1_A|\mathcal I]=0$, so $\mathbb P(A)=0$.
 
-   It follows that $\sum_k \mathbb P(F_j\cap G_{j,k})=\mathbb P(F_j)$ and $\sum_{j,k} \mathbb P(F_j\cap G_{j,k})=1$. Notice $F_j\cap G_{j,k}$implies $S_j=S_{j+k}=0$, i.e., $\mathbb P(S_n=0 \text{ for at least 2 times})=1$. 
+(ii) Let $F_j=\{S_i\neq 0\ \forall 1\leq i<j, S_j=0 \}$ and $G_{j,k}=\{S_{j+i}-S_j\neq 0\ \forall 1\leq i<k, S_{j+k}-S_j=0 \}$. Notice $F_k$ are disjoint and since $\mathbb P(A)=0$, $\sum \mathbb P(F_k)=1$. Moreover, stationarity implies $\mathbb P(G_{j,k})=\mathbb P(F_k)$, and for fixed $j$, $G_{j,k}$ are disjoint, so actually $\cup_k G_{j,k}=\Omega$ a.s..
 
-   Introduce $G_{j,k_1,...,k_l}$ in the similar fashion, we can conclude $\mathbb P(S_n=0\text{ for at least }l\text{ times})=1$, so the proof is complete.
+It follows that $\sum_k \mathbb P(F_j\cap G_{j,k})=\mathbb P(F_j)$ and $\sum_{j,k} \mathbb P(F_j\cap G_{j,k})=1$. Notice $F_j\cap G_{j,k}$implies $S_j=S_{j+k}=0$, i.e., $\mathbb P(S_n=0 \text{ for at least 2 times})=1$. 
 
-   **Theorem** (From PTE) If $(X_i)$ is a stationary sequence, $A\in\mathcal S$, $\mathbb P(X_n\in A \text{ at least once})=1$, then under $\mathbb P(\cdot |X_0\in A)$, $t_n=T_n-T_{n-1}$ is a stationary sequence with $\mathbb E(T_1|X_0\in A)=1/\mathbb P(X_0\in A)$.  $T_n$ is $n$th visit time to $A$.
+Introduce $G_{j,k_1,...,k_l}$ in the similar fashion, we can conclude $\mathbb P(S_n=0\text{ for at least }l\text{ times})=1$, so the proof is complete.
 
-   _Remark_ For a Markov chain defined on countable state space with a stationary distribution, we pick $A=\{x\}$, the theorem just says $\mathbb E_xT_x=1/\pi (x)$. This theorem drops Markov assumption and extend it to an arbitrary set $A$.
+**Theorem** (From PTE) If $(X_i)$ is a stationary sequence, $A\in\mathcal S$, $\mathbb P(X_n\in A \text{ at least once})=1$, then under $\mathbb P(\cdot |X_0\in A)$, $t_n=T_n-T_{n-1}$ is a stationary sequence with $\mathbb E(T_1|X_0\in A)=1/\mathbb P(X_0\in A)$.  $T_n$ is $n$th visit time to $A$.
 
-   <font color='red'>_proof_</font> (i) $t_i$ is stationary under the conditional measure: Actually it suffices to show $\mathbb P(t_1=m,t_2=n|X_0\in A)=\mathbb P(t_2=m,t_3=n|X_0\in A)$, then use similar argument for  any finite-dim case.
+_Remark_ For a Markov chain defined on countable state space with a stationary distribution, we pick $A=\{x\}$, the theorem just says $\mathbb E_xT_x=1/\pi (x)$. This theorem drops Markov assumption and extend it to an arbitrary set $A$.
 
-   Our first step is to extend $(X_n)_{n\geq 0}$ to $(X_n)_{n\in\mathbb Z}$ using shift operator. Then let $C_k=\{X_{-1}\notin A,...,X_{-k+1}\notin A, X_{-k}\in A\}$, we have $(\cup_{k=1}^K C_k)^c=\{X_k\notin A\ \forall -K\leq k\leq -1 \}$, and $\mathbb P(RHS)=\mathbb P(X_k\notin A\forall 1\leq k\leq K)$. Let $K\rightarrow\infty$, since $X_n$ must visit $A$ a.s., the prob. at right hand tends to 0, so $\mathbb P(\cup_{k=1}^\infty C_k)=1$. And 
-   $$
-   \mathbb P(t_2=m,t_3=n, X_0\in A)=\sum_{l=1}^\infty \mathbb P(X_0\in A, t_1=l, t_2=m, t_3=n)
-   \\=\sum_{l=1}^\infty \mathbb P(C_l,X_0\in A, t_1=m, t_2=n)=\mathbb P(X_0\in A, t_1=m, t_2=n)
-   $$
-   i.e., move visit time (0,l,l+m,l+m+n) to (-l,0,m,m+n).
+<font color='red'>_proof_</font> (i) $t_i$ is stationary under the conditional measure: Actually it suffices to show $\mathbb P(t_1=m,t_2=n|X_0\in A)=\mathbb P(t_2=m,t_3=n|X_0\in A)$, then use similar argument for  any finite-dim case.
 
-   (ii) compute
-   $$
-   \mathbb E(t_1|X_0\in A)=\sum_{k=1}^\infty\mathbb P(t_1\geq k|X_0\in A)=\mathbb P(X_0\in A)^{-1}\sum_{k=1}^\infty \mathbb P(t_1\geq k,X_0\in A)
-   \\=\mathbb P(X_0\in A)^{-1}\sum_{k=1}^\infty \mathbb P(C_k)=1/\mathbb P(X_0\in A)
-   $$
-   It's useful to introduce subadditive ergodic theorems.
+Our first step is to extend $(X_n)_{n\geq 0}$ to $(X_n)_{n\in\mathbb Z}$ using shift operator. Then let $C_k=\{X_{-1}\notin A,...,X_{-k+1}\notin A, X_{-k}\in A\}$, we have $(\cup_{k=1}^K C_k)^c=\{X_k\notin A\ \forall -K\leq k\leq -1 \}$, and $\mathbb P(RHS)=\mathbb P(X_k\notin A\forall 1\leq k\leq K)$. Let $K\rightarrow\infty$, since $X_n$ must visit $A$ a.s., the prob. at right hand tends to 0, so $\mathbb P(\cup_{k=1}^\infty C_k)=1$. And 
+$$
+\mathbb P(t_2=m,t_3=n, X_0\in A)=\sum_{l=1}^\infty \mathbb P(X_0\in A, t_1=l, t_2=m, t_3=n)
+\\=\sum_{l=1}^\infty \mathbb P(C_l,X_0\in A, t_1=m, t_2=n)=\mathbb P(X_0\in A, t_1=m, t_2=n)
+$$
+i.e., move visit time (0,l,l+m,l+m+n) to (-l,0,m,m+n).
 
-   **Theorem subadditive ergodic theorem** Suppose $X_{m,n},0\leq m<n$ satisfy:
+(ii) compute
+$$
+\mathbb E(t_1|X_0\in A)=\sum_{k=1}^\infty\mathbb P(t_1\geq k|X_0\in A)=\mathbb P(X_0\in A)^{-1}\sum_{k=1}^\infty \mathbb P(t_1\geq k,X_0\in A)
+\\=\mathbb P(X_0\in A)^{-1}\sum_{k=1}^\infty \mathbb P(C_k)=1/\mathbb P(X_0\in A)
+$$
+It's useful to introduce subadditive ergodic theorems.
 
-   (i) $X_{0,m}+X_{m,n}\geq X_{0,n}$
+**Theorem subadditive ergodic theorem** Suppose $X_{m,n},0\leq m<n$ satisfy:
 
-   (ii) $\{X_{nk,(n+1)k},n\geq 1\}$ is a stationary sequence for each k.
+(i) $X_{0,m}+X_{m,n}\geq X_{0,n}$
 
-   (iii) The distribution of $\{X_{m,m+k},k\geq 1\}$ doesn't depend on m.
+(ii) $\{X_{nk,(n+1)k},n\geq 1\}$ is a stationary sequence for each k.
 
-   (iv) $\mathbb E X_{0,1}^+<\infty$ and for each $n$, $\mathbb E X_{0,n}\geq \gamma_0 n$, where $\gamma_0>-\infty$.
+(iii) The distribution of $\{X_{m,m+k},k\geq 1\}$ doesn't depend on m.
 
-   Then 
+(iv) $\mathbb E X_{0,1}^+<\infty$ and for each $n$, $\mathbb E X_{0,n}\geq \gamma_0 n$, where $\gamma_0>-\infty$.
 
-   (a) $\lim_{n\rightarrow\infty} \mathbb E X_{0,n}/n=\inf_m \mathbb E X_{0,m}/m=\gamma$
+Then 
 
-   (b) $X=\lim_{n\rightarrow\infty} X_{0,n}/n$ exists a.s. and in $ L^1$, so $\mathbb E X=\gamma$.
+(a) $\lim_{n\rightarrow\infty} \mathbb E X_{0,n}/n=\inf_m \mathbb E X_{0,m}/m=\gamma$
 
-   (c) If all the stationary sequence in (ii) are ergodic then $X=\gamma$ a.s.
+(b) $X=\lim_{n\rightarrow\infty} X_{0,n}/n$ exists a.s. and in $ L^1$, so $\mathbb E X=\gamma$.
 
-   **Example** to show a concrete example, consider the range of r.w. Suppose $\xi_1,\xi_2,...$ is a stationary sequence and let $S_n=\xi_1+...+\xi_n$. Let $X_{m,n}=|\{S_{m+1},...,S_n\}|$. It's clear that $X_{0,m}+X_{m,n}\geq X_{0,n}$. Moreover, $0\leq X_{0,n}\leq n$, so (iv) holds. the theorem says there is a limit distribution though we don't know what it is.
+(c) If all the stationary sequence in (ii) are ergodic then $X=\gamma$ a.s.
 
-   **Example Random permutations and integer partitions** Let $n\in \mathbb N^*$, a partition of $n$ is a nonincreasing sequence $(\lambda_1,...,\lambda_l)$ s.t. $\sum \lambda_i=n$. In this case, we say $\lambda$ partitions $n$ and has length $l$. This can be represented by a Young diagram. A Young tableau is a filling of Young diagram by number $1,2,...,n$ s.t. rows and columns increase. Let $f_\lambda$ be the number of Young tableau with shape $\lambda$, i.e., ways to fill in Young diagram. 
+**Example** to show a concrete example, consider the range of r.w. Suppose $\xi_1,\xi_2,...$ is a stationary sequence and let $S_n=\xi_1+...+\xi_n$. Let $X_{m,n}=|\{S_{m+1},...,S_n\}|$. It's clear that $X_{0,m}+X_{m,n}\geq X_{0,n}$. Moreover, $0\leq X_{0,n}\leq n$, so (iv) holds. the theorem says there is a limit distribution though we don't know what it is.
 
-   > [!NOTE]
-   >
-   > **Robinson–Schensted correspondence** $S_n\leftrightarrow \{(P,Q):\text{P and Q are two standard Young tableau with same shape}\}$.
-   >
-   > To explain this, we introduce RSK algorithm for inserting a number into a Young tableau:
-   >
-   > Suppose S is a Young tableau, to insert $x$ into $S$, operate as follows:
-   >
-   > 1. start from the first row.
-   > 2. In the current row, find the minimal $y$ which is larger than $x$.
-   > 3. If found, replace $y$ by $x$, and insert $y$ to the next row.
-   > 4. If not found, place $x$ to the end of this row and exit.
-   >
-   > It's easy to examine this algorithm preserves a Young tableau.
-   >
-   > Moreover, if we create another tableau simultaneously by filling n at the place where a new box is created, then this also gives a Young tableau, since we only add boxes at the end of a row. 
-   >
-   > For a permutation $\sigma\in S_n$, we say $\sigma(1)\sigma(2)...\sigma(n)$ is a word. Insert this word into a Young tableau by RSK algorithm, we have P the insertion and Q the recording. So $S_n\rightarrow (P,Q)$ is well-defined. Meanwhile, this procedure can be reversed. So the map is a bijection. 
+**Example Random permutations and integer partitions** Let $n\in \mathbb N^*$, a partition of $n$ is a nonincreasing sequence $(\lambda_1,...,\lambda_l)$ s.t. $\sum \lambda_i=n$. In this case, we say $\lambda$ partitions $n$ and has length $l$. This can be represented by a Young diagram. A Young tableau is a filling of Young diagram by number $1,2,...,n$ s.t. rows and columns increase. Let $f_\lambda$ be the number of Young tableau with shape $\lambda$, i.e., ways to fill in Young diagram. 
 
-   The **Plancherel measure** is the pushforward of the uniform measure on $S_n$ to the set of partitions of n, given by $\mathbb P(\lambda)=\frac{1}{Z} f_\lambda^2$, with $Z=\sum_{\lambda \text{ partitions of n }} f_\lambda^2=|S_n|=n!$ by the bijection. 
+> [!NOTE]
+>
+> **Robinson–Schensted correspondence** $S_n\leftrightarrow \{(P,Q):\text{P and Q are two standard Young tableau with same shape}\}$.
+>
+> To explain this, we introduce RSK algorithm for inserting a number into a Young tableau:
+>
+> Suppose S is a Young tableau, to insert $x$ into $S$, operate as follows:
+>
+> 1. start from the first row.
+> 2. In the current row, find the minimal $y$ which is larger than $x$.
+> 3. If found, replace $y$ by $x$, and insert $y$ to the next row.
+> 4. If not found, place $x$ to the end of this row and exit.
+>
+> It's easy to examine this algorithm preserves a Young tableau.
+>
+> Moreover, if we create another tableau simultaneously by filling n at the place where a new box is created, then this also gives a Young tableau, since we only add boxes at the end of a row. 
+>
+> For a permutation $\sigma\in S_n$, we say $\sigma(1)\sigma(2)...\sigma(n)$ is a word. Insert this word into a Young tableau by RSK algorithm, we have P the insertion and Q the recording. So $S_n\rightarrow (P,Q)$ is well-defined. Meanwhile, this procedure can be reversed. So the map is a bijection. 
 
-   The length of the first row is the length of the longest increasing subsequence of $\sigma(1)...\sigma(n)$, call it $L_n$ and give it measure induced by Plancherel measure. 
+The **Plancherel measure** is the pushforward of the uniform measure on $S_n$ to the set of partitions of n, given by $\mathbb P(\lambda)=\frac{1}{Z} f_\lambda^2$, with $Z=\sum_{\lambda \text{ partitions of n }} f_\lambda^2=|S_n|=n!$ by the bijection. 
 
-   **Proposition** $\frac{L_n}{\sqrt{n}}\rightarrow_d c$.
+The length of the first row is the length of the longest increasing subsequence of $\sigma(1)...\sigma(n)$, call it $L_n$ and give it measure induced by Plancherel measure. 
 
-   <font color='red'>_proof_</font> The idea is to sample $L_n$ using a Poisson point process with intensity Lebesgue measure on $\mathbb R^2$. 
+**Proposition** $\frac{L_n}{\sqrt{n}}\rightarrow_d c$.
 
-   Define $\tau(n)=\inf\{x>0: [0,x]^2 \text{ contains exactly n points}\}$. We can label the points $(x_j,y_j)$ in $[0,\tau(n)]^2$ s.t. $x_i\uparrow$. Then there is a unique permutation $\pi$ s.t. $y_{\pi(n)}\uparrow$. Then $\pi(n)$  has uniform distribution. 
+<font color='red'>_proof_</font> The idea is to sample $L_n$ using a Poisson point process with intensity Lebesgue measure on $\mathbb R^2$. 
 
-   Notice an increasing subsequence of $\pi(n)$ corresponds to an increasing path on $\mathbb R^2$. Now let $Y_{s,t}$ be the number of increasing paths in the rectangle $[s,t]^2$, then $-Y_{s,t}$ satisfy (i) in the subadditive ergodic thm. (ii) is also satisfied by the independence. By transition invariance of Poisson point process, (iii) is satisfied. actually ,(iv) is also satisfied trivially. So by the subadditive ergodic thm, $\lim_{n\rightarrow\infty}\frac{Y_{0,n}}{n}\rightarrow r$ for some $r\in\mathbb R\cup\{\infty\}$.
+Define $\tau(n)=\inf\{x>0: [0,x]^2 \text{ contains exactly n points}\}$. We can label the points $(x_j,y_j)$ in $[0,\tau(n)]^2$ s.t. $x_i\uparrow$. Then there is a unique permutation $\pi$ s.t. $y_{\pi(n)}\uparrow$. Then $\pi(n)$  has uniform distribution. 
 
-   On the other hand, we consider $\tau(n)$:
+Notice an increasing subsequence of $\pi(n)$ corresponds to an increasing path on $\mathbb R^2$. Now let $Y_{s,t}$ be the number of increasing paths in the rectangle $[s,t]^2$, then $-Y_{s,t}$ satisfy (i) in the subadditive ergodic thm. (ii) is also satisfied by the independence. By transition invariance of Poisson point process, (iii) is satisfied. actually ,(iv) is also satisfied trivially. So by the subadditive ergodic thm, $\lim_{n\rightarrow\infty}\frac{Y_{0,n}}{n}\rightarrow r$ for some $r\in\mathbb R\cup\{\infty\}$.
 
-   **Lemma** $\frac{\tau(n)}{\sqrt{n}}\rightarrow 1$ a.s.
+On the other hand, we consider $\tau(n)$:
 
-   <font color='red'>_proof_</font> Let $S_n$ be the number of points in $[0,\sqrt{n}]^2$. Then $S_n-S_{n-1}$ are independent Poisson r.v. with mean 1, so SLLN shows $S_n/n\rightarrow 1$ a.s.. Then if $\epsilon>0$ then for large $n$, $S_{n(1-\epsilon)}<n<S_{n(1+\epsilon)}$, and siv=nce $\tau$ is an increasing function, $\sqrt{(1-\epsilon)n}\leq \tau(n)\leq \sqrt{(1+\epsilon)n}$. So $\tau(n)/\sqrt{n}\rightarrow 1$ a.s.
+**Lemma** $\frac{\tau(n)}{\sqrt{n}}\rightarrow 1$ a.s.
 
-   So $\frac{L_n}{\sqrt{n}}=\frac{Y_{0,\tau(n)}}{\tau(n)} \frac{\tau(n)}{\sqrt{n}}\rightarrow r\cdot 1$. a.s. 
+<font color='red'>_proof_</font> Let $S_n$ be the number of points in $[0,\sqrt{n}]^2$. Then $S_n-S_{n-1}$ are independent Poisson r.v. with mean 1, so SLLN shows $S_n/n\rightarrow 1$ a.s.. Then if $\epsilon>0$ then for large $n$, $S_{n(1-\epsilon)}<n<S_{n(1+\epsilon)}$, and siv=nce $\tau$ is an increasing function, $\sqrt{(1-\epsilon)n}\leq \tau(n)\leq \sqrt{(1+\epsilon)n}$. So $\tau(n)/\sqrt{n}\rightarrow 1$ a.s.
 
-   Actually, we have constructed a coupling of all uniform measure on $S_n$ and PPP.
+So $\frac{L_n}{\sqrt{n}}=\frac{Y_{0,\tau(n)}}{\tau(n)} \frac{\tau(n)}{\sqrt{n}}\rightarrow r\cdot 1$. a.s. 
 
-   #### 4. Brownian motion
+Actually, we have constructed a coupling of all uniform measure on $S_n$ and PPP.
 
-   ***Definition*** A standard Brownian Motion is a probability measure on $C^0(\mathbb R_+,\mathbb R)$ s.t. paths $(B_t)_{t\geq 0}$ satisfy:
-
-   (i) $B_0=0$ a.s.
-
-   (ii) (stationary increments) $\forall t,s\geq 0$, $B_{t+s}-B_t\sim\mathcal N(0,t-s)$.
-
-   (iii) (independent increments) $\forall t_1<s_1<t_2<s_2$, $B_{s_2}-B_{s_1}$ is independent of $B_{s_1}-B_{t_1}$.
-
-   (iv) (From PTE) $t\rightarrow B_t$ is continuous a.s..
-
-   Naturally we care about its existence. Now we give a claim:
-
-   **Theorem** standard Brownian motion exists and is unique. 
-
-   As for the detail of construction, I don't think more space should be occupied. Refer [Proswit](https://www.proswit.com/levyConstruction) to the construction of Levy.

@@ -12,7 +12,12 @@ Now we begin our step to define a stochastic integration.
 
    <font color='red'> **Define**</font> when $n=1$ the integral 
    $$
-   Z_t=\int_0^t H_s dB_s=\left\{\begin{align}&0,&t<t_0\\&c_1(B_t-B_{t_0}),&t_0\leq t<t_1\\&c_1(B_{t_1}-B_{t_0}),&t>t_1\end{align}\right.
+   Z_t=\int_0^t H_s\,dB_s=
+   \begin{cases}
+   0, & t<t_0,\\
+   c_1(B_t-B_{t_0}), & t_0\le t<t_1,\\
+   c_1(B_{t_1}-B_{t_0}), & t\ge t_1.
+   \end{cases}
    $$
    when $n>1$ the integral is the linear combination of cases for $n=1$. This is well-defined.
 
@@ -62,14 +67,14 @@ Now we begin our step to define a stochastic integration.
    $$
    E [ c_i \Delta W_i \mid \mathcal{F}_s ] = E \Big[ E [ c_i \Delta W_i \mid \mathcal{F}_{t_i} ] \ \Big| \ \mathcal{F}_s \Big]=E\Big[ c_i \cdot E[\Delta W_i|\mathcal F_{t_i}]\Big|\mathcal F_s\Big] =  0
    $$
-   So $E[Z_t \mid \mathcal F_s] = Z_s $ 
+   So $E[Z_t \mid \mathcal F_s] = Z_s$ 
 
    (ii) Prove $Z_t^2 - \langle Z \rangle_t$ is a Martingale
 
-   We need to show that $ E[Z_t^2 - \langle Z \rangle_t \mid \mathcal{F}_s] = Z_s^2 - \langle Z \rangle_s $.
-   By rearranging terms, this is mathematically equivalent to proving: $ E[Z_t^2 - Z_s^2 \mid \mathcal{F}_s] = E[\langle Z \rangle_t - \langle Z \rangle_s \mid \mathcal{F}_s] $
+   We need to show that $E[Z_t^2 - \langle Z \rangle_t \mid \mathcal{F}_s] = Z_s^2 - \langle Z \rangle_s$.
+   By rearranging terms, this is mathematically equivalent to proving: $E[Z_t^2 - Z_s^2 \mid \mathcal{F}_s] = E[\langle Z \rangle_t - \langle Z \rangle_s \mid \mathcal{F}_s]$
 
-   LHS: Since $ Z_t^2 = \Big( Z_s + (Z_t - Z_s) \Big)^2 = Z_s^2 + 2Z_s(Z_t - Z_s) + (Z_t - Z_s)^2 $
+   LHS: Since $Z_t^2 = \Big( Z_s + (Z_t - Z_s) \Big)^2 = Z_s^2 + 2Z_s(Z_t - Z_s) + (Z_t - Z_s)^2$
 
    Now, subtract $Z_s^2$ from both sides, and take the conditional expectation given $\mathcal{F}_s$:
    $$ E[Z_t^2 - Z_s^2 \mid \mathcal{F}_s] = E \Big[ 2Z_s(Z_t - Z_s) + (Z_t - Z_s)^2 \mid \mathcal{F}_s \Big] $$
@@ -338,3 +343,11 @@ Now we begin our step to define a stochastic integration.
    * If $a\leq 1/4$, then $T_x<T_y$ a.s. for all $x,y$.
 
    <font color='red'>_proof_</font> Suppose $0<x_1<x<x_2<\infty$, and let $\sigma=\inf\{t:X_t^x\in\{x_1,x_2\}\}$, i.e., the first hitting time of $x_1$ or $x_2$. Let $\phi(x)=\phi(x;x_1,x_2)=\mathbb P(X_\sigma^x=x_2)$, i.e. the probability of hitting $x_2$ first. Note that $\phi(X_{t\wedge\sigma}^x)=\mathbb E[\phi(X_\sigma^x)|\mathcal F_t]$ 
+
+
+
+### Class 3 Introduction to SLE and basic knowledge
+
+This part refers to Miller's notes at [Schramm-Loewner Evolutions](http://www.statslab.cam.ac.uk/~jpm205/teaching/lent2019/sle_notes.pdf) .
+
+1. Introduction 
