@@ -188,7 +188,7 @@ By reflection principle, $\mathbb P(\sup_{0<s\leq t}X_s>a)=2\mathbb P(X_t>a)\rig
 
 By Markov property, any $T_n<\infty$ a.s. This indicates (i).
 
-(ii) Set $p_0(x)=\mathbb P(X_t=0\ \exists\ t>0)$ and for $\epsilon>0$, $p_\epsilon(x)=\mathbb P(|X_t|<\epsilon\ \exists\ t>0)$.
+(ii) Set $p_0(x)=\mathbb P_x(X_t=0\ \exists\ t>0)$ and for $\epsilon>0$, $p_\epsilon(x)=\mathbb P_x(|X_t|<\epsilon\ \exists\ t>0)$.
 
 Let $0<a<b$ and fix a function in $C^2(\mathbb R^2)$ s.t. $f(x)=\ln(|x|)$ in a neighborhood of annulus $\{a<R<b\}$, we have $\Delta f=0$.
 
@@ -204,4 +204,100 @@ So
 $$
 \mathbb P(T_a<T_b)=\frac{\ln |x|-\ln b}{\ln a-\ln b}\rightarrow 0(a\rightarrow 0)
 $$
-So the prob. of twice visit to 0 is 0.
+So $\mathbb P_x(X_t\text{ visits 0 for some t})=0$ for $x\neq 0$.
+
+To extend the result to $x=0$, by Markov property, for all $n>0$, 
+$$
+\mathbb P_0(X_t=0\text{ for some }t>\frac{1}{n})=\int_{\mathbb R^2}p_{1/n}(0,y)\mathbb P(X_t=0\text{ for some }t)=0
+$$
+To prove $X_t$ visits the ball $B(0,a)$ for arbitrary small $a>0$, take $b\rightarrow \infty$, we can get $\mathbb P(T_a<\infty)= 1$, so $\mathbb P(X_t\text{ visits }B(0,a))=1\ \forall a>0$. By Markov property, $\forall n\in\mathbb N$, $\mathbb P(X_t\text{ visits }B(0,a)\text{ when }t\geq n)=1$.
+
+(iii)For $d=3$, we want to show $|X_t|\rightarrow \infty$ as $t\rightarrow\infty$ a.s.. And it suffices to show that for all $N\geq 1$, $\mathbb P(\{ t\geq 0, |X_t|\leq N\}\text{ is bounded})=1$. 
+
+In this case, we use the harmonic function $f(x)=|x|^{2-d}$. Again, consider $T_a=\inf\{t\geq 0, |X_t|=a\}$ the hitting time of $a\mathbb S^{d-1}$. $|X_{t\wedge T_a\wedge T_b}|^{2-d}$ is a martingale. By optional stopping theorem, we have $\mathbb P(T_a<T_b)=\frac{|x|^{2-d}-b^{2-d}}{a^{2-d}-b^{2-d}}$. Let $b\rightarrow\infty$, we have $\mathbb P(T_a<\infty)=|x|^{2-d}/a^{2-d}$
+
+Let $N\geq 1$, define stopping times $T_0=1$, $S_k=\inf\{t\geq T_{k-1}, |X_t|=N+1 \}$, and $T_k=\inf\{t\geq S_{k},|X_t|=N \}$. 
+
+By strong Markov property we have
+$$
+\mathbb P(T_k<\infty|\mathcal F_{S_k})=\mathbb P_{X_{S_k}}(T_N<\infty)=(\frac{N}{N+1})^{2-d}
+$$
+So we have (Notice if $S_k=\infty$ the conditional prob. $\mathbb P(T_k<\infty|\mathcal F_{S_k}))=0$.)
+$$
+\mathbb P(T_k<\infty)=\mathbb E[1_{S_k<\infty}\mathbb P(T_k<\infty|\mathcal F_{S_k})]=\mathbb P(S_k<\infty)(\frac{N}{N+1})^{2-d}\leq \mathbb P(T_{k-1}<\infty)(\frac{N}{N+1})^{2-d}\leq c(\frac{N}{N+1})^{k(2-d)}
+$$
+By Borel Cantelli lemma, there are only finite many finite $T_k$. Suppose $k_0$ is the maximal, then for all $t>T_{k_0}$, we have $|X_t|>N$, which completed our proof.
+
+> [!NOTE]
+>
+> The functions $\Phi(x)=-\frac{1}{2\pi}\ln|x|$, $d=2$ or $\Phi(x)=\frac{1}{n(n-2)|\mathbb B(0,1)|}|x|^{2-d}$, $d\geq 3$ are called fundamental solutions of Laplacian equation $\Delta u=0$ on $\mathbb R^d- \{0\}$. 
+>
+> If we view this function on $\mathbb R^d$, for all $f\in C_c^\infty (\mathbb R^d)$ ($_c$ implies supported on a compact set), we have $\int_{\mathbb R^d} \Delta f(y)u(x-y)dy=f(x)$. 
+>
+> So formally we can write $-\Delta\Phi=\delta_0$, where $\delta_0$ is a cts linear functional $\delta_0(f)=f(0)$. Then $\int_{\mathbb R^d}-\Delta\Phi(x-y)f(y)dy=\int_{\mathbb R^n}\delta_x f(y)dy=f(x)$. This is called Dirac mass of 0.
+
+**Brownian motion and the Dirichlet Problem** 
+
+Let $D$ be an open, connected, nonempty, bounded set in $\mathbb R^d$. Let $c: D\rightarrow\mathbb R_+$ and $f:\partial D\rightarrow\mathbb R_+$ be cts functions. 
+
+Define the cost function $p(x)=\mathbb E_x[\int_0^T c(X_t)dt+f(X_T)\mathbb 1_{T<\infty}]$ where $T=\inf\{t\geq 0, X_t\notin D \}$.
+
+The Dirichlet problem is 
+$$
+\left\{\begin{aligned}-\frac{1}{2}\Delta\Psi&=c\ \text{in}\ D\\\Psi&=f\ \text{on}\ \partial D\end{aligned}\right.
+$$
+For some unknown function $\Psi:\overline{\mathbb D}\rightarrow\mathbb R$, call $\Psi$ is a solution if it satisfies the system or a super solution if it satisfies the system where two $=$ are replaced by $\geq$.
+
+**Theorem** Under the above condition and if $c$ has a $C_b^2(\mathbb R^d)$ extension to $\mathbb R^d$, the cost function is the unique solution to the Dirichlet problem.
+
+> [!NOTE]
+>
+> To prove this, we need some preliminaries on harmonic functions.
+>
+> **Proposition Sphere Average Property** suppose that $u: D\rightarrow\mathbb R$ is such that $u(x)=\int_{\mathbb S(x,\rho)} u(y)d\sigma_{x,\rho}(y)$ for all $x\in D,\rho\geq 0$ s.t. $\overline{\mathbb B(x,\rho)}\subset D$. Then $\Delta u=0$.
+>
+> <font color='red'>_proof_</font> By the sphere average property, we can differentiate this inside the integral sign to  know actually $u$ is smooth.
+>
+> $\forall\rho>0$ small enough, use Taylor expansion, 
+> $$
+> u(x+\rho v)=u(x)+\rho \nabla u(x)\cdot v+\frac{\rho^2}{2}v^THu(x)v+o(\rho^2)
+> $$
+> Now integrate over $v\in\mathbb S^{d-1}$, by symmetric $\int\rho\nabla u(x)=0$. And since Hessian matrix is symmetric, we can diagonalize it to $\text{diag}\{\Delta u \}$by orthogonal matrix which preserves $\sigma$. Finally use the sphere average property, we have $\rho^2/2\Delta u+o(\rho^2)=0$. This indicates $\Delta u=0$.
+>
+> The inverse can be attained by direct calculation.
+>
+> **Proposition Maximum Module Principle** Suppose $u$ is harmonic on $D$ and not constant. Let $M:=\max_{x\in D} u(x)$, then $S:=\{x\in D:u(x)=M\}$ must be empty.
+>
+> <font color='red'>_proof_</font> Since $u$ is cts on $\bar{D}$, $S$ is closed. Now let's show $S$ is open. Let $x\in S$. By the sphere average property, $M=|u(x)|=|\int_{\mathbb S(x,\rho)} u(y)d\sigma|\leq M$, and to have equality $u(y)=M$ should hold in some ball. So $S$ is open. Since $D$ is connected open, $S\in\{\emptyset, D\}$. Since $u$ is not constant, $S=\emptyset$.
+
+**Application** Consider the Dirichlet problem with data $(0,f)$. Then by the theorem the solution is given by $\mathbb E_x[f(B_T)]$. By maximum module principle, $|\mathbb E_x[f(B_T)]\leq \|f\|_\infty$. So the map $\Pi_x: f\rightarrow \mathbb E_x[f(B_T)]$ is cts, and also it's positive.
+
+By Riesz-Markov-Kakutani, $\Pi_x$ is associated to a unique Borel measure $\mu$ on $\partial D$, which is called  the harmonic measure on $\partial D$ such that $\Pi_x(f)=\int_{\partial D} f(x)d\mu(x)$.
+
+*Example* $D=\mathbb B(0,1)$. By invariance of Brownian motion under orthogonal transformation, $\mu$ is invariant too, so $\mu$ must be the uniform measure.
+
+<font color='red'>_proof_</font> We need to lemmas for uniqueness.
+
+**Lemma 1** let $\Phi$ be a super solution to the Dirichlet problem, then $\Phi\geq\Psi$ the cost function.
+
+<font color='red'>_proof_</font> First on the boundary, $\Phi\geq \Psi$ by definition. Let $x\in D$ and $X_t$ be the BM starting from x. Define $D_N:=\mathbb B(0,N)\cap\{x\in D:\text{dist} (x,\partial D)>\frac{1}{N} \}$. Fix some function $g$ s.t. $g=\Phi$ on $D_N$. Let $M_t=g(X_t)-g(X_0)-\frac{1}{2}\int_0^t\Delta g(X_s)ds$. This is a martingale. Let $T_N$ be the exiting time of $D_N$. 
+
+For some large $N$, by optional stopping theorem, $\mathbb EM_{t\wedge T_N}=\mathbb EM_0$, i.e.,
+$$
+\Phi(x)=\mathbb E_x[\Phi(X_{t\wedge T_N})-\frac{1}{2}\int_0^{T_N\wedge t}\Delta \Phi(X_s)ds]
+$$
+Let $N\rightarrow \infty$ and $t\rightarrow\infty$, by MCT, 
+$$
+\int_0^{T_N\wedge t}\Delta \Phi(X_s)ds\leq \int_0^{T_N\wedge t}c(X_s)ds\rightarrow\int_0^Tc(X_s)ds
+$$
+On the other hand, on $\{T<\infty \}$, $\Phi(X_{T_N\wedge t})\rightarrow \Phi(X_T)\geq f(X_T)$ a.s.. Since $\Psi\geq 0$, we get $\liminf \Phi(X_{T_N\wedge t})\geq f(X_T)\mathbb 1_{T<\infty}$. By Fatou's lemma, 
+$$
+\liminf \mathbb E[\Phi(X_{T_N\wedge t})]\geq \mathbb E[f(X_T)\mathbb 1_{T<\infty}]
+$$
+Combine these two we know $\Phi\geq \Psi$.
+
+**Lemma 2** Let $\Phi$ be a bounded solution to the Dirichlet problem, and assume that $\mathbb E_x[\Phi(X_t)\mathbb 1_{T\geq t}]\rightarrow 0\forall x\in D$. Then $\Phi=\Psi$.
+
+<font color='red'>_proof_</font> On $\partial D$, $\Phi=\Psi$ by definition. In $D$, the proof is identical to proof of **Lemma 1**, if we notice two inequalities can take equality (The second is from Bounded convergence theorem).
+
+It remains to prove that $\Psi$ is a solution.

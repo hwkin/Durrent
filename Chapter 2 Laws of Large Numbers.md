@@ -198,7 +198,7 @@ P(|\frac{S_n-a_n}{b_n}|>\epsilon)\leq P(S_n\neq \bar{S_n})+P(|\frac{\bar S_n-a_n
 \\P(S_n\neq \bar S_n)\leq \sum_{k=1}^nP(X_n\neq \bar X_n)=\sum_{k=1}^n P(|X_n|>b_n)\rightarrow 0
 \\P(|\frac{\bar S_n-a_n}{b_n}|>\epsilon)\leq \epsilon^{-2} E(\frac{\bar S_n-a_n}{b_n})^2\leq \epsilon^{-2}b_n^{-2}\sum_{=1}^n E(\bar{X}_{n,k}^2)\rightarrow 0
 $$
-**Theorem 2.2.12 WLLN** Let $X_1,...,X_n$ be i.i.d. with $xP(|X_i|>x)\rightarrow 0$ as $x\rightarrow\infty$. Let $S_n=X_1+...+X_n$ and $\mu_n=E(X_11_{|X_1|\leq n})$, then $S_n/n-\mu_n$ in prob.
+**Theorem 2.2.12 WLLN** Let $X_1,...,X_n$ be i.i.d. with $xP(|X_i|>x)\rightarrow 0$ as $x\rightarrow\infty$. Let $S_n=X_1+...+X_n$ and $\mu_n=E(X_11_{|X_1|\leq n})$, then $S_n/n-\mu_n\rightarrow 0$ in prob.
 
 _Remark_ $E|X|<\infty\Rightarrow xP(|X|>x)\rightarrow 0$ but not vise versa. So in this case $L^2$ convergence is not assured, and $\mu_n$ doesn't necessarily converges to a finite limit (However they do exist in this condition). But actually $E|X|^{1-\epsilon}<\infty$ in this condition for any $\epsilon>0$.
 
@@ -212,3 +212,163 @@ _Remark_ This is the most familiar form for us. In i.i.d. case, finite variation
 
 **Example 2.2.15 WLLN doesn't hold** Consider $X_1,...$ are i.i.d. with Cauchy distribution $p(x)=\frac{1}{\pi(1+x^2)}$, then $P(|X_1|>x)\sim \frac{2}{\pi}x^{-1}$, so it doesn't satisfy the condition above. Actually its expectation doesn't exist, so there isn't $\mu_n$ such that $S_n/n-\mu_n\rightarrow 0$
 
+**Exercise 2.2.7** If $H(x)=\int_{-\infty}^x h(y)dy$, $h(y)\geq 0$, then $E\ H(x)=\int_\mathbb R h(y)P(X\geq y)dy$. This is a generalization of **Lemma 2.2.13**
+
+<font color='red'>_proof of Exercise 2.2.7_</font> 
+$$
+\int_\mathbb R h(y)P(X\geq y)=\int_\mathbb R\int_\Omega h(y)1_{X\geq y}dP dy=\int_\Omega\int_\mathbb R h(y)1_{X\geq y}dydP
+\\=\int_\Omega\int_{-\infty}^X h(y)dP=\int_\Omega H(y)dP=E\ H(X)
+$$
+
+
+### 2.3 Borel-Cantelli lemmas
+
+Some basic concepts are skipped. We only list a piece of result from Fatou's lemma:
+
+**Exercise 2.3.1** $P(\limsup A_n)\geq \limsup P(A_n)$ and $P(\liminf A_n)\leq \liminf P(A_n)$.
+
+**Theorem 2.3.1 Borel-Cantelli lemma** If $\sum_{n=1}^\infty P(A_n)<\infty$, then $P(A_n\ i.o.)=0$
+
+<font color='red'>_proof of Theorem 2.3.1_</font> Let $N=\sum_k 1_{A_k}$ be the number of events that occur. By Fubibi's theorem, $EN=\sum_k P(A_k)<\infty$, so $N<\infty$ a.s..
+
+A typical application is,
+
+**Theorem 2.3.2** $X_n\rightarrow X$ in prob. if and only if for any subsequence of $X_n$, say $X_{n_m}$, it has a subsequence which converges to $X$ a.s..
+
+<font color='red'>_proof of Theorem 2.3.2_</font> 
+
+$\Rightarrow$ Extract a subseries which converges fast: Let $\epsilon_k\downarrow 0$, and in $X_{n_m}$ pick its subseries such that $P(|X_{n_{m_k}}-X|>\epsilon_k)<2^{-k}$, so $\sum_k P(|X_{n_{m_k}}-X|>\epsilon_k)<\infty$, which implies $P(|X_{n_{m_k}}-X|>\epsilon_k\ i.o.)=0$, i.e., $X_{n_{m_k}}\rightarrow X$ a.s..
+
+$\Leftarrow$ Use a fact for topology space:
+
+**Theorem 2.3.3** Let $y_n$ be a sequence of elements of a topological space. If every subsequence has a further subsequence converging to y then $y_n\rightarrow y$.
+
+<font color='red'>_proof of Theorem 2.3.3_</font> Otherwise we can find an open set G including $y$ and excluding some subseries, which cannot have a subseries converging to $y$.
+
+So for $y_n=P(|X_n-X|>\delta)$, we know every subsequence of $y_n$ has a subsequence converging to 0 (a.s. convergence), so $y_n\rightarrow 0$. 
+
+_Remark_ a.s. convergence is a pointwise convergence. Moreover, it's not topological: by **Theorem 2.3.3**, if a.s. convergence is induced by topology, then every sequence converges in prob. also converges a.s., which doesn't hold. Moreover convergence in prob. has a metric, under which the space of r.v. is complete.
+
+By **Theorem 2.3.2**, we can upgrade convergence in prob. to convergence a.s.. The first example is:
+
+**Theorem 2.3.4** If $f$ is cts and $X_n\rightarrow_p X$, then $f(X_n)\rightarrow_p f(X)$. If f is bounded, $Ef(X_n)\rightarrow Ef(X)$.
+
+<font color='red'>_proof of Theorem 2.3.4_</font> To prove $f(X_n)\rightarrow_p f(X)$,it suffices to show every subsequence $f(X_{n_k})$ has a subsequence $f(X_{n_{k_m}})$ converging to $f(X)$ a.s.. since $X_n\rightarrow_p X$ in prob, for $X_{n_k}$, we can extract $X_{n_{k_m}}\rightarrow X$ a.s., so $f(X_{n_{k_m}})\rightarrow f(X)$ a.s..
+
+When $f$ is bounded, by bounded convergence theorem, $Ef(X_{n_{k_m}})\rightarrow Ef(X)$, by **Theorem 2.3.3** we have $Ef(X_n)\rightarrow Ef(X)$.
+
+The second example is the first SLLN:
+
+**Theorem 2.3.5** Let $X_1,X_2,...$ be i.i.d., with $EX_i=\mu$ and $EX_i^4<\infty$. Then $S_n\rightarrow \mu$ a.s..
+
+<font color='red'>_proof of Theorem 2.3.5_</font> WLOG suppose $\mu=0$. Now 
+$$
+ES_n^4=E(\sum_{i=1}^{n} X_i)^4=E\sum_{1\leq i,j,k,l\leq n}X_i X_j X_k X_l
+$$
+For $i,j,k,l$ distinct, $EX_iX_jX_kX_l, EX_i^2X_jX_k, EX_i^3X_j=0$. So we only need to consider $EX_i^4$ which has n terms and $EX_i^2X_j^2$ which have $C_n^2 C_4^2=3n(n-1)$ terms. So there is some constant C,
+$$
+ES_n^4= nEX_i^4+3(n^2-n)(EX_1^2)^2\leq Cn^2
+$$
+By Chebyshev inequality,
+$$
+P(|S_n|>n\epsilon)\leq ES_n^4/n^4\epsilon^4\leq C/n^2\epsilon^4
+$$
+So 
+$$
+\sum_{i=1}^{\infty}P(\frac{|S_i|}{i}>\epsilon)<\infty
+$$
+which implies $P(|S_n|/n>\epsilon\ i.o.)=0$. Since $\epsilon$ is arbitrary, we have completed.
+
+_Remark_ The converse of Borel Cantelli lemma is false: $\limsup (0,1/n)=\emptyset$ where $\sum 1/n=\infty$. So actually we can't say more than **Exercise 2.3.1**.
+
+However, for independent events, we have:
+
+**Theorem 2.3.7 The second Borel-Cantelli lemma** If the events $A_n$ are independent then $\sum P(A_n)=\infty$ implies $P(A_n\ i.o.)=1$.
+
+<font color='red'>_proof of Theorem 2.3.7_</font> For $M<N<\infty$, independence and $1-x\leq e^{-x}$ imply
+$$
+P(\cap_{n=M}^N A_n^c)=\prod_{n=M}^N (1-P(A_n))\leq\prod_{n=M}^N \exp(-P(A_n))=\exp(-\sum_{n=M}^N P(A_n))\rightarrow 0, N\rightarrow\infty
+$$
+So $P(\cup_{n=M}^\infty A_n)=1$ for all M. So $P(\limsup A_n)=1$.
+
+A typical of second Borel Cantelli lemma is:
+
+**Theorem 2.3.8** If $X_1,...$ are i.i.d. with $E|X_i|=\infty$, then $P(|X_n|>n\ i.o.)=1$. So $P(\lim S_n/n\ exists\ \in(-\infty,\infty))=0$.
+
+_Remark_ So $E|X|<\infty$ is necessary for SLLN. Actually, it's also sufficient.
+
+<font color='red'>_proof of Theorem 2.3.8_</font> 
+
+First $\infty=E|X_1|<\sum_n P(|X_n|>n)$, so by Borel Cantelli lemma, $P(|X_n|>n\ i.o.)=1$.
+
+For the second claim, observe that
+$$
+\frac{S_n}{n}-\frac{S_{n+1}}{n+1}=\frac{S_n}{n(n+1)}-\frac{X_{n+1}}{n+1}
+$$
+On $C:=\{\omega:\lim S_n/n\ exists\ \in(-\infty,\infty)\}$, we have $S_n/n(n+1)=0$. So on $C\cap \{\omega:|X_n|>n\ i.o. \}$, we have $|S_n/n-S_{n+1}/(n+1)|>2/3$ i.o., which is a contradiction. So $\{\omega: |X_n|\geq n\ i.o. \}\cap C=\emptyset$. This indicates $P(C)=0$.
+
+The next result extends the second Borel Cantelli lemma and sharpens its conclusion. In some sense, it gives the "rate of occurrence".
+
+**Theorem 2.3.9** If $A_1,...$ are pairwise independent and $\sum_{i=1}^{\infty}P(A_i)=\infty$ then as $n\rightarrow \infty$,
+$$
+\sum_{m=1}^{n}1_{A_m}\bigg /\sum_{m=1}^{n} P(A_m)\rightarrow 1\ a.s.
+$$
+<font color='red'>_proof of Theorem 2.3.9_</font> Let $X_m=1_{A_m}$, and $S_n=X_1+...+X_n$. 
+
+(i) $S_n/ES_n\rightarrow_p 1$​. Estimate by Chebyshev inequality,
+$$
+P(|S_n-ES_n|>\delta ES_n)\leq var(S_n)/(\delta ES_n)^2
+$$
+Since $X_i\in\{0,1\}$ are pairwise independent, we have $var(X_m)\leq EX_m^2=EX_m$, hence $var(S_n)\leq ES_n$. Since $ES_n\rightarrow \infty$, we have
+$$
+P(|S_n-ES_n|>\delta ES_n)\leq 1/(\delta ^2ES_n)\rightarrow 0
+$$
+(ii) Pass convergence in prob. to convergence a.s.. 
+
+Extract a subseries (Notice despite we can extract arbitrary by **Theorem 2.3.2**, in order to estimate the whole sequence, we need to be careful): Let $n_k=\inf\{n:ES_n\geq k^2\}$ and $T_k=S_{n_k}$. So $k^2\leq T_k<k^2+1$. Estimate $T_k$,
+$$
+P(|T_n-ET_n|>\delta ET_n)\leq1/(\delta^2k^2)
+$$
+Since $\sum_k 1/(\delta^2k^2)<\infty$, $P(|T_n/ET_n -1|>\delta\ i.o.)=0$, and since $\delta$ is arbitrary, we have $T_n/ET_n\rightarrow 1$ a.s..
+
+Estimate $S_n$: pick $\omega$ s.t. $T_k(\omega)/ET_k\rightarrow 1$. For $n_k\leq n<n_{k+1}$, we have 
+$$
+\frac{T_k(\omega)}{ET_{k+1}}\leq \frac{S_n(\omega)}{ES_n}\leq \frac{T_{k+1}(\omega)}{ET_k}
+$$
+So we expect to show $ET_{k+1}/ET_k\rightarrow 1$, but this is direct from $k^2\leq T_k<k^2+1$.
+
+_Remark_ Notice $ES_n$ is monotonically increasing. If we are proving $X_n/c_n\rightarrow 1$ where $c_n$ is increasing, it suffices to show that on a subseries the convergence holds, and pass to the whole sequence as above.
+
+**Example 2.3.10 Record Values** Let $X_i$ i.i.d. with cts distribution function F be thought of as scores and $A_k=\{X_k>\sup_{j<k} X_j\}$ is the event of breaking record at time k. 
+
+*Claim*: $A_k$ are independent and $P(A_k)=1/k$.
+
+- Since F is cts, $P(X_i=X_j)=0$. Consider $X_1,...,X_n$. Let $\pi$ be the (random) permutation such that $X_{\pi(i)}$ is decreasing. Since the joint distribution is invariant under any permutation, we have $\pi$ is uniformly distributed on $S_n$.
+
+- $P(A_n)=P(\pi(n)=1)=1/n$. This is direct from previous observation.
+- $P(A_m|\pi(j)\text{ is fixed for }j>m)=1/m$. This also results from the symmetry of permutations.
+
+So if we let $m_1<m_2<...<m_k$ then $P(A_{m_1}|A_{m_2}\cap...\cap A_{m_k})=P(A_{m_1})$ since later events doesn't disturb current events by the third observation. Now the claim is trivial.
+
+By these observations, apply **Theorem 2.3.9** we have:
+
+**Theorem 2.3.11** If $R_n=\sum_{m=1}^{n}1_{A_m}$ is the number of records at time n, then as $n\rightarrow \infty$, we have $R_n/\log n\rightarrow 1$ a.s..
+
+_Remark_ This is independent with F as long as F is cts (exclude that any two scores are the same)
+
+_Remark_ under the same hypothesis, let $Y_i=\#\{j\leq i: X_j>X_i\}$, we have $Y_i$ are independent r.v. with $P(Y_i=j)=1/i$ for $0\leq j<i-1$: $P(Y_i=j)=P(\pi(i)=j)=1/i$.
+
+**Example 2.3.12 Head runs** Let $X_n$ i.i.d. with $P(X_n=1)=P(X_n=-1)=1/2$. Let $\mathcal l(n)=\max\{m:X_{n-m+1}=...=X_n=1 \}$ be the length of the run of +1's at time n, and $L_n=\max_{1\leq m\leq n}\mathcal l_m$ be the longest run at time n. We use a two-sided sequence so that for all n, $P(\mathcal l_n=k)=2^{-k-1}$ for $k\geq 0$. Now we want to prove
+$$
+L_n/\log_2 n\rightarrow 1\ a.s.
+$$
+Since $\mathcal l_1<\infty$, the result we are going to prove is also true for a one-sided sequence. (We can see for one-sided $\tilde L_n$, $\tilde L_n\leq L_n\leq \tilde L_n+l_1$).
+
+<font color='red'>_proof of the proposition_</font> 
+
+We begin by observing that $P(\mathcal l_n\geq(1+\epsilon)\log_2 n)\leq n^{-(1+\epsilon)}$. Since $\sum_n n^{-(1+\epsilon)}<\infty$ for any $\epsilon$, By Borel Cantelli lemma, we have $\mathcal l_n\leq (1+\epsilon)\log_2 n$ for $n\geq N_\epsilon$. This indicates $\limsup L_n/\log_2 n\leq 1$ a.s..
+
+To estimate the inverse equation, notice when $L_n\leq (1-\epsilon )\log_2 n$ occurs, if we split the sequence with lengths $[(1-\epsilon)\log_2 n]+1$, any of them can't be +1's sequence. This occurs with prob. $1-2^{-[(1-\epsilon)\log_2 n]-1}\leq 1-n^{-1+\epsilon}/2$. So
+$$
+P(L_n\leq (1-\epsilon)\log_2 n)\leq (1-n^{})
+$$

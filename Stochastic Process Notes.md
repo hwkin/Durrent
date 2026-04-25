@@ -40,11 +40,11 @@ Stochastic Process Notes
 
       Case: $L^2(\mathbb P) $ is dense in $L^1(\mathbb P)$ (the most common case). 
 
-      In this case, for all $X\in L^2(\mathbb P)$, $\Pi_\mathcal G(X)$ is the unique version. Now let $X\in L^1(\mathbb P)$ and $(X_n)\in L^2(\mathbb P)$, s.t. $X_n\rightarrow X$ in $ L^1$, so from the present lemma,
+      In this case, for all $X\in L^2(\mathbb P)$, $\Pi_\mathcal G(X)$ is the unique version. Now let $X\in L^1(\mathbb P)$ and $(X_n)\in L^2(\mathbb P)$, s.t. $X_n\rightarrow X$ in $L^1$, so from the present lemma,
       $$
       \mathbb E|\mathbb E[X_n|\mathcal G]-\mathbb E[X_m|\mathcal G]|\leq \mathbb E|\mathbb E[X_n-X_m|\mathcal G]|\leq \mathbb E|X_n-X_m|
       $$
-      Since $X_n$ converges in $ L^1$, $\mathbb E[X_n|\mathcal G]$ is also Cauchy, so it converges in $ L^1$ to some variable, say $Y$. $Y$ is $\mathcal G$-measurable as a limit and it's easy to verify it's surely a version.
+      Since $X_n$ converges in $L^1$, $\mathbb E[X_n|\mathcal G]$ is also Cauchy, so it converges in $L^1$ to some variable, say $Y$. $Y$ is $\mathcal G$-measurable as a limit and it's easy to verify it's surely a version.
 
       Case: density is not assumed. Suppose $X\geq 0$
 
@@ -481,7 +481,7 @@ Stochastic Process Notes
 
    A variation of this: 2-circle: Once we reach one cycle, we stayed there forever. Both the uniform measure on the first and second circle are invariant (not pass the bridge), so there is no uniqueness in this case.
 
-   ![](C:\Users\m1500\Desktop\Durrent\images\2-cycle invariant.png)
+   <img src="C:\Users\m1500\Desktop\Durrent\images\2-cycle invariant.png" style="zoom:25%;" />
 
    In general, if we have several irreducible components, we many have an invariant distribution in each component and any convex combination is also invariant(among different component). This is why most would be stated for irreducible chains.
 
