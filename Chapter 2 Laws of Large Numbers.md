@@ -370,5 +370,43 @@ We begin by observing that $P(\mathcal l_n\geq(1+\epsilon)\log_2 n)\leq n^{-(1+\
 
 To estimate the inverse equation, notice when $L_n\leq (1-\epsilon )\log_2 n$ occurs, if we split the sequence with lengths $[(1-\epsilon)\log_2 n]+1$, any of them can't be +1's sequence. This occurs with prob. $1-2^{-[(1-\epsilon)\log_2 n]-1}\leq 1-n^{-1+\epsilon}/2$. So
 $$
-P(L_n\leq (1-\epsilon)\log_2 n)\leq (1-n^{})
+P(L_n\leq (1-\epsilon)\log_2 n)\leq (1-n^{-1+\epsilon}/2)^{n/(\log_2 n)}\leq \exp(-n^\epsilon/2\log_2 n)
 $$
+Since this is summable, we have $\liminf_{n\rightarrow\infty} L_n/\log_2 n\geq 1$ a.s..
+
+**Exercise 2.3.4 Fatou's lemma** Suppose $X_n\geq 0$ and $X_n\rightarrow X$ in prob., then $\liminf_{n\rightarrow\infty} EX_n\geq EX$.
+
+**Exercise 2.3.5 Dominated Convergence Theorem** Suppose $X_n\rightarrow X$ in prob. and onw of the two conditions holds:
+
+(a) $|X_n|\leq Y$ with $EY<\infty$
+
+(b) $\exists g\in C(\mathbb R)$, when $x$ is large $g(x)>0$ and $|x|/g(x)\rightarrow 0$ as $|x|\rightarrow\infty$, and satisfies $Eg(X_n)\leq C<\infty$ for all n.
+
+Then $EX_n\rightarrow EX$.
+
+_Remark_ These are primarily true for a.s. convergence. By **Theorem 2.3.2**, these results can be extended to convergence in prob..
+
+**Exercise 2.3.6 Metric for convergence in prob. ** Define $d(X,Y)=E(|X-Y|/(1+|X-Y|))$, then this defines a metric on the space of r.v.. This is complete and its convergence is equivalent to convergence in prob. (This is standard in Real Analysis)
+
+**Exercise 2.3.8** Let $A_n$ be a sequence of independent events with $P(A_n)<1$ for all n. Show that $P(\cup A_n)=1$ implies $\sum_n P(A_n)=\infty$ and hence $P(A_n\ i.o.)=1$.
+
+<font color='red'>_proof of Exercise 2.3.8_</font> So $1-P(A_n)>0$ and $\prod_n(1-P(A_n))=0$. So $\sum_n P(A_n)=\infty$ (from analysis). By Borel Cantelli lemma, $P(A_n\ i.o.)=1$.
+
+**Exercise 2.3.9** Let $A_n$ be a sequence of events with $P(A_n)\rightarrow 0$ and $\sum_{n=1}^{\infty} P(A_n^c\cap A_{n+1})<\infty$. Then $P(A_n\ i.o.)=0$.
+
+<font color='red'>_proof of Exercise 2.3.9_</font> Let $B_n=A_n^c\cap A_{n+1}$Notice If $\omega\in A_n$i.o. but $\omega\notin B_n$i.o., then there must be some k such that $\omega\in A_n$ for all $n\geq k$. So we have $\{A_n\ i.o.\}\subset \{B_n\ i.o.\}\cup( \cup_{n\geq 1}\cap_{k\geq n} A_k)$. So
+$$
+P(A_n\ i.o.)\leq P(B_n\ i.o.)+\lim_{n\rightarrow\infty}P(\cap_{k\geq n}A_k)=P(B_n\ i.o.)
+$$
+Since $P(A_n)\rightarrow 0$. Since by Borel Catelli lemma, $P(B_n\ i.o.)=0$, we have $P(A_n\ i.o.)=0$.
+
+_Remark_ In some cases when Borel Cantelli lemma fails, this can be applied. For example, we can construct on $((0,1),m,\mathcal B)$: Let $A_n=[a_n,a_n+1/(n+1)]$ where $a_k=\sum_{n=2}^k\frac{1}{2n^2}$. 
+
+**Exercise 2.3.10 Kochen-Stone lemma** Suppose $\sum P(A_k)=\infty$. If 
+$$
+\limsup_{n\rightarrow\infty}(\sum_{i=1}^{n}P(A_i))^2\bigg /(\sum_{1\leq j,k\leq n}P(A_j\cap A_k))=\alpha>0
+$$
+then $P(A_n\ i.o.)\geq \alpha$.
+
+<font color='red'>_proof_</font> Left for later completion.
+
