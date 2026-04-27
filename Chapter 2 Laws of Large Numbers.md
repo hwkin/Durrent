@@ -408,5 +408,250 @@ $$
 $$
 then $P(A_n\ i.o.)\geq \alpha$.
 
-<font color='red'>_proof_</font> Left for later completion.
+<font color='red'>_proof_</font> Let $S_n=\sum_{k=1}^n 1_{A_k}$, $ES_n=\sum_{i=1}^{n} P(A_i)^2$ and $\sum_{1\leq j,k\leq n}P(A_j\cap A_k)=ES_n^2$. Moreover, $ES_n^2\rightarrow\infty$.
 
+Since $\limsup_{n\rightarrow\infty} (ES_n)^2/(ES_n^2)=\alpha$, choose a subseries s.t. $\lim_{m\rightarrow\infty}(ES_{n_m})^2/(ES_{n_m}^2)=\alpha$. 
+
+Notice $P(A_n\ i.o.)\geq P(S_{n_m}\geq r)$ for all sufficient large m. And we have estimation:
+$$
+P(S_{n_m}\geq r)\geq \frac{(ES_{n_m}-r)^2}{ES_{n_m}^2}
+$$
+So $\liminf_{m\rightarrow\infty}P(S_{n_m}\geq r)\geq \alpha$ for all $r>0$. So $P(A_n\ i.o.)\geq \alpha$.
+
+_Remark_ Such form of inequality is called **Paley-Zygumid inequality**: If $X\geq 0$ and have finite second moment,
+$$
+\begin{aligned}
+P(X \ge \theta E[X]) &\ge (1-\theta)^2 \frac{(E[X])^2}{E[X^2]}(\text{standard form})
+\\P(X\geq t)&\geq \frac{(E[X]-t)^2}{E[X^2]}(\text{threshold version})
+\\P(X>0)&\geq \frac{(E[X])^2}{E[X^2]} (\text{Let }t\rightarrow 0)
+\end{aligned}
+$$
+_Remark_ When $A_i$ are independent, notice the limit term is just 1, so $P(A_n\ i.o.)=1$. This is just the second Borel Cantelli lemma.
+
+### 2.4 Strong Law of Large Numbers
+
+**Theorem 2.4.1 Strong Law of Large Numbers** Let $X_1,X_2,...$ be pairwise independent identically distributed r.v. with $E|X_i|<\infty$. Let $EX_i=\mu$ and $S_n=X_1+...+X_n$. Then $S_n/n\rightarrow\mu$ a.s..
+
+To prove this theorem, we begin from truncating. These two lemmas are standard.
+
+**Lemma 2.4.2** Let $Y_k=X_k1_{|X_k|\leq k}$ and $T_n=Y_1+...+Y_n$. To prove $S_n/n\rightarrow \mu$ a.s., it suffices to show $T_n/n\rightarrow \mu$.
+
+<font color='red'>_proof of Lemma 2.4.2_</font> $\sum_{k=1}^\infty P(|X_k|>k)\leq E|X_1|<\infty$. so $P(X_k\neq Y_k\ i.o.)=0$. So $|S_n(\omega)-T_n(\omega)|$ is a.s. finite, and $|S_n-T_n|/n\rightarrow 0$ a.s.
+
+**Lemma 2.4.3** $\sum_{k=1}^\infty var(Y_k)/k^2\leq 4E|X_1|<\infty$.
+
+First, to bound the sum, we observe
+$$
+var(Y_k)\leq E(Y_k^2)=\int_0^\infty 2yP(|Y_k|>y)dy\leq \int_0^k 2yP(|X_1|>y)dy
+$$
+So using Fubini's theorem,
+$$
+\begin{aligned}
+\sum_{k=1}^\infty E(Y_k^2)/k^2&\leq \sum_{k=1}^\infty k^{-2}\int_0^\infty1_{y<k}2yP(|X_1|>y)dy
+\\&=\int_0^\infty(\sum_{k=1}^\infty k^{-2} 1_{y<k})2yP(|X_1|>y)dy
+\\&\leq \int_0^\infty 4P(|X_1|>y)dy=4E|X_1|
+\end{aligned}
+$$
+Next, observe that $X=X_+-X_-$, and $EX_+,EX_-<\infty$, so WLOG let $X\geq 0$. Again, we use the technique from **Theorem 2.3.9**, i.e., extract a convergent subsequence, and by the monotonicity of $c_n=n$, control the values in between. 
+
+<font color='red'>_proof of Theorem 2.4.1_</font> Let $\alpha>1$ and $k(n)=[\alpha^n]$. By Chebyshev's inequality, 
+$$
+\sum_{n=1}^\infty P(\frac{|T_{k(n)}-ET_{k(n)}|}{k(n)}\geq\epsilon)\leq \epsilon^{-2}\sum_{n=1}^\infty\frac{var(T_{k_n})}{k(n)^2}=\epsilon^{-2}\sum_{n=1}^\infty\sum_{k=1}^{k(n)}\frac{var(Y_k)}{k(n)^2}=\epsilon^{-2}\sum_{k=1}^\infty var(Y_k)\sum_{n:k(n)\geq k}^\infty k(n)^{-2}
+$$
+Actually, choose $k(n)=[\alpha^n]$ is to ensure:
+$$
+\sum_{n:k(n)\geq k}^\infty k(n)^{-2}=\sum_{[\alpha^n]\geq k}[\alpha^n]^{-2}\leq \sum_{\alpha^n\geq k}4\alpha^{-2n}\leq 4(1-\alpha^{-2})^{-1}k^{-2}
+$$
+So we can use **Lemma 2.4.3**,
+$$
+\sum_{n=1}^\infty P(\frac{|T_{k(n)}-ET_{k(n)}|}{k(n)}\geq\epsilon)\leq \epsilon^{-2}4(1-\alpha^{-2})^{-1}\sum_{k=1}^\infty k^{-2}var(Y_k)<\infty
+$$
+Since $\epsilon$ is arbitrary, $(T_{k(n)}-ET_{k(n)})/k(n)\rightarrow 0$ a.s..
+
+- By DCT, $ET_{k(n)}\rightarrow EX_1$.
+
+- The control argument: if $k(n)\leq m<k(n+1)$,
+  $$
+  \frac{T_{k(n)}}{k(n+1)}\leq \frac{T_m}{m}\leq \frac{T_{k(n+1)}}{kn}
+  $$
+  Since we have supposed $Y_n\geq 0$. Since $k(n+1)/k(n)\rightarrow\alpha$,
+  $$
+  \frac{1}{\alpha}EX_1\leq \liminf_{n\rightarrow\infty}T_n/n\leq \limsup_{n\rightarrow\infty}T_n/n\leq\alpha EX_1
+  $$
+  Since $\alpha$ is arbitrary, we have completed our proof.
+
+The next result shows that SLLN holds whenever $EX_i$ exists (including infinity).
+
+**Theorem 2.4.5** Let $X_1,...$ be i.i.d. with $EX_i^+=\infty$ and $EX_i^-<\infty$. Then $S_n/n\rightarrow\infty$.
+
+<font color='red'>_proof of Theorem 2.4.5_</font> Let $M>0$ and $X_i^M=X_i\wedge M$. Then $X_i^M$ are i.i.d. and $E|X_i^M|<\infty$. So Let $S_n^M=X_1^M+...+X_n^M$ then $S_n^M/m\rightarrow EX_i^M$ a.s.. Since by MCT, $E(X_i^M)^+\uparrow\infty$, we have $EX_i^M\uparrow\infty$ and $\liminf_{n\rightarrow\infty} S_n/n\geq\infty$.
+
+The next example is to show the application of SLLN.
+
+**Example 2.4.6 Renewal theory** Let $X_1,X_2,...$ be i.i.d. with $0<X_i<\infty$. Let $T(n)=X_1+...+X_n$ and think of $T(n)$ as the time of $n$ th occurrence of some event, if we assume the waiting time is i.i.d.. Let $N_t=\sup\{n:T(n)\leq t \}$ ne the number of occurrence up to time n.
+
+**Theorem 2.4.7** If $EX_1=\mu\leq\infty$ then as $t\rightarrow\infty$, $N_t/t\rightarrow 1/\mu\ a.s.$.
+
+<font color='red'>_proof of Theorem 2.4.7_</font> By **Theorem 2.4.1** and **2.4.5**, $T_n/n$ a.s., and control $N_t$ by
+$$
+\frac{T(N_t)}{N_t}\leq \frac{t}{N_t}\leq \frac{T(N_t+1)}{N_t}=\frac{T(N_t+1)}{N_t+1}\frac{N_t+1}{N_t}
+$$
+by the definition of $N_t$. Since $N_t\rightarrow\infty$ as $t\rightarrow\infty$ ($X_i<\infty$), we have $T(N_t)/N_t\rightarrow \mu$ and $(N_t+1)/N_t\rightarrow 1$, which completes our proof.
+
+_Remark_ If $X_n\rightarrow X_\infty$ a.s., and $N(n)\rightarrow\infty$ a.s., then $X_{N(n)}\rightarrow X_\infty$ a.s. by the pointwise convergence. But this can be false for convergence in prob.. If $X_n\in\{0,1 \}$ are independent r.v. s with $P(X_n=1)=a_n\rightarrow 0$ and $\sum_n a_n=\infty$, then $X_n\rightarrow 0$ in prob. and not a.s.. Let $N(n)=\inf\{m\geq n: X_m=1 \}$. First, $N(n)\neq \infty$ since $P(X_n=1\ i.o.)=1$. Next, $N(n)\uparrow\infty$ . But $X_{N(n)}=1$ a.s..
+
+The next example shows us "frequency is approximately probability".
+
+**Example 2.4.8 Empirical distribution functions** Let $X_1,X_2,...$ be i.i.d. with distribution $F$ and let $F_n(x)=n^{-1}\sum_{m=1}^n 1_{X_m\leq x}$, i.e., the observed frequency of values $\leq x$.
+
+**Theorem 2.4.9 The Glivenko-Cantelli theorem** $\sup_x |F_n(x)-F(x)|\rightarrow 0$ a.s.
+
+_Remark_ $F$ may have jumps, which makes the proof somewhat complicated. See PTE for proof.
+
+**Example 2.4.10 Shannon's theorem** Let $X_1,X_2,...\in\{1,...,r\}$ be independent with $P(X_i=k)=p(k)>0$ for $1\leq k\leq r$. Let $\pi_n(\omega)=p(X_1(\omega))...p(X_n(\omega))$ be the probability of realization at first n trials. By SLLN, $-n^{-1}\log \pi_n(\omega)\rightarrow H:=\sum_{k=1}^r -p(k)\log p(k)$ a.s., and the constant $H$ is called the entropy of the source which measures the randomness. Asymptotic equipartition property says if $\epsilon>0$, then $P(e^{-n(H+\epsilon)}\leq \pi_n(\omega)\leq e^{-n(H-\epsilon)})\rightarrow 1$ as $n\rightarrow\infty$.
+
+**Example 2.4.1** For the renewal process let $0<X_i<\infty$ be i.i.d. with $EX_i<\infty$ and $0<Y_i<\infty$ be i.i.d. with $EY_i<\infty$. Suppose the two process take turns beginning with $X$, and let $R_t$ be the time of waiting times for process $X_i$. Then $R_t/t\rightarrow EX_i/(EX_i+EY_i)$ a.s..
+
+<font color='red'>_proof of Exercise 2.4.1_</font> Let $N_t$ denotes the occurrence of events for $X$, then similar argument implies $R_t/N_t\rightarrow EX_i$. and consider the process as a renewal process with waiting time $X_n+Y_n$, $t/N_t\rightarrow EX_i+EY_i$. So $R_t/t\rightarrow EX_i/(EX_i+EY_i)$.
+
+### 2.5 Convergence of Random Series
+
+Based on convergence of random series, we can attain SLLN in another way, estimate convergence rate and attain a negative result for infinite mean. First Let's introduce some notations.
+
+**Definition** Let $\mathcal F_n^\prime=\sigma(X_n,X_{n+1},...)$, i.e., the future information after time n. Let $\mathcal T=\cap_n\mathcal F_n^\prime$ be the remote future, or **tail $\sigma$-field**.
+
+**Example 2.5.1** If $B_n\in\mathcal R$ then $\{ X_n\in B_n\ i.o.\}\in\mathcal T$. If we let $X_n=1_{A_n}$, and $B_n=\{1\}$, the event is $\{A_n\ i.o.\}$.
+
+**Example 2.5.2** Let $S_n=X_1+...+X_n$, then $\{\lim_{n\rightarrow\infty} S_n\text{ exists} \}\in\mathcal T$, $\{\limsup_{n\rightarrow\infty} S_n>0 \}\notin \mathcal T$ (since adjust $X_1$, $S_n$ can be negative), $\{\limsup_{n\rightarrow\infty} S_n/c_n>x \}\in\mathcal T$ if $c_n\rightarrow\infty$.(since adjusting finite many $X_i$ the limit will not be disturbed.)
+
+This results shows that all examples are trivial. Actually, this is the second 0-1 law we meet. The first is Borel Cantelli lemma for independent events.
+
+**Theorem 2.5.3 Kolmogorov's 0-1 law** If $X_1,X_2,...$ are independent and $A\in\mathcal T$, then $P(A)=0\ or\ 1$.
+
+<font color='red'>_proof of Theorem 2.5.3_</font> We will show that $A$ is independent of itself, i.e., $P(A\cap A)=P(A)P(A)$, so $P(A)=0\ or\ 1$. We follow two steps:
+
+- $A\in\sigma(X_1,...,X_k)$ and $B\in\sigma(X_{k+1},X_{k+2},...)$ are independent.
+
+  proof: If $B\in\sigma(X_{k+1},...,X_{k+j})$ for some $j$, then by **Theorem 2.1.9** they are independent. Since $\sigma(X_1,...,X_k)$ and $\cup_j \sigma (X_{k+1},...,X_{k+j})$ are $\pi$-systems that contain $\Omega$, by **Theorem 2.1.7** They are independent.
+
+- $A\in\sigma(X_1,...)$ and $B\in\mathcal T$ are independent.
+
+  proof: If $A\in\sigma(X_1,...,X_k)$ for some k, then $A$ and $B$ are independent. Since $\cup_k\sigma(X_1,...,X_k)$ and $\mathcal T$ are $\pi$-systems that contain $\Omega$, by **Theorem 2.1.7** they are independent.
+
+So $A$ is independent of itself.
+
+Now let's introduce another 0-1 law.
+
+**Definition** A **finite permutation** of $\mathbb N$ is a map $\pi: \mathbb N\rightarrow\mathbb N$ s.t. $\pi(i)\neq i$ for finitely many $i$. If $\pi$ is a finite permutation, define $(\pi\omega)_i=\omega_{\pi(i)}$ for $\omega\in S^\mathbb N$. This can be also regarded as rearranging $X_i$s. An event is **permutable** if $\pi^{-1}A:=\{ \omega:\pi\omega\in A\}$ for any finite permutation $\pi$, in other words, its occurrence is not affected by rearranging finitely many r.v. s. The collection of permutable events is a $\sigma$-field and is called the **exchangeable** $\sigma$-field, denoted by $\mathcal E$.
+
+**Example** $\{\omega: S_n(\omega)\in B\ i.o.\}$, $\{\omega: \limsup_{n\rightarrow\infty} S_n(\omega)/c_n\geq 1 \}$, all events in $\mathcal T$ are all permutable. 
+
+Notice actually this exchangeable $\sigma$-field may be larger than $\mathcal T$, for example, $\{\limsup_{n\rightarrow\infty} S_n>0 \}$ is in $\mathcal E$. But for i.i.d. sequence, they are identical and trivial.
+
+**Theorem 2.5.4 Hewitt-Savage 0-1 law** If $X_1,X_2,...$ are i.i.d. and $A\in\mathcal E$ then $P(A)=0\ or\ 1$.
+
+For proof see PTE, since this is operating on measure space.
+
+Upon now, we know if $A_1,A_2,...$ are independent then $P(A_n\ i.o.)=0\ or\ 1$. So $P(\lim_{n\rightarrow\infty}S_n\text{ exists})=0\ or\ 1$.Now we concerns when the prob. is 1.
+
+**Theorem 2.5.5 Kolmogorov's maximal inequality** Suppose $X_1,...,X_n$ are independent with $EX_i=0$ and $var(X_i)<\infty$. If $S_n=X_1+...+X_n$, then we have 
+$$
+P(\max_{1\leq k\leq n}|S_k|\geq x)\leq x^{-2}var(S_n)
+$$
+_Remark_ Under the same hypothesis, Chebyshev's inequality only gives $P(|S_n|\geq x)\leq x^{-2}var(S_n)$. So this inequality is much stronger.
+
+<font color='red'>_proof of Theorem 2.5.5_</font> Actually $S_n$ is a martingale, so we are using the techniques from martingales to prove this. Actually, this is a version of Doob's maximal inequality.
+
+let $A_k=\{|S_k|\geq x\text{ but }|S_j|<x\text{ for }j<k \}$, i.e., the event $|S_k|$ hits $x$ at k for the first time. They are disjoint, so
+$$
+\begin{aligned}
+ES_n^2&\geq \sum_{k=1}^n ES_n^21_{A_k}=\sum_{k=1}^n E(S_k^2+2S_k(S_n-S_k)+(S_n-S_k)^2)1_{A_k}
+\\&\geq\sum_{k=1}^n ES_k^21_{A_k}+\sum_{k=1}^n 2ES_k(S_n-S_k)1_{A_k}=\sum_{k=1}^nES_k^21_{A_k}+\sum_{k=1}^n2ES_k1_{A_k}E(S_n-S_k)
+\\&=\sum_{k=1}^n ES_k^21_{A_k}
+\\&\geq\sum_{k=1}^n x^2P(A_k)=x^2P(\max_{1\leq k\leq n}|S_k|\geq x)
+\end{aligned}
+$$
+Now we can state the results on convergence of series. 
+
+**Theorem 2.5.6** Suppose $X_1,X_2,...$ are independent and have $EX_n=0$. If $\sum_{n=1}^\infty var(X_n)<\infty$, then $\sum_{n=1}^\infty X_n(\omega)$ converges a.s.
+
+<font color='red'>_proof of Theorem 2.5.6_</font> let $S_N=\sum_{n=1}^N X_n$ and by **Theorem 2.5.5**, we get
+$$
+P(\max_{M\leq m\leq N}|S_m-S_M|>\epsilon)\leq \epsilon^{-2}var(S_N-S_M)=\epsilon^{-2}\sum_{n=M+1}^N var(X_n)
+$$
+Let $N\rightarrow\infty$,
+$$
+P(\sup_{m\geq M}|S_m-S_M|>\epsilon)\leq \epsilon^{-2}\sum_{n=M+1}^\infty var(X_n)\to 0(M\rightarrow \infty)
+$$
+Let $w_M=\sup_{m,n\geq M}|S_m-S_n|$, then $w_M\downarrow$as $M\uparrow$ and 
+$$
+P(w_M>2\epsilon)\leq P(\sup_{m\geq M}|S_m-S_M|>\epsilon)\rightarrow 0
+$$
+So $w_M\downarrow 0$ a.s., $S_n(\omega)$ is Cauchy.
+
+**Example 2.5.7** Let $X_1,...$ be independent with $P(X_n=n^{-\alpha})=P(X_n=-n^{-\alpha})=1/2$. Then $EX_n=0$ and $var(X_n)=n^{-2\alpha}$. So if $\alpha>1/2$, $\sum X_n$ converges a.s..This is actually necessary by **Theorem 2.5.8**. Notice the series is absolutely convergent iff $\alpha>1$.
+
+**Theorem 2.5.8 Kolmogorov's three-series theorem** Let $X_1,X_2,...$ be independent, and let $A>0$, $Y_i=X_i1_{|X_i|\leq A}$. $\sum_{n=1}^\infty X_n$ converges a.s. iff
+
+(i) $\sum_{n=1}^\infty P(|X_n|>A)<\infty$ (ii) $EY_n$ converges (iii)$\sum_{n=1}^\infty var(Y_n)<\infty$
+
+<font color='red'>_proof of Theorem 2.5.8_</font> Necessity will be proved after CLT. Now we consider sufficiency. Let $\mu_n=EY_n$
+
+By (iii) and **Theorem 2.5.6**, $\sum_{n=1}^\infty Y_n-\mu_n$ converges a.s.. By (ii), $\sum_{n=1}^\infty Y_n$ converges a.s.. By (i) and Borel Cantelli lemma, $\sum_{n=1}^\infty P(X_n\neq Y_n)<\infty$, whence $X_n\neq Y_n\ i.o.$, $\sum_{n=1}^\infty X_n$ converges a.s..
+
+Now we link convergence of series and SLLN:
+
+**Theorem 2.5.9 Kronecker's lemma** If $a_n\uparrow\infty$ and $\sum_{n=1}^\infty x_n/a_n$ converges, then $a_n^{-1}\sum_{m=1}^n x_m\to 0$. 
+
+_Remark_ This is purely a result of analysis. For the proof refer to PTE.
+
+**Theorem 2.5.10 SLLN** Let $X_1,...$ be i.i.d. r.v. s with $E|X_i|<\infty$, then $S_n/n\to\mu$ a.s..
+
+_Remark_ **Theorem 2.4.1** requires $X_i$ to be pairwise independent while we require they are independent here.
+
+<font color='red'>_proof of Theorem 2.5.10_</font> The two lemmas are still useful here. let $Y_k=X_k1_{|X_k|\leq k}$ and $T_n=Y_1+...+Y_n$, it suffices to show SLLN holds for $T_n$. Let $Z_k=Y_k-EY_k$, by the second lemma $\sum_{k=1}^\infty var(Z_k)/k^2<\infty$. Apply **Theorem 2.5.6**, $\sum_{k=1}^\infty Z_k/k$ converges a.s.. Apply **Theorem 2.5.9**, $n^{-1}\sum_{k=1}^n Z_k\to 0$, i.e., $T_n/n-n^{-1}\sum_{k=1}^n EY_k\rightarrow 0$ a.s.. By DCT, $EY_k\to\mu$, and $n^{-1}\sum_{k=1}^n EY_k\to\mu$. So $T_n/n\to\mu$ a.s..
+
+#### 2.5.1 Rates of Convergence
+
+**Theorem 2.5.11** Let $X_1,X_2,...$ be i.i.d. r.v. s with $EX_i=0$, $EX_i^2=\sigma^2<\infty$. Then
+$$
+S_n/(n^{1/2}(\log n)^{1/2+\epsilon})\rightarrow 0\ a.s.
+$$
+<font color='red'>_proof of Theorem 2.5.11_</font> Let $a_1>0$, $a_n=n^{1/2}(\log n)^{1/2+\epsilon}$ for $n\geq 2$,
+$$
+\sum_{n=1}^\infty var(X_n/a_n)=\sigma^2\sum_{n=1}^\infty 1/a_i^2<\infty
+$$
+By **Theorem 2.5.6** $\sum_{n=1}^\infty X_n/a_n$ converges a.s. and the result is from Kolmogorov's lemma.
+
+**Theorem 2.5.12** Let $X_1,X_2,...$ be i.i.d. with $EX_1=0$ and $E|X_1|^p<\infty$ where $1<p<2$. Then $S_n/n^{1/p}\to 0$ a.s.
+
+_Remark_ When the second moment is infinite this can be used for estimation the rate.
+
+<font color='red'>_proof of Theorem 2.5.12_</font> This proof is somewhat complicated. We prove step by step.
+
+First as before we truncate. Let $Y_k=X_k1_{|X_k|\leq k^{1/p}}$ and $T_n=Y_1+...+Y_n$.
+
+(i) it suffices to show for $Y_n$: $\sum_{n=1}^\infty P(X_n\neq Y_n)=\sum_{n=1}^\infty P(|X_k|^p>k)\leq E|X_k|^p<\infty$. By Borel Cantelli lemma, $P(Y_k\neq X_k\ i.o.)=0$. Notice the truncation is s.t. we can estimate in (ii) better.
+
+(ii) Estimate $var(Y_m/m^{1/p})$:
+$$
+\begin{aligned}
+\sum_{m=1}^\infty var(Y_m/m^{1/p})&\leq \sum_{m=1}^\infty EY_m^2/m^{2/p}
+\\&\leq \sum_{m=1}^\infty\sum_{n=1}^m\int_{(n-1)^{1/p}}^{n^{1/p}}\frac{2y}{m^{2/p}}P(|X_1|>y)dy
+\\&=\sum_{n=1}^\infty\int_{{(n-1)}^{1/p}}^{n^{1/p}}\sum_{m=n}^\infty \frac{2y}{m^{2/p}}P(|X_1|>y)dy
+\\&\leq\sum_{n=1}^\infty\int_{(n-1)^{1/p}}^{n^{1/p}}C(n-1)^{1-2/p}\ 2yP(|X_1|>y)dy
+\\&\leq\sum_{n=1}^\infty\int_{(n-1)^{1/p}}^{n^{1/p}}2Cy^{p-1}P(|X_1|>y)dy
+\\&=2CE|X_1|^p<\infty
+\end{aligned}
+$$
+By **Theorem 2.5.6 2.5.12** we can show $n^{-1/p}\sum_{m=1}^n (Y_m-\mu_m)\to 0$ a.s.
+
+(iii) Estimate $\mu_m/m^{1/p}$, where $\mu_m=EY_m$. Since $EX_m=0$, $\mu_m=-E(X_11_{|X_i|>m^{1/p}})$
+$$
+|\mu_m|\leq E(|X|1_{|X|>{m^{1/p}}})=m^{1/p}E(|X|/m^{1/p}1_{|X|/m^{1/p}>1})\leq m^{1/p}E(|X|^p/m1_{|X|^p>m})
+$$
+Since $\sum m^{1-1/p}<\infty$, $E(|X|^p1_{|X|^p>m})\to 0$, we have $\sum n^{-1/p}\mu_n\to 0$ a.s..
+
+#### 2.5.2 Infinite Mean
+
+**Theorem 2.5.13** Let $X_1,X_2,...$ be i.i.d. with $E|X_1|<\infty$ and let $S_n=X_1+...+X_n$. Let $A_n$ be a sequence of positive numbers with $a_n/n$ increasing. Then $\limsup_{n\rightarrow\infty} |S_n|/a_n=0\ or\ \infty$ according as $\sum_n P(|X_1|>a_n)<\infty\ or\ =\infty$.
