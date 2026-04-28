@@ -652,6 +652,109 @@ $$
 $$
 Since $\sum m^{1-1/p}<\infty$, $E(|X|^p1_{|X|^p>m})\to 0$, we have $\sum n^{-1/p}\mu_n\to 0$ a.s..
 
+_Remark_ The inverse is also true:
+$$
+E|X_i|^p\leq \sum_{n=0}^\infty P(|X_1|^p>n)=\sum_{n=0}^\infty P(|X_i|>n^{1/p})<\infty
+$$
+Since to ensure $S_n/n^{1/p}\to 0$, $|X_i|>n^{1/p}\ i.o.$ is not allowed. 
+
 #### 2.5.2 Infinite Mean
 
-**Theorem 2.5.13** Let $X_1,X_2,...$ be i.i.d. with $E|X_1|<\infty$ and let $S_n=X_1+...+X_n$. Let $A_n$ be a sequence of positive numbers with $a_n/n$ increasing. Then $\limsup_{n\rightarrow\infty} |S_n|/a_n=0\ or\ \infty$ according as $\sum_n P(|X_1|>a_n)<\infty\ or\ =\infty$.
+**Theorem 2.5.13** Let $X_1,X_2,...$ be i.i.d. with $E|X_1|=\infty$ and let $S_n=X_1+...+X_n$. Let $a_n$ be a sequence of positive numbers with $a_n/n$ increasing. Then $\limsup_{n\rightarrow\infty} |S_n|/a_n=0\ or\ \infty$ according as $\sum_n P(|X_1|>a_n)<\infty\ or\ =\infty$.
+
+<font color='red'>_proof of Theorem 2.5.13_</font> 
+
+If $\sum_n P(|X_1|>a_n)=\infty$, we can estimate
+$$
+\sum_{n=1}^\infty P(|X_1|/a_n\geq k)\geq \sum_{n=1}^\infty P(|X_1|/a_{kn}\geq 1)\geq \frac{1}{k}\sum_{n=k}^\infty P(|X_1|/a_n\geq 1)=\infty
+$$
+Since $a_n/n$ and $a_n$ are both increasing. This implies $|X_n|/a_n\geq k$ i.o.. Since $k$ is arbitrary, this implies $\limsup_{n\rightarrow\infty}|X_n|/a_n=\infty$. To pass to $S_n$, notice $\max\{|S_{n-1}|, |S_n| \}\geq |X_n|/2$. So $\limsup_{n\rightarrow\infty}|S_n|/a_n=\infty$.
+
+If $\sum_n P(|X_1|>a_n)<\infty$, we still truncate. Define $Y_n=X_n1_{|X_n|<a_n}$ and $T_n$ are partial sums. Since the series is finite, $P(X_n\neq Y_n\ i.o.)=0$. So it suffices to study $Y_n$. 
+$$
+\begin{aligned}
+\sum_{n=1}^\infty var(Y_n/a_n)&\leq \sum_{n=1}^\infty EY_n^2/a_n^2
+\\&=\sum_{n=1}^\infty\sum_{m=1}^n EY_n^21_{a_{m-1}\leq |Y_n|\leq a_m}/a_n^2
+=\sum_{m=1}^\infty\sum_{n=m}^\infty EY_n^21_{a_{m-1}\leq |Y_n|\leq a_m}/a_n^2
+\\&\leq\sum_{m=1}^\infty\sum_{n=m}^\infty(a_m/a_n)^2P(a_{m-1}\leq |Y_n|\leq a_m)\leq\sum_{m=1}^\infty CmP(a_{m-1}\leq |Y_n|\leq a_m)
+\\&=\sum_{m=1}^\infty\sum_{n=1}^m CP(a_{m-1}\leq |Y_n|\leq a_m)=\sum_{n=1}^\infty\sum_{m=n}^\infty CP(a_{m-1}\leq |Y_n|\leq a_m)
+\\&=\sum_{n=1}^\infty CP(|Y_n|\geq a_{n-1})\leq C\sum_{n=1}^\infty P(|X_n|\geq a_{n-1})<\infty
+\end{aligned}
+$$
+So $(T_n-ET_n)/a_n\to 0$.
+
+And $ET_n/a_n\to 0$:
+$$
+\begin{aligned}
+\bigg |a_n^{-1}\sum_{m=1}^n EY_m\bigg |&\leq a_n^{-1}nE(|X_n|1_{|X_n|<a_n})
+\\&\leq a_n^{-1}n(a_N+E(|X_n|1_{a_N\leq |X_i|<a_n}))
+\end{aligned}
+$$
+The first term, $a_N(n/a_n)\to 0$, since $\sum_{k=1}^\infty P(|X_i|\geq kt)\geq E|X_i|/t=\infty$. So to make $\sum_n P(|X_1|>a_n)=\infty$, $a_n/n\uparrow\infty$.
+
+The second term, as we estimate before,
+$$
+a_n^{-1}nE(|X_n|1_{a_N\leq |X_n|\leq a_n})=a_n^{-1}n\sum_{k=N}^{n-1}E|X_n|1_{a_k\leq |X_n|\leq a_{k+1}}\leq \sum_{k=N}^{n-1}a_{k+1}^{-1}(k+1)E|X_n|1_{a_k\leq |X_n|\leq a_{k+1}}\leq \sum_{k=N}^{n-1}(k+1)P(a_k\leq |X_n|\leq a_{k+1})\leq \infty
+$$
+The last step is similar to the end of estimation of $var(Y_n)/a_n$.
+
+**Exercise 2.5.10 by P.Levy** Let $X_1,X_2,...$ be independent and $S_n$ is the partial sum. If $\lim_{n \to \infty}S_n$ exists in prob. Then it exists a.s.
+
+<font color='red'>_proof of Exercise 2.5.10_</font> First we need a lemma:
+
+**Exercise 2.5.9** Let $S_{m,n}=S_n-S_m$, then
+$$
+P(\max_{m<j\leq n}|S_{m,j}|>2a)\min_{m<k\leq n}P(|S_{k,n}|\leq a)\leq P(|S_{m,n}|>a)
+$$
+<font color='red'>_proof of Excerise 2.5.9_</font>
+$$
+LHS\leq \sum_{j=m+1}^n P(j=\text{argmax}_{m<j\leq n}|S_{m,j}|)P(|S_{m,j}|>2a)P(|S_{j,n}|\leq a)\leq \sum_{j=m+1}^n P(j=\text{argmax}_{m<j\leq n}|S_{m,j}|)P(|S_{m,n}|>a)=RHS
+$$
+return to our proof. Suppose $S_n\to x$ in prob., i.e., $P(|S_n-x|>\epsilon)\to 0\forall \epsilon>0$. Then 
+$$
+P(|S_{m,n}|>2\epsilon)\leq P(|S_m-x|>\epsilon)+P(|S_n-x|>\epsilon)\to 0,\ m,n\to\infty
+$$
+Use the lemma,
+$$
+P(\max_{m<j\leq n}|S_{m,j}|>2\epsilon)\min_{m<k\leq n}P(|S_{k,n}|\leq \epsilon)\leq P(|S_{m,n}|>\epsilon)
+$$
+We can argue
+$$
+P(\max_{m<j\leq n}|S_{m,j}|>2\epsilon)\to 0, m,n\to\infty
+$$
+Let $n\to\infty$, we have $P(\sup_{j>m}|S_{m,j}|>2\epsilon)\to 0$ as $n\to\infty$. This already implies $S_n$ converges a.s..
+
+_Remark_ This inequality seems to be useful since it can estimate the "inside" of a series using boundary. Again, this is similar with reflection principle.
+
+### 2.6 Renewal Theory
+
+Let $\xi_1,\xi_2,...$ be i.i.d. positive r.v.s, and define T by $T_0=0, T_k=T_{k-1}+\xi_k\ \text{for}\ k\geq 1$.$T_k$ is called **renewals** since the process starts afresh at $T_k$, i.e., $\{T_{k+j}-T_k \}=_d \{T_j \}$. Let $N_t=\inf\{k:T_k>t \}$ denotes the number of renewals in $[0,t]$.
+
+**Theorem 2.6.1** As $t\to\infty$, $N_t/t\to1/\mu$ a.s., where $\mu=E\xi_i\in(0,\infty]$. $1/\infty=0$ (**Theorem 2.4.7**)
+
+Now we consider the asymptotic behavior of $U(t)=EN_t$.
+
+**Theorem 2.6.2 Wald's equation** Let $X_1,X_2,...$ be i.i.d. with $E|X_1|<\infty$. If $N$ is a stopping time and $EN<\infty$, then $ES_N=EX_1EN$.
+
+<font color='red'>_proof of Theorem 2.6.2_</font> First suppose $X_i\geq 0$,
+$$
+\begin{aligned}
+ES_N&=\int S_NdP=\sum_{n=1}^\infty\int S_n1_{N=n}dP=\sum_{m=1}^\infty\sum_{m=1}^n\int X_m1_{N=n}dP
+\\&=_{(\text{Fubini})}\sum_{m=1}^\infty\sum_{n=m}^\infty\int X_m1_{N=n}dP=\sum_{m=1}^\infty\int X_m1_{N\geq m}dP
+\\&=\sum_{m=1}^\infty EX_m1_{N\geq m}=\sum_{m=1}^\infty EX_mP(N\geq m)=EX_1EN
+\end{aligned}
+$$
+For the general case, since $|X_m|\geq 0$, so the above identity holds for $|X_m|$. This implies for the step using Fubini theorem, the terms are absolutely summable. This indicates that for general case, the Fubini theorem also holds. SO the result is the same.
+
+**Theorem 2.6.3** As $t\to\infty$, $U(t)/t\to1/\mu$.
+
+<font color='red'>_proof of Theorem 2.6.3_</font> We will apply Wald's equation to the stopping time $N_t$, where $t$ is fixed.
+
+- $EN(t)<\infty$. For $\epsilon>0$, pick $P(\xi>\delta)=\epsilon$, $K\delta>t$. So we have
+  $$
+  P(N_t>K)=P(T_K<t)=1-P(T_K>t)\leq1-\epsilon^K
+  \\P(N_t>mK)=P(T_{mK}<t)\leq P(T_K<t)^m\leq (1-\epsilon^K)^m
+  $$
+  by the renewal property. Since RHS is summable, $EN_t<\infty$.
+
+- Apply Wald's equality, $\muEN_t=E_{{N_t}}
