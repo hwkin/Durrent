@@ -730,6 +730,8 @@ _Remark_ This inequality seems to be useful since it can estimate the "inside" o
 
 Let $\xi_1,\xi_2,...$ be i.i.d. positive r.v.s, and define T by $T_0=0, T_k=T_{k-1}+\xi_k\ \text{for}\ k\geq 1$.$T_k$ is called **renewals** since the process starts afresh at $T_k$, i.e., $\{T_{k+j}-T_k \}=_d \{T_j \}$. Let $N_t=\inf\{k:T_k>t \}$ denotes the number of renewals in $[0,t]$.
 
+<img src="C:\Users\m1500\Desktop\Durrent\images\renewal process.png" alt="renewal process" style="zoom:50%;" />
+
 **Theorem 2.6.1** As $t\to\infty$, $N_t/t\to1/\mu$ a.s., where $\mu=E\xi_i\in(0,\infty]$. $1/\infty=0$ (**Theorem 2.4.7**)
 
 Now we consider the asymptotic behavior of $U(t)=EN_t$.
@@ -744,7 +746,7 @@ ES_N&=\int S_NdP=\sum_{n=1}^\infty\int S_n1_{N=n}dP=\sum_{m=1}^\infty\sum_{m=1}^
 \\&=\sum_{m=1}^\infty EX_m1_{N\geq m}=\sum_{m=1}^\infty EX_mP(N\geq m)=EX_1EN
 \end{aligned}
 $$
-For the general case, since $|X_m|\geq 0$, so the above identity holds for $|X_m|$. This implies for the step using Fubini theorem, the terms are absolutely summable. This indicates that for general case, the Fubini theorem also holds. SO the result is the same.
+For the general case, since $|X_m|\geq 0$, so the above identity holds for $|X_m|$. This implies for the step using Fubini theorem, the terms are absolutely summable. This indicates that for general case, the Fubini theorem also holds. So the result is the same.
 
 **Theorem 2.6.3** As $t\to\infty$, $U(t)/t\to1/\mu$.
 
@@ -757,4 +759,448 @@ For the general case, since $|X_m|\geq 0$, so the above identity holds for $|X_m
   $$
   by the renewal property. Since RHS is summable, $EN_t<\infty$.
 
-- Apply Wald's equality, $\muEN_t=E_{{N_t}}
+- Apply Wald's equality, $\mu EN_t=ET_{{N_t}}\geq t$ 
+
+- For the inverse equality, if $\xi\leq c$ a.s., then $\mu EN_t=ET_{N_t}\leq t+c$. For general case, define $\bar{\xi_i}=\xi_i\wedge c$ and define $\bar T_n$, $\bar{N_t}$ in the obvious way. Then we have $EN_t\leq E\bar N_t\leq (t+c)/E(\bar \xi_i)$. This implies $\liminf_{t\rightarrow\infty}EN_t/t\leq 1/E\bar\xi_i$. Let $c\to\infty$, we can get the inverse inequality.
+
+Generalize the definition of $U$, we can consider 
+$$
+U(A)=\sum_{n=1}^\infty P(T_n\in A)
+$$
+$U(t)=U([0,t])$ in this sense. Notice by this we define a measure called **renewal measure**. 
+
+The asymptotic behavior of $U(t)$ depends on whether the distribution $F$ of $\xi_i$ is arithmetic, i.e., concentrated on $\{\delta,2\delta,3\delta,... \}$ for some $\delta>0$ or nonarithmetic. The first case will be treated using Markov chain, now we consider the second case.
+
+**Theorem 2.6.4 Blackwell's renewal theorem** If $F$ is nonarithmetic then $U([t,t+h])\to h/\mu$ as $t\to\infty$.
+
+<font color='red'>_proof of Theorem 2.6.4_</font>
+
+First we consider the case $\mu<\infty$. Our strategy is coupling.
+
+Now we work on some preparations. 
+
+**Definition** In the renewal process, if $T_0\geq 0$ is independent of $\xi_1,\xi_2,...$ and has distribution $G$, then $T_{k+1}=T_k+\xi_k$ defines a **delayed renewal process**, and $G$ is the **delay distribution**. Let $N_t=\inf \{k:T_k> t \}$, $V(t)=EN_t$. So $V(t)=Y_0+U(t)$, we have $V=U*G$. 
+
+Similarly, to attain an equation w.r.t. $F$, regard $\xi_1$ as delay and we have $U=1_{[0,\infty)}(t)+U*F$. Combine these, we have $V=G+U*G*F=G+V*F$.
+
+If we expect $V(t)=t/\mu$, some calculations indicate $G(t)=\frac{1}{\mu}\int_0^t1-F(y)dy$. Actually, this is the distribution of the age of the last renewal $A_t=t-T_{N(t)-1}$ in the non-delay case. The magic is, if we set $Y_0$ to have this law, the delayed process is stationary, i.e., $N_t-N_s=_dN_{t-s}$.
+
+Return to the proof. Let $T_n$ be a renewal process and $T_n'$ be an independent stationary renewal process. 
+
+- Our first goal is to find $J,K$ s.t. $|T_J-T_K'|<\epsilon$ and increments $T_{J+i}-T_J$, $T_{K+i}'-T_K'$ are i.i.d. sequences independent of what has come before.
+
+- Let $\eta_1,\eta_2,...$ and $\eta_1',\eta_2',...$ $\sim B(0,1/2)$ be i.i.d. independent of $T_n$ and $T_n'$, $\nu_n=\eta_1+...+\eta_n$, $\nu_n'=1+\eta_1'+...+\eta_n'$, $S_n=T_{\nu_n}$, $S_n'=T_{\nu_n'}'$.
+
+- Notice $\Delta_{n+1}=S_{n+1}-S_{n+1}'-(S_n-S_n')$ has symmetric distribution, so it has mean 0. Moreover $P(\Delta_{n+1}=0)\geq 1/4$ (comes from $\eta_{n+1}=\eta_{n+1}'$).This random walk is actually neighborhood recurrent so if $N=\inf\{n:|S_n-S_n'|<\epsilon \}$, $P(N<\infty)=1$.
+
+- Define $J=\nu_N$, $K=\nu_N'$, and 
+  $$
+  T_n''=\left\{\begin{aligned}&T_n&if\ J\geq n\\&T_J+T_{K+(n-J)}'-T_K'&if\ J<n\end{aligned}\right.
+  $$
+  <img src="C:\Users\m1500\Desktop\Durrent\images\coupling of renewal process.png" alt="coupling of renewal process" style="zoom:50%;" />
+
+  i.e., $T_{J+i}''-T_J''=_dT_{K+i}'-T_K'$. Meanwhile, $T_n=_d T_n''$.
+
+  _Remark_ We constructed a recurrent random walk to let two independent renewal process  to be close enough at some step, then consider the later increments.
+
+- Let $N'[s,t]=|\{n:T_n'\in[s,t] \}|$ and $N''[s,t]=|\{n:T_n''\in[s,t] \}|$, on $T_J\leq t$,
+  $$
+  N''[t,t+h]=N'[t+T_K'-T_J,t+h+T_K'-T_J]\geq N'[t+\epsilon,t+h-\epsilon],\leq N'[t-\epsilon,t+h+\epsilon]
+  $$
+  So when $\epsilon<h/2$,
+  $$
+  U([t,t+h])=EN''[t,t+h]\geq EN'[t+\epsilon,t+h-\epsilon]1_{T_J\leq t}=\frac{h-2\epsilon}{\mu}-EN'[t+\epsilon,t+h-\epsilon]1_{T_J\geq t}\geq \frac{h-2\epsilon}{\mu}-P(T_J>t)U(h)
+  $$
+
+  $$
+  U([t,t+h])\leq EN'[t-\epsilon,t+h+\epsilon]1_{T_J\leq t}+EN''[t,t+h]1_{T_J>t}\leq \frac{h+2\epsilon}{\mu}+P(T_J>t)U(h)
+  $$
+
+  Since $P(T_J>t)\to 0$ and $\epsilon$ is arbitrary, we finished our proof.
+
+- The case $\mu=\infty$ is referred to PTE.
+
+Now we consider **renewal equation**: $H=h+H*F$. we have seen
+
+**Example 2.6.5** $h=1$: $U=1+U*F$
+
+**Example 2.6.6** $h=G$: $V=G+V*F$.
+
+**Example 2.6.7** $h=\frac{1}{\mu}\int_t^\infty 1-F(s)ds, H=U(t)-t/\mu$: $H=h+H*F$.
+
+**Example 2.6.8** Let $x>0$ be fixed and let $H(t)=P(T_{N(t)}-t>x)$, By considering the value of $T_1$, we get $H(t)=(1-F(t+x))+\int_0^t H(t-s)dF(s)$.
+
+These examples motivate us to consider
+
+**Theorem 2.6.9** If $h$ is bounded then the function $H(t)=\int_0^t h(t-s)dU(s)$ is the unique solution of renewal equation that is bounded on bounded intervals. (Notice $U=\sum_{n=0}^\infty F^{n*}$)
+
+<font color='red'>_proof of Theorem 2.6.9_</font> Let $U_n(A)=\sum_{m=0}^nP(T_m\in A)$ and $H_n(t)=\int_0^t h(t-s)dU_n(s)=\sum_{m=0}^{n}(h*F^{m*})(t)$. So we have $H_{n+1}=h+H_n*F$. 
+
+Since $U(t)<\infty$, we have $U(t)-U_n(t)\to 0$. Since $h$ is bounded, $|H_n(t)-H(t)|\leq \|h\|_\infty|U(t)-U_n(t)|$. So on any bounded interval, $H_n\rightrightarrows H$.
+
+Meanwhile, $|H_n*F-H*F|\leq\sup_{s\leq t}|H_n(s)-H(s)|\leq\|h\|_\infty|U_t-U_n(t)|$ since $U-U_n$ is increasing. So on any bounded interval $H_n*F\rightrightarrows H*F$. In the iteration equation let $n\to\infty$, $H$ is the solution.
+
+For uniqueness, if $H_1$, $H_2$ are solutions then $K=H_1-H_2$ satisfies $K=K*F$. Then $K=K*F^{n*}$.Since $K$ is bounded on bounded intervals, $|K(t)|\leq \sup|K|F^{n*}(t)\to 0$. So $H_1=H_2$.
+
+_Remark_ This proof is valid when $F(\infty)=P(\xi_i<\infty)<1$. In this case, we have a **terminating renewal process**. After a geometric number of trials with mean $1/(1-F(\infty))$, $T_n=\infty$.
+
+**Example 2.6.10 Pedestrian delay** Let $X_t$ be a Poisson process with rate $\lambda$, and
+$$
+M=\inf\{ t\geq 0:\text{there are no arrivals in } (t,t+1] \}:=\inf\{T_n:T_{n+1}-T_n\geq 1 \}
+$$
+ Then $H(t)=P(M\leq t)$ satisfies
+$$
+H(t)=e^{-\lambda}+\int_0^1H(t-y)\lambda e^{-\lambda y}dy
+$$
+So $H(t)=e^{\lambda} \sum_{n=1}^\infty F^{n*}(t)$.
+
+To calculate $EM$, think of this as a geometric distribution with success prob. $p=e^{-\lambda}$, and every trial has mean $\mu=\int_0^1 x\lambda e^{-\lambda x}dx=\lambda^{-1}-(1+\lambda^{-1})e^{-\lambda}$
+$$
+EM=\sum_{n=0}^\infty p(1-p)^nn\mu=(1/p-1)\mu
+$$
+**Example 2.6.11 Cramer's estimation of ruin** Consider an insurance company that collects money at rate $c$ and experience i.i.d. claims at the arrival time of a Poisson process $N_t$ with rate 1. If its initial capital is $x$, then its wealth at time $t$ is $W_x(t)=x+ct-\sum_{m=1}^{Nt} Y_i$, where $Y_i$ are i.i.d. with distribution $G$ and mean $\mu$. Let $R(x)=P(W_x(t)\geq 0\forall t>0)$ be the prob. of never going bankrupt starting from $x$. First we have
+$$
+R(x)=\int_0^\infty e^{-s}\int_0^{x+cs}R(x+cs-y)dG(y)ds
+$$
+To make it a renewal equation, we can derive by
+
+- let $t=x+cs$
+  $$
+  R(x)e^{-x/c}=\int_x^\infty e^{-t/c}\int_0^tR(t-y)dG(y)\frac{dt}{c}
+  $$
+
+- differentiate,
+  $$
+  R'(x)e^{-x/c}-1/cR(x)e^{-x/c}=-e^{-x/c}/c\int_0^xR(x-y)dG(y)
+  \\cR'(x)=(R(x)-\int_0^xR(x-y)dG(y))
+  $$
+
+- integrate back,
+  $$
+  \begin{aligned}
+  c(R(w)-R(0))&=\int_0^wR(x)dx-\int_0^w\int_0^xR(x-y)dG(y)dx
+  \\&=\int_0^w R(x)dx-\int_0^w\int_y^wR(x-y)dxdG(y)
+  \\&=\int_0^w R(x)dx+\int_0^w\int_y^wR(x-y)dxd(1-G(y))
+  \\&=\int_0^w R(x)dx-\int_0^wR(x)dx+\int_0^w(1-G(y))R(w-y)dy
+  \end{aligned}
+  $$
+
+- Finally,
+  $$
+  R(w)=R(0)+\int_0^w R(w-y)\frac{1-G(y)}{c}dy
+  $$
+
+Now we analyze this renewal process. If $\mu>c$,
+$$
+\frac{1}{t}(ct-\sum_{m=1}^{Nt} Y_i)\to c-\mu<0\ a.s.
+$$
+So $R(x)\equiv 0$.
+
+When $\mu<c$, $F(x)=\int_0^x\frac{1-G(y)}{c}dy$ is a defective prob. distribution with $F(\infty)=\mu/c$. The renewal equation can be written as $R=R(0)+R*F$. It's solution is $R(w)=R(0)U(w)$. To obtain $R(0)$, notice when $w\to\infty$, we have $R(\infty)=1$ since in this case the company will never go bankrupt and $U(\infty)=\sum_{n=0}^\infty F^{*n}(\infty)=\sum_{n=0}^\infty (1-F(\infty))^n=(1-F(\infty))^{-1}=(1-\mu/c)^{-1}$. So $R(0)=1-\mu/c$.
+
+For nonarithmetic case, the basic fact about solutions of the renewal equation is:
+
+**Theorem 2.6.12 The renewal theorem** If $F$ is nonarithmetic and $h$ is directly Riemann integrable then as $t\to\infty$, $H(t)\to\frac{1}{\mu}\int_0^\infty h(s)ds$.
+
+_Remark_ Since $H(t)=\int_0^t h(t-s)dU(s)$ and $dU(s)\to ds/\mu$ by Blackwell's renewal theorem, intuitively this holds. As in PTE, we will introduce "directly Riemann integrable" in the proof.
+
+<font color='red'>_proof of Theorem 2.6.12_</font> Start from step functions of Riemann style, suppose $h(s)=\sum_{k=0}^\infty a_k1_{[k\delta,(k+1)\delta)}(s)$, where $\sum_{k=1}^\infty |a_k|<\infty$. Since $U([t,t+\delta])\leq U(\delta)<\infty$ (since the renewal process during $[t,t+\delta]$ is indeed a delayed renewal process.) , use Blackwell's renewal process we have (estimate finite terms and tail respectively)
+$$
+\int_0^th(t-s)dU(s)=\sum_{k=0}^\infty a_k U((t-(k+1)\delta,t-k\delta])\to \frac{1}{\mu}\sum_{k=0}^\infty a_k\delta,\ t\to\infty
+$$
+If $h$ is arbitrary function on $[0,\infty)$, let
+$$
+I^\delta=\sum_{k=0}^\infty\delta\sup\{h(x):x\in[k\delta,(k+1)\delta) \}
+\\I_\delta=\sum_{k=0}^\infty\delta\inf\{h(x):x\in[k\delta,(k+1)\delta] \}
+$$
+we have 
+$$
+\frac{I_\delta}{\mu}\leq\liminf_{t\rightarrow\infty}\int_0^th(t-s)dU(s)\leq\limsup_{t\rightarrow\infty}\int_0^th(t-s)dU(s)\leq\frac{I^\delta}{\mu}
+$$
+We call $h$ is **directly Riemann integrable** if $I_\delta$ and $I^\delta$ have the same limit as $\delta\to 0$.In this case, $\int_0^th(t-s)dU(s)\to I/\mu$. In common Riemann integration, $\int_0^\infty f(x)dx=\lim_{t \to \infty}\int_0^tf(x)dx$, but in this case we directly segment $[0,\infty)$. This leads us to ask what kind of functions are directly Riemann integrable.
+
+**Lemma 2.6.13** If $h(x)\geq 0$ is decreasing with $h(0)<\infty$ and $\int_0^\infty h(x)dx<\infty$, $h$ is directly Riemann integrable.
+
+Return to previous examples. Notice for **Example 2.6.5 2.6.6**, $h\to 1$, so it's not integrable.
+
+**Example 2.6.14 Continuation of Example 2.6.7** $h(t)=\frac{1}{\mu}\int_{[t,\infty)}1-F(s)ds$ is decreasing and $h(0)=1<\infty$ Moreover, $\int_0^\infty h(t)=E\xi_i^2/2\mu$. So when $E\xi_i^2<\infty$, we have $U(t)-t/\mu\to E\xi_i^2/2\mu^2$ as $t\to\infty$.
+
+When the renewal process is a rate $\lambda$ Poisson process, $U(t)=1+\lambda t$, $\mu=\frac{1}{\lambda}$ and $E\xi_i^2=\frac{2}{\lambda^2}$, the limit can be verified to be true.
+
+**Example 2.6.15 Continuation of Example 2.6.8** $h(t)=1-F(t+x)$ is decreasing, $h(0)=1-F(x)<\infty$, and $\int_0^\infty h(t)dt$ is finite iff $\mu<\infty$. So 
+$$
+P(T_{N(t)}-t>x)\to\frac{1}{\mu}\int_0^\infty h(s)ds=\frac{1}{\mu}\int_x^\infty 1-F(t)dt
+$$
+So the distribution of **residual waiting time** converges to the delay distribution that produces the stationary renewal process. Denote $B_t=T_{N(t)}-t$.
+
+**Exercise 2.6.4** Let $A_t=t-T_{N(t)-1}$ be the age at time t. $H(t)=P(A_t>x)$​ satisfies the renewal equation
+$$
+H(t)=1_{(x,\infty)}(t)(1-F(t))+\int_0^tH(t-s)dF(s)
+$$
+So $P(A_t>x)\to \frac{1}{\mu}\int_0^\infty (1-F(t))1_{(x,\infty)}(t)dt$. 
+
+_Remark_ Notice this has the same law with the limit of residual lifetime. The symmetry is reasonable, since if at some time $t$ is age and $s$ is residual lifetime then at another time $t$ can be residual lifetime and $s$ can be the age. Moreover, these two are not independent in general. This can be shown in 
+
+**Exercise 2.6.6** $P(A_t>x,B_t>y)\to\frac{1}{\mu}\int_{x+y}^\infty (1-F(t))dt$.
+
+<font color='red'>_proof of Exercise 2.6.6_</font> Let $H(t)=P(A_t>x,B_t>y)$. $H$ satisfies renewal equation
+$$
+H(t)=1_{(x+y,\infty)}(t)[1-F(t)]+\int_0^t H(t-s,y)ds
+$$
+So $H(t)\to\frac{1}{\mu}\int_0^\infty 1_{(x+y,\infty)}(t)[1-F(t)]dt$.
+
+From this, we can obtain the limit"lifetime" distribution $A_t+B_t$ 
+$$
+P(A_t+B_t>z)=\frac{1}{\mu}\int_z^\infty tdF(t)
+$$
+**Exercise 2.6.5** Take Poisson process with rate $\lambda$ as example. $A_t$ has distribution (Notice this is not limit distribution) by **Theorem 2.6.9**,
+$$
+P(A_t>x)=\left\{\begin{aligned}&0,&x>t\\&e^{-\lambda x}-e^{-\lambda t},&x\leq t\end{aligned}\right.
+$$
+which has the same distribution with $\xi_i\wedge t$. This results from the memoryless property. 
+
+$B_t$ has the distribution $P(B_t>x)=e^{-\lambda x}$. So when $t\to\infty$, their distributions are the same.
+
+$A_t+B_t$ satisfies renewal equation: set $H(t)=P(A_t+B_t\geq x)$,
+$$
+H(t)=(1-F(x))1_{(0,x)}(t)+\int_0^tH(t-s)dF(s)
+$$
+So it has distribution $H(t)=\lambda (t\wedge x)e^{-\lambda x}$.
+
+Actually, one can verify $A_t$ and $B_t$ are independent by using the renewal equation in **Exercise 2.6.6**. This is a special case, which also results from memoryless property.
+
+**Exercise 2.6.7 Alternating renewal process** Let $\xi_1,\xi_2,...>0$ be i.i.d. with distribution $F_1$ and $\eta_1,\eta_2,...>0$ be i.i.d. with distribution $F_2$. Let $T_0=0$ and for $k\geq 1$ let $S_k=T_{k-1}+\xi_k$, $T_k=S_k+\eta_k$. Let $F=F_1*F_2$ and $H_t=P(T_k<t<S_{k+1}\text{ for some }k\geq 0)$.If $F$ is nonarithmetic then as $t\to\infty$, $H(t)\to\mu_1/(\mu_1+\mu_2)$, where $\mu_i$ is the mean of $F_i$.
+
+<font color='red'>_proof of Exercise 2.6.7_</font> The renewal equation for $H(t)$ is 
+$$
+H(t)=1-F_1(t)+\int_0^tH(t-s)dF(s)
+$$
+and its limit is given by
+$$
+H(t)\to\frac{1}{\mu_1+\mu_2}\int_0^\infty1-F_1(s)ds=\frac{\mu_1}{\mu_1+\mu_2}
+$$
+**Exercise 2.6.9 Renewal densities** 
+
+- If $F(t)$ has a directly Riemann integrable density function $f(t)$, then $V=U-1_{[0,\infty)}$ has a density $v$ that satisfies $v(t)=f(t)+\int_0^t v(t-s)dF(s)$.
+
+- <font color='red'>_proof_</font> First the density is Radon-Nikodym derivative. Since $U(t)=\sum_{n=0}^\infty F^{*n}$, $V=\sum_{n=1}^\infty F^{*n}$. If $F$ has density $f$, $V$ has density $\sum_{n=1}^\infty f^{*n}$, so
+  $$
+  v=f+\sum_{n=2}^\infty f^{*n}=f+\sum_{n=2}^\infty\int_0^\infty f^{*(n-1)}(t-s)dF=f+\int_0^\infty v(t-s)dF
+  $$
+
+- By renewal theorem, if f is directly Riemann integrable then $v(t)\to\frac{1}{\mu}\int_0^\infty f(t)dt=1/\mu$. This result can be seen Blackwell renewal theorem when $\delta\to 0$.
+
+### 2.7 Large Derivations
+
+Let $X_1,X_2,...$ be i.i.d. and let $S_n=X_1+X_2+...$. We will investigate the rate at which $P(S_n>na)\to 0$ for $a>\mu=EX_i$. 
+
+The final result is, if the moment-generating function $\varphi(\theta)=E\exp(\theta X_i)<\infty$ for some $\theta>0$, then $P(S_n\geq na)\to 0$ exponentially rapidly and we will identify 
+$$
+\gamma(a)=\lim_{n \to \infty}\frac{1}{n}\log P(S_n\ge na)
+$$
+Our first step is to prove that the limit exists.
+
+**Observation** let $\pi_n=P(S_n\ge na)$, since $S_m, S_{n+m}-S_m$ are independent, 
+$$
+\pi_{m+n}\geq P(S_m\geq ma,S_{n+m}-S_m\geq na)=\pi_m\pi_n
+$$
+Let $\gamma_n=\log\pi_n$ to transform multiplication into addition, then $\gamma_{m+n}\geq \gamma_m+\gamma_n$. For this property we have:
+
+**Lemma 2.7.1** If $a_{m+n}\geq a_m+a_n$, then $a_n/n\to\sup_m a_m/m$.
+
+<font color='red'>_proof of Lemma 2.7.1_</font> Clearly $\limsup_{n\rightarrow\infty} a_n/n\leq\sup a_m/m$. It suffices to show $\liminf_{n\rightarrow\infty} a_n/n\geq a_m/m\ \forall m$. Writing $n=km+l$ with $0\leq l<m$, we have $a_n\geq ka_m+a_l$, so
+$$
+a_n/n\geq \frac{km}{km+l}a_m/m+a_l/n
+$$
+let $n\rightarrow\infty$, $\lim RHS=a_m/m$. 
+
+This implies $\gamma_m/m$ has a negative limit $\gamma(a)$, and
+$$
+P(S_n\geq n\alpha)\leq e^{n\gamma(a)}
+$$
+This conclusion is valid for any distribution, but it's not very useful if $\gamma(a)=0$. For the rest of this section, we will suppose:
+
+**Hypothesis**  $\varphi(\theta)<\infty$ for some $\theta>0$. We can deduce some properties:
+
+- Let $\theta_+=\sup\{\theta:\varphi(\theta)<\infty\}$ and $\theta_-=\{\theta:\varphi(\theta)<\infty \}$. Then we have 
+
+  **Proposition** $\varphi(\theta)<\infty$ for all $\theta\in(\theta_-,\theta_+)$.
+
+  <font color='red'>_proof_</font> For $\theta\in(\theta_-,\theta_+)$, pick $a<\theta<b$ s.t. $\varphi(a),\varphi(b)<\infty$. Then $\theta=ta+(1-t)b$ for some $t\in[0,1]$. Then we have
+  $$
+  E\exp(\theta X_i)=E\exp((ta+(1-t)b)X_i)=E\exp(taX_i)\exp((1-t)bX_i)\leq [E\exp(aX_i)]^t[E\exp(bX_i)]^{1-t}<\infty
+  $$
+  So $\{\theta:\varphi(\theta)<\infty \}$ is a convex set. On $\mathbb R$, it can only be an interval.
+  
+- **Proposition** $\varphi$ is differentiable on $[0,\theta_+)$.
+
+  <font color='red'>_proof_</font> 
+
+  (i) $\kappa(\theta)$ is cts on $[0,\theta_+)$: $\forall \theta'\geq 0$, pick $0<\theta'<\theta_0<\theta_+$, we have $e^{\theta x}\leq 1+e^{\theta_0 x}\ \forall x\forall\theta\in[0,\theta_0]$. Since $E[1+e^{\theta_0 x}]<\infty$, by DCT we have $Ee^{\theta X}\to Ee^{\theta_0 X}$.
+
+  (ii) $\kappa(\theta)$ is differentiable on $[0,\theta_+)$: 
+
+  - First, if we formally differentiate, $\varphi'(\theta)=EXe^{\theta X}$. 
+
+    $EXe^{\theta X}<\infty$: First we have $|X|\leq (e^{\theta |X|}-1)/\theta$, so if we pick $\theta_0$ s.t. $0<\theta-\theta_0<\theta+\theta_0<\theta_+$, we have
+    $$
+    E|X|e^{\theta X}\leq 1/\theta_0 \ Ee^{\theta X+\theta_0 |X|}=1/\theta_0[Ee^{(\theta-\theta_0) X}+Ee^{(\theta+\theta_0)X}]<\infty
+    $$
+
+  - if $|h|<h_0$, we have $|e^{hx}-1|=|\int_0^{hx}e^y dy|\leq |hx|e^{h_0 x}$. Then by DCT, when $\theta+h_0<\theta_+$,
+    $$
+    \varphi'(\theta)=\lim_{h \to 0}\frac{\varphi(\theta+h)-\varphi(\theta)}{h}=\lim_{h \to 0}\int_\mathbb R \frac{e^{hx}-1}{h}e^{\theta x}dF(x)=\int_\mathbb Rxe^{\theta x}dF(x)
+    $$
+
+  _Remark_ Actually we can work on this repeatedly, i.e., $\varphi(\theta)\in C^\infty([0,\theta_+))$.
+
+Under the hypothesis, $\theta EX_i^+\leq E\exp(\theta X_i)<\infty$. So $\mu=EX^+-EX^-\in[-\infty,\infty)$.
+
+If $\theta>0$, Chebyshev's inequality implies $e^{\theta na}P(S_n\geq na)\leq E\exp(\theta S_n)=\varphi(\theta)^n$. Let $\kappa(\theta)=\log\varphi(\theta)$, we have $P(S_n\geq na)\leq\exp(-n(a\theta-\kappa(\theta)))$. Moreover, by the smoothness of $\varphi$, we have
+
+**Lemma 2.7.2** If $a>\mu$ and $\theta>0$ is small then $a\theta-\kappa(\theta)>0$.
+
+<font color='red'>_proof of Lemma 2.7.2_</font> Since $\varphi$ is differentiable, $\kappa$ is differentiable and $\kappa'=\varphi'/\varphi$, so $\kappa'(0)=EX$. If $a>EX$, then $(a\theta-\kappa(\theta))'|_{\theta=0}>0$.
+
+Moreover, $\phi(\theta)=a\theta-\kappa(\theta)$ is concave:
+$$
+\phi''(\theta)=-\frac{\varphi''(\theta)\varphi(\theta)-\varphi'^2(\theta)}{\varphi(\theta)^2}=-\frac{EX^2e^{\theta X}Ee^{\theta X}-[EXe^{\theta X}]^2}{\varphi(\theta)^2}<0
+$$
+by Cauchy inequality, and the equality holds when $X=c$ for some $c$. 
+
+On PTE, we define $F_\theta(x)=\frac{1}{\varphi(\theta)}\int_{-\infty}^x e^{\theta y}dF(y)$ to prove this
+
+- This is a distribution 
+- Radon-Nikodym derivative $\frac{dF_\theta}{dF}=\frac{e^{\theta x}}{\varphi(\theta)}$.
+- If $X\sim F_\theta$, $EX=\varphi'(\theta)/\varphi(\theta)$.
+
+**Hypothesis** $X$ is not a constant.
+
+Under this hypothesis, the extremum is unique. Let's begin discussing existence by examples.
+
+**Example 2.7.3 Normal distribution** Suppose $X\sim \mathcal N(0,1)$
+$$
+\varphi(\theta)=Ee^{\theta X}=\int_\mathbb R e^{\theta x}\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}dx=e^{\theta^2/2}
+$$
+In this case $\phi'(\theta)=a-\theta$, $F_\theta(x)=e^{-\theta^2/2}\int_{-\infty}^x e^{\theta y}\frac{1}{\sqrt{2\pi}}e^{-y^2/2}dy$, the CDF of $\mathcal N(\theta,1)$.
+
+**Example 2.7.4 Exponential distribution with parameter $\lambda$** If $\theta<\lambda$, we have
+$$
+\varphi(\theta)=\int_\mathbb R e^{\theta x}\lambda e^{-\lambda x}=\lambda/(\lambda-\theta)
+$$
+in this case $\phi'(\theta)=a-1/(\lambda-\theta)$ and $F_\theta(x)=(\lambda-\theta)\int_0^x e^{(\theta-\lambda) y} dy$, the CDF of $Exp(\lambda-\theta)$.
+
+**Example 2.7.5 Coin flips** $P(X_i=1)=P(X_i=-1)=1/2$,
+$$
+\varphi(\theta)=\frac{e^\theta+e^{-\theta}}{2}=\cosh \theta
+$$
+in this case $\phi'(\theta)=a-\tanh \theta$, and $F_\theta(1)=e^\theta/(e^\theta+e^{-\theta})$, $F_\theta(-1)=e^{-\theta}/(e^\theta+e^{-\theta})$.
+
+**Example 2.7.6 Perverted exponential ** Let $g(x)=Cx^{-3}e^{-x}$ for $x\geq 1$ and $0$ otherwise, $C$ is chosen to make $g$ a density. Then 
+$$
+\varphi(\theta)=\int_1^\infty e^{\theta x}Cx^{-3}e^{-x}dx
+$$
+and $\varphi(\theta)<\infty$  iff $\theta\leq 1$. in this case $\varphi'(\theta)/\varphi(\theta)\leq \varphi'(1)/\varphi(1)=\int_1^\infty Cx^{-3}dx/\int_1^\infty Cx^{-2}dx=2$.
+
+In **Example 2.7.3 2.7.4**, $\phi'(+\infty)=-\infty$, so we can always solve them; in **Example 2.7.5**,  $\phi'(+\infty)=1$; in **Example 2.7.6**, $\phi'\geq a-2$, so when $a>2$ we cannot solve this.
+
+First, if we suppose the existence of root of $\phi(\theta)$, 
+
+**Theorem 2.7.7** Suppose under above hypotheses, there is a $\theta_a\in(0,\theta_+)$ so that $a=\varphi'(\theta)/\varphi(\theta)$. Then as $n\to\infty$, we have $n^{-1}\log P(S_n\geq na)\to -a\theta_a+\log\varphi(\theta_a)$.
+
+<font color='red'>_proof of Theorem 2.7.7_</font> 
+
+- Since we have deduced $P(S_n\geq na)\leq \exp(-n(a\theta-\kappa(\theta)))$, and $\theta_a$ is the minimum point of $\exp(-n(a\theta-\kappa(\theta)))$, we have $\limsup_{n\rightarrow\infty} LHS\leq RHS$. 
+
+- For the inverse inequality, pick $\lambda\in(\theta_a,\theta_+)$, and let $X_1^\lambda,X_2^\lambda,...$ be i.i.d. with distribution $F_\lambda$, and let $S_n^\lambda=X_1^\lambda+...+X_n^\lambda$. To connect this with the distribution of $S_n$, we have 
+
+**Lemma 2.7.8** $\frac{dF^{*(n)}}{dF^{*(n)}_\lambda}=e^{-\lambda x}\varphi(\lambda)^n$.
+
+<font color='red'>_proof of Lemma 2.7.8_</font> By induction, when $n=1$ this holds. when $n\geq 1$,
+$$
+\begin{aligned}
+F^{*(n)}(z)&=F^{*(n-1)}*F(z)=\int_\mathbb R dF^{*(n-1)}(x)\int_{_\infty}^{z-x}dF(y)
+\\&=\int_\mathbb R e^{-\lambda x}\varphi(\lambda)^{n-1} dF_\lambda^{*(n-1)}(x)\int_\mathbb R dF_\lambda(y) e^{-\lambda y}\varphi(\lambda)1_{x+y\leq z}
+\\&=E(1_{S_{n-1}^\lambda+X_n^\lambda\leq z}e^{-\lambda(S_{n-1}^\lambda+X_n^\lambda)}\varphi(\lambda)^n)
+\\&=\int_{-\infty}^z dF_\lambda^{*(n)}(u)e^{-\lambda u}\varphi(\lambda)^n
+\end{aligned}
+$$
+Return to our proof. If $\nu>a$, the lemma and monotonicity imply
+$$
+P(S_n\geq na)\geq \int_{na}^{n\nu}e^{-\lambda x}\varphi(\lambda)^ndF_\lambda^{*(n)}(x)\geq \varphi(\lambda)^ne^{-\lambda n\nu}(F_\lambda^{*(n)}(n\nu)-F_\lambda^{*(n)}(na))
+$$
+$F_\lambda$ has mean $\varphi'(\lambda)/\varphi(\lambda)$, so if we have $a<\varphi'(\lambda)/\varphi(\lambda)<\nu$, by WLLN we have as $n\rightarrow\infty$, 
+$$
+F_\lambda^{*(n)}(n\nu)-F_\lambda^{*(n)}(na)\to 1
+$$
+So $\liminf_{n\rightarrow\infty} n^{-1}\log P(S_n>na)\geq -\lambda \nu+\log \varphi(\lambda)$. Since $\lambda>\theta_a$ and $\nu>a$ is arbitrary, the inverse inequality is proved. 
+
+Let $\gamma(a)=-a\theta_a+\log \varphi(\theta_a)$,
+
+**Example 2.7.3 Normal distribution** $\gamma(a)=-a^2/2$.
+
+**Example 2.7.4 Exponential distribution** $\gamma(a)=-a\lambda+1+\log a\lambda$.
+
+**Example 2.7.5 Coin flips** $\gamma(a)=-a\tanh^{-1} a-\frac{1}{2}\log (1-a^2)$.
+
+When we cannot solve $\phi(\theta)=0$, we have 
+
+**Theorem 2.7.9** Suppose $x_o=\sup\{x:F(x)<1 \}<\infty$ and $F$ is not a point mass at $x_o$. Then $\varphi(\theta)<\infty\forall \theta>0$ and $\varphi'(\theta)/\varphi(\theta)\to x_o$ as $\theta\uparrow\infty$.
+
+<font color='red'>_proof of Theorem 2.7.9_</font> Since $P(X\leq x_o)=1$, $Ee^{\theta X}<e^{\theta x_o}<\infty\forall \theta>0$, and since $F_\theta$ is concentrated on $(-\infty,x_o]$, $\varphi'(\theta)/\varphi(\theta)=\mu_\theta<x_o$.
+
+On the other hand, if $\delta>0$, then $P(X\geq x_o-\delta)=c_\delta>0$, so $Ee^{\theta X}\geq c_\delta e^{\theta(x_o-\delta)}$, and hence 
+$$
+F_\theta(x_0-2\delta)=\frac{1}{\varphi(\theta)}\int_{-\infty}^{x_o-2\delta}e^{\theta x}dF(x)\leq \frac{e^{\theta(x_o-2\delta)}}{c_\delta e^{\theta(x_o-\delta)}}\to 0
+$$
+as $\theta\to\infty$. Since $\delta>0$ is arbitrary, $\mu_\theta\to x_o$.
+
+When $a=x_o$, $\frac{1}{n}\log P(S_n\geq nx_o)=\log P(X_i=x_o)\forall n$, which is trivial. 
+
+Moreover, $\gamma(a)\downarrow \log P(X_i=x_o)$ as $a\uparrow x_o$: Since $a=\varphi'(\theta_a)/\varphi(\theta_a)$ and $[\varphi'/\varphi]'>0$, there is an inverse map $\theta_a=\theta(a)$ which is differentiable. Then $\gamma'(a)=-\theta(a)+a\theta'(a)+\varphi'(\theta(a))/\varphi(\theta(a))\theta'(a)=-\theta(a)<0$.
+
+When $x_o=\infty$ and $\theta_+=\infty$, by above proof we know $\varphi'/\varphi\to\infty$ as $\theta\to\infty$. The last case is 
+
+**Theorem 2.7.10** Suppose $x_o=\infty$, $\theta_+<\infty$, and $\varphi'(\theta)/\varphi(\theta)\to a_0<\infty$ as $\theta\to\theta_+$. If $a_0\leq a<\infty$, $n^{-1}\log P(S_n\geq na)\to-a\theta_++\log \varphi(\theta_+)$, i.e., $\gamma(a)$ is linear for $a\geq a_0$.
+
+<font color='red'>_proof of Theorem 2.7.10_</font> 
+
+Since $(\log\varphi(\theta))'=\varphi'(\theta)/\varphi(\theta)$, integrating from $0$ to $\theta_+$, we know $\log \varphi(\theta_+)<\infty$. 
+
+$\limsup_{n\rightarrow\infty} LHS\leq RHS$ is already shown before, now we consider the inverse inequality by letting $\lambda=\theta_+$ in $F_\theta$.
+
+- As $\theta\to\theta_+$, $\mu_\theta\to a_0$. Apply MCT for $X^+$ and DCT for $X^-$ we can get $a_0=\mu_{\theta_+}$.
+
+- Use an estimation in **Theorem 2.7.7**, we have 
+  $$
+  P(S_n\geq na)\geq \int_{na}^{n\nu}e^{-\lambda x}\varphi(\lambda)^ndF_\lambda^{*(n)}(x)\geq \varphi(\lambda)^ne^{-\lambda n\nu}(F_\lambda^{*(n)}(n\nu)-F_\lambda^{*(n)}(na))
+  $$
+  for $a_0\leq a<\nu=a+3\epsilon$. So
+  $$
+  \frac{1}{n} \log P(S_n\geq na)\geq \log \varphi(\lambda)-\lambda\nu+\frac{1}{n}\log P(S_n^\lambda\in(na,n\nu])
+  $$
+  And 
+  $$
+  \begin{aligned}
+  P(S_n^\lambda\in(na,n\nu])&\geq P(S_{n-1}^\lambda\in((a_0-\epsilon)n,(a_0+\epsilon)n])P(X_n^\lambda\in((a-a_0+\epsilon)n,(a-a_0+2\epsilon)n))
+  \\&\geq \frac{1}{2}P(X_n^\lambda\in((a-a_0+\epsilon)n,(a-a_0+2\epsilon)n))
+  \end{aligned}
+  $$
+  For large n by WLLN. 
+
+- And $\limsup_{n\rightarrow\infty}\frac{1}{n}\log P(X_n^\lambda\in((a-a_0+\epsilon)n,(a-a_0+2\epsilon)n))=0$. Actually, it must be nonpositive; if it's negative, there must be some $\eta$ s.t. $Ee^{\eta X^\lambda}<\infty$. But $Ee^{\eta X^\lambda}=Ee^{\eta+\lambda}X$, and we have assumed $\lambda=\theta_+$. This leads to contradiction.
+
+- Let $\epsilon\to 0$, we can conclude $\liminf_{n\rightarrow\infty} \frac{1}{n}\log P(S_n\geq na)\geq \log \varphi(\theta_+)-\theta_+ a$. This completes our proof. 
+
+_Remark_ This implies the hypothesis $\varphi(\theta)<\infty$ for some $\theta>0$ is necessary for exponential decay. Otherwise we have:
+
+**Exercise 2.7.5** Suppose $EX_i=0$ and $E\exp(\theta X_i)=\infty$ for all $\theta>0$. Then $\frac{1}{n}\log P(S_n\geq na)\to 0$ for all $a>0$.
+
+<font color='red'>_proof of Excercise 2.7.5_</font> 
+
+Otherwise there is some $a>0$ such that $\frac{1}{n}\log P(S_n\geq na)\leq c<0$ for all $n$. Notice
+$$
+\sum_{n=1}^\infty P(e^{\theta X_i}\geq n)=\sum_{n=1}^\infty P(X_i\geq \frac{1}{\theta}\log n)\leq \sum_{n=1}^\infty P(S_n\geq n\frac{1}{\theta}\log n)
+$$
+Since LHS is decreasing as $a$ increases, when $n$ is large enough, i.e., $\frac{1}{\theta}\log n>a$, $P(S_n\geq n\frac{1}{\theta}\log n)\leq e^{cn}$. RHS is summable, so $\sum_{n=1}^\infty P(e^{\theta X_i}\geq n)$ is summable. This indicates $E e^{\theta X_i}<\infty$, which is a contradiction.
+
