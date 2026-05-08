@@ -465,3 +465,312 @@ _Remark_ Continuity of the limit at $0$ is needed in (ii). Consider this example
   So $\mu_n$ is tight.
 
 - By tightness and Helly's selection theorem, there is a subsequence of $\mu_n$, say $\mu_{n(k)}$, converging to $\mu$. This $\mu$ is actually the limit of the whole sequence. By (i), we know $\varphi_{n(k)}\to \varphi_\mu$, and $\varphi_n$ is pointwise convergent to $\varphi$, so $\varphi_n\to \varphi=\varphi_\mu$. By the inverse formular, we know this indicates $\mu_n\to_d\mu$, and $\varphi_\mu=\varphi$.
+
+As applications, 
+
+**Exercise 3.3.7** Suppose $X_n\sim\mathcal N(0,\sigma_n^2)\to_d X$, then $\sigma_n^2\to \sigma^2\in[0,+\infty)$.
+
+<font color='red'>_proof of Exercise 3.3.7_</font> $\varphi_n(t)=\exp(-1/2\ \sigma_n^2t^2)$. If $X_n\to_d X$, $\varphi_n(1)$ must converge, so $\sigma_n^2$ converges, say the limit $\sigma^2$. It must be nonnegative.
+
+It's easy to verify $\varphi_n(t)\to\exp(-1/2 \sigma^2t^2)$ pointwise, and since the limit is cts at 0, we know $X$ has ch.f. $\exp(-1/2\sigma^2t^2)$, so $X\sim\mathcal N(0,\sigma^2)$.
+
+Moreover, if $X_n\sim\mathcal N(\mu_n,\sigma_n^2)\to_d X$, we can prove similarly $\mu_n\to\mu$ and $\sigma_n^2\to\sigma^2$, and $X\sim\mathcal N(\mu,\sigma^2)$.
+
+**Exercise 3.3.8** If $X_n$ and $Y_n$ are independent, $X_n\to_d X$ and $Y_n\to_d Y$, then $X_n+Y_n\to_d X+Y$.
+
+<font color='red'>_proof of Exercise 3.3.8_</font> Then $\varphi_{X_n}\to \varphi_X$ and $\varphi_{Y_n}\to\varphi_Y$. Since $\varphi$ is bounded, $\varphi_{X_n+Y_n}=\varphi_{X_n}\varphi_{Y_n}\to\varphi_{X}\varphi_{Y}=\varphi_{X+Y}$.
+
+**Exercise 3.3.9** Let $X_1,X_2,...$ be independent and let $S_n=X_1+...+X_n$. If $S_n\to_d S$, then $\varphi_S=\prod \varphi_n$.
+
+**Exercise 3.3.10** Euler's formular says $(\sin t)/t=\prod_{m=1}^\infty \cos(t/2^m)$. Actually this have a probabilistic interpretation. Let $X_n$ be independent with law $P(X_n=1/2^n)=P(X_n=-1/2^n)=1/2$. Then $\sum_{n=1}^\infty X_n=_d U(-1,1)$. Use **Exercise 3.3.9**, since $\varphi_{U(-1,1)}=\sin t/t$ and $\varphi_{X_n}=\cos(t/2^m)$, we can get this result.
+
+#### 3.3.3 Moments and Derivatives
+
+We have shown 
+$$
+\mu\{x:|x|>2/u\}\le u^{-1} \int_{-u}^u(1-\varphi(t))dt
+$$
+which indicates the smoothness of ch.f. at 0 is related to the decay of measure at $\infty$.
+
+**Theorem 3.3.18** If $\int |x|^n \mu(dx)<\infty$ then $\varphi\in C^n$ with $\varphi^{(k)}=\int (ix)^k e^{itx}\mu(dx)$.
+
+<font color='red'>_proof of Theorem 3.3.18_</font> Notice $|e^{itx}|\le 1$. Differentiate inside integral signal for $n$ times.
+
+In this case, its Maclaurin expansion is $\varphi(t)=\sum_{m=0}^n \frac{E(itX)^m}{m!}+o(t^n)$. A more precise estimation for the error term is
+
+**Lemma 3.3.19** 
+$$
+\bigg |e^{ix}-\sum_{m=1}^n \frac{(ix)^m}{m!}\bigg |\le \min\bigg (\frac{|x|^{n+1}}{(n+1)!},\frac{2|x|^n}{n!} \bigg )
+$$
+<font color='red'>_proof of Lemma 3.3.19_</font> By Taylor expansion with integral error term, 
+$$
+e^{ix}-\sum_{m=1}^{n}\frac{(ix)^m}{m!}=\frac{1}{n!}\int_0^x i^{n+1}e^{it}(x-t)^n dt
+$$
+when $x$ is small, we can estimate $|RHS|\le \frac{1}{n!}\frac{|x|^{n+1}}{n+1}$
+
+when $x$ is large, a better estimate can be obtained by 
+$$
+\frac{i}{n}\int_0^x (x-s)^n e^{is}ds=-\frac{x^n}{n}+\int_0^x (x-s)^{n-1}e^{is}ds=\int_0^x(x-s)^{n-1}(e^{is}-1)ds
+$$
+And 
+$$
+\int_0^x |(x-s)^{n-1}(e^{is}-1)|ds\le 2\int_0^x|(x-s)|^{n-1}ds\le \frac{2}{n}|x|^n
+$$
+So $|RHS|\le \frac{1}{(n-1)!}\frac{2}{n} |x|^n$. Combine these we can reach the conclusion.
+
+By this we have 
+$$
+\bigg |Ee^{itX}-\sum_{m=1}^{n}E\frac{(itX)^m}{m!}\bigg|\le E\bigg |e^{itX}-\sum_{m=1}^{n}\frac{(itX)^m}{m!}\bigg|\le E\min(|tX|^{n+1},2|tX|^n)
+$$
+A useful trivial corollary is 
+
+**Theorem 3.3.20** If $E|X|^2<\infty$ then $\varphi(t)=1+itEX-t^2/2\ EX^2+o(t^2)$.
+
+The converse case also holds, i.e., if $\varphi''$ exists, then $EX^2<\infty$.
+
+**Theorem 3.3.21** If $\limsup_{h\downarrow 0}(\varphi(h)+\varphi(-h)-2\varphi(0))/h^2>-\infty$, then $EX^2<\infty$,
+
+<font color='red'>_proof of Theorem 3.3.21_</font> 
+$$
+\int x^2dF(x)\le 2\liminf_{h\to 0}\int \frac{1-\cos hx}{h^2}dF(x)=\liminf_{h\to 0}-\int\frac{e^{ihx}+e^{-ihx}-2}{h^2}dF(x)=-\limsup_{h\to 0}\frac{\varphi(h)+\varphi(-h)-2\varphi(0)}{h^2}<\infty
+$$
+gives the desired result. Actually, if $\varphi''$ exists then the limit term is $\varphi''(0)$ by Taylor expansion. However that limit exists cannot assure the second derivative exists, i.e., consider $f$ odd on $\mathbb R$ with $f(x)=\sqrt{x}$ on $R_{\ge 0}$.
+
+**Exercise 3.3.12** Consider $X\sim\mathcal N(0,1)$, with $\varphi(t)=\exp(-t^2/2)=\sum_{m=0}^\infty\frac{1}{m!}(-1)^m\frac{t^{2m}}{2^{m}}$, we can derive $EX^{2n}=(2n-1)!!$.
+
+**Exercise 3.3.13** (i) If $\mu_i$ is tight, then their ch.f.'s are equicontinuous.
+
+<font color='red'>_proof_</font> For all $\epsilon$, since $\mu_i$ is tight, pick $M$ s.t. $\sup_i \mu_i([-M,M]^c)<\epsilon$, then for $|h|M<\epsilon$, 
+$$
+|Ee^{i(t+h)X_n}-Ee^{itX_n}|\le E|e^{ihX_n}-1|\le 2P(|X_n|>M)+hM\le 3\epsilon
+$$
+which indicates equicontinuity.
+
+(ii) If $\mu_n\to_d\mu_\infty$, then $\varphi_n\to\varphi_\infty$ on compact sets.
+
+<font color='red'>_proof_</font> Since $\mu_n\to_d\mu_\infty$, $\mu_n$ is tight. So their ch.f. are equicontinuous. Then pick finite points that are dense enough, and pass the convergence on points to all compact set. Or Arzela-Ascoli theorem.
+
+_Remark_ The uniform convergence can only occur on compact sets. For example, consider $\mathcal N(0,1-1/n)\to_d\mathcal N(0,1)$.
+
+**Exercise 3.3.14** Let$X_1,X_2,...$ be i.i.d. with ch.f.$\varphi$, then $S_n/n$ converges to some constant in prob. iff $\varphi'(0)$ exists.
+
+<font color='red'>_proof of Exercise 3.3.14_</font>
+
+$\Leftarrow$ If $\varphi(0)=ia$, then (take $\log$ on the main component)
+$$
+\varphi_{S_n/n}=\varphi^n(t/n)=\exp(n\log \varphi(t/n))=\exp(iat+o(1/n))\to\exp(iat)
+$$
+and the limit is cts at 0. This indicates $S_n/n\to_d a$, so $S_n/n\to_p a$.
+
+$\Rightarrow$ Inversely if $S_n\to_p a$ then $\varphi(t/n)^n\to e^{iat}$. To simplify this we assume $a=0$.
+
+By **Exercise 3.3.13**, for any fixed $T>0$ we have $\varphi(t/n)^n\rightrightarrows 1$ on $[0,T]$.
+
+Now we suppose for contradiction $\frac{\varphi(h)-1}{h}\nrightarrow 0$, i.e., $\exists\ h_k\downarrow 0,\epsilon>0$, $|\varphi(h_k)-1|\ge \epsilon h_k$.
+
+Since we have $|1-\varphi(h_k)^m|=|1-\varphi(h_k)||1+\varphi(h_k)+...+\varphi(h_k)^{m-1}|$,and 
+$$
+|1+\varphi(h_k)+...+\varphi(h_k)^{m-1}|\ge m-\sum |1-\varphi(h_k)^i|\ge m-\sum i|1-\varphi(h_k)|\ge m(1-m\epsilon h_k/2)
+$$
+so $|1-\varphi(h_k)^m|\ge (m\epsilon h_k)(1-1/2\ m\epsilon h_k)$.
+
+Notice $\varphi(h_k)^m=\varphi(mh_k/m)^m$, so if we pick suitable $m_k$ s.t. $m_kh_k\to \eta<1$, then $m_kh_k$ is bounded, and we have $|1-\varphi(h_k)^{m_k}|\to 0$, but $RHS\to \eta(1-\eta/2)>0$.
+
+So $\varphi'(0)=0$.
+
+(The next two sections are left for later completion)
+
+### 3.4 Central Limit Theorems
+
+#### 3.4.1 i.i.d. Sequences
+
+**Theorem 3.4.1** Let $X_1,X_2,...$ be i.i.d. with $EX_i=\mu,var(X_i)=\sigma^2\in \mathbb R^+$, then $(S_n-n\mu)/\sigma n^{1/2}\to \mathcal N(0,1)$.
+
+<font color='red'>_proof of Theorem 3.4.1_</font> WLOG $\mu=0$, then by **Theorem 3.3.20**, $\varphi(t)=E\exp(itX_1)=1-\frac{\sigma^2 t^2}{2}+o(t^2)$, so we expect $E\exp(itS_n/\sigma n^{1/2})=(1-t^2/2n+o(n^{-1}))^n\to\exp(-t^2/2)$. To make this true for complex numbers, we need to show
+
+**Theorem 3.4.2** if $c_n\to c\in\mathbb C$, then $(1+c_n/n)^n\to c$.
+
+**Lemma 3.4.3** Let $z_1,...,z_n$ and $w_1,...,w_n$ be complex numbers of modulus less than $\theta$, then
+$$
+\left| \prod_{m=1}^{n} z_m - \prod_{m=1}^{n} w_m \right| \leq \theta^{n-1} \sum_{m=1}^{n} |z_m - w_m|
+$$
+<font color='red'>_proof of Lemma 3.4.3_</font> Use induction. This is true for $n=1$, and for $n>1$, we have
+$$
+\left| \prod_{m=1}^{n} z_m - \prod_{m=1}^{n} w_m \right|
+\leq \left| z_1 \prod_{m=2}^{n} z_m - z_1 \prod_{m=2}^{n} w_m \right| + \left| z_1 \prod_{m=2}^{n} w_m - w_1 \prod_{m=2}^{n} w_m \right|\leq \theta \left| \prod_{m=2}^{n} z_m - \prod_{m=2}^{n} w_m \right| + \theta^{n-1} |z_1 - w_1|
+$$
+**Lemma 3.4.4** If $b\in\mathbb C$, $|b|<1$, then $e^b-(1+b)|\le |b|^2$.
+
+<font color='red'>_proof of Lemma 3.4.4_</font> By definition
+$$
+|e^b-(1+b)|=|b^2/2!+b^3/3!+...|\le|b|^2/2(1+1/2+1/2^2+...)=|b|^2
+$$
+<font color='red'>_proof of Theorem 3.4.2_</font> Let $z_m=(1+c_m/m)$, $w_n=\exp(c_n/n)$, $\gamma>|c|$. Then when $n$ is large $|c_n|\le\gamma$. So $|z_m|,|w_m|\le e^{\gamma/n}$ Then we have
+$$
+|(1+c_n/n)^n-e^{c_n}|\le_{3.4.3}(e^{\gamma/n})^{n-1}n|c_n/n|^2\le e^{\gamma}(\gamma^2/n)\to 0
+$$
+Now let's look at some examples of CLT.
+
+**Example 3.4.6 Coin flips** Let $X_1,X_2,...$ be i.i.d.$\sim B(1,1/2)$. Since $EX_i=1/2$ and $var X_i=1/4$, CLT shows $(S_n-n/2)/\sqrt{n/4}\to_d \mathcal N(0,1)$.
+
+**Example 3.4.7 Normal approximation to the binomial** This is to say if you want to approximate on an integer $n$ using normal distribution you has better estimate on $[n-1/2,n+1/2]$. This is called **histogram correction**.
+
+**Example 3.4.8 Normal approximation to the Poisson** To estimate the limit distribution $P(\lambda)$, we start from integers. Let $X_1,X_2,...$ i.i.d. $\sim P(1)$, we have $S_n\sim P(n)$, and by CLT we have $(S_n-n)/n^{1/2}\to_d\mathcal N(0,1)$. For $\lambda\to\infty$ on real line, let $N_1,N_2,N_3$ be independent Poisson with means $[\lambda],\lambda-[\lambda],[\lambda]+1-\lambda$. If we let $S_{[\lambda]}=N_1$, $Z_\lambda=N_1+N_2$, and $S_{[\lambda]+1}=N_1+N_2+N_3$, then $S_[\lambda]\le Z_\lambda\le S_{[\lambda]+1}$. Use CLT, it follows that $(Z_\lambda-\lambda)/\lambda^{1/2}\to\mathcal N(0,1)$.
+
+**Example 3.4.9 Pairwise independence** For SLLN, pairwise independence is enough, but not for CLT. Let $\xi_1,\xi_2,...$ be i.i.d. with $P(\xi_i=1)=P(\xi_i=-1)=1/2$.
+
+First we notice if $S,T\subset Z_+$ are finite and not identical, we have $\prod_{i\in S}\xi_i$ and $\prod_{j\in T}\xi_j$ have the same law but are independent. 
+
+For $n\in Z_+$, suppose the binary form of $n-1$ has digit $1$ on the set $K_n\subset Z_+$. Then let $X_n=\xi_1\prod_{j\in K_n}\xi_{j+1}$. Now $X_n$ are pairwise independent, and the sum is constructed so that $S_{2^n}=\xi_1(1+\xi_2)...(1+\xi_{n+1})$. If CLT hold, we should have $S_n/{\sqrt{n}}\to_d\mathcal N(0,1)$. But $S_{2^n}$ has law $P(S_{2^n}=\pm 2^n)=2^{-n-1}$, $P(S_{2^n}=0)=1-2^{-n}$.  So CLT doesn't hold.
+
+**Exercise 3.4.2** 
+
+(i) $S_n/\sqrt{n}$ doesn't converge a.s.: Let $X_1,X_2,...$ be i.i.d. with $EX_i=0,EX_i^2<\infty$, then by CLT we know $S_n/\sqrt{n}\to_d\mathcal N(0,1)$, So $P(S_n/\sqrt{n}>x)$ have a positive limit. By Kolmogorov's 0-1 law, $S_n/\sqrt{n}>0$ i.o.. Since $x$ is arbitrary, $\limsup_{n\rightarrow\infty} S_n/\sqrt{n}=\infty$ a.s.. 
+
+(ii) $S_n/\sqrt{n}$ doesn't converge in prob.: Suppose otherwise it converges in prob., then extract a subseries $n(m)=m!$. Since it's induced by topology, the series is Cauchy. However
+$$
+\frac{S_{(m+1)!}}{\sqrt{(m+1)!}}-\frac{S_{m!}}{\sqrt{m!}}=\frac{S_{(m+1)!}-S_{m!}}{\sqrt{(m+1)!}}-(1-\frac{1}{\sqrt{m+1}})\frac{S_{m!}}{\sqrt{m!}}
+$$
+By CLT both term converge to $\mathcal N(0,\sigma^2)$ ,so it has distribution $\mathcal N(0,2\sigma^2)$ by independence. This indicates this sequence cannot converge in probability. 
+
+_Remark_ we don't know what the limit will be, so we can only deal with the Cauchy sequence.
+
+**Exercise 3.4.5 Self-normalized sums** Let $X_1,X_2,...$ be i.i.d. with $EX_i=0$ and $EX_i^2=\sigma^2$, then
+$$
+\sum_{i=1}^{n}X_i\bigg/\bigg(\sum_{i=1}^{n}X_i^2\bigg)^{1/2}=\frac{\sum_{i=1}^{n}X_i}{\sqrt{n}}\bigg/\bigg(\frac{\sum_{i=1}^{n}X_i^2}{n}\bigg)^{1/2}\to_d\mathcal N(0,1)
+$$
+By Slutsky's theorem.
+
+**Exercise 3.4.6 Random index CLT** Let $X_1,X_2,...$ be i.i.d. with $EX_i=0$ and $EX_i^2=\sigma^2$. If $N_n$ is an integer-valued positive r.v. , $a_n$ is a sequence of integers with $a_n\to\infty$ and $N_n/a_n\to 1$ in prob.. Then $S_{N_n}/\sigma\sqrt{a_n}\to \mathcal N(0,1)$.
+
+<font color='red'>_proof of Exercise 3.4.6_</font> Since we have $S_{a_n}/\sigma\sqrt{a_n}\to_d\mathcal N(0,1)$, we need only to estimate the difference $(S_{N_n}-S_{a_n})/\sigma\sqrt{a_n}$. We have 
+$$
+P((S_{N_n}-S_{a_n})/\sigma\sqrt{a_n}>\epsilon)\le P(|N_n/a_n-1|\ge \epsilon')+P(\max_{1\le k\le [\epsilon' a_n]}|S_k|>\epsilon\sigma\sqrt{a_n})
+$$
+The first term goes to 0 and the second term can be bounded by Kolmogorov's maximal inequality:
+$$
+P(\max_{1\le k\le [\epsilon' a_n]}|S_k|>\epsilon\sigma\sqrt{a_n})\le (\epsilon\sigma\sqrt{a_n})^{-2}P(S_{[\epsilon' a_n]}>\epsilon\sigma\sqrt{a_n})
+$$
+Take $\epsilon=\epsilon'$, notice $RHS\to 0$ since $a_n\to\infty$ and the prob. is convergent by CLT.
+
+**Exercise 3.4.7 CLT in renewal theory** Let$Y_1,Y_2,...$ be i.i.d. positive r.v. with $EY_i=\mu$ and $var(Y_i)=\sigma^2$. Then we have $(\mu N_t-t)/(\sigma^2t/\mu)^{1/2}\to_d\mathcal N(0,1)$.
+
+<font color='red'>_proof of Exercise 3.4.7_</font> By definition we have $S_{N_t-1}\le t\le S_{N_t}$. Since $N_t/t\to1/\mu$ a.s., we have $(S_{N_t}-\mu N_t)/(\sigma^2 t/\mu)^{1/2}\to_d\mathcal N(0,1)$ as $t\to\infty$.
+
+#### 3.4.2 Triangular Arrays
+
+**Theorem 3.4.10 The Lindeberg-Feller theorem** For each $n$, let $X_{n,m},1\le m\le n$ be independent r.v.'s with mean 0. Suppose
+
+(i)$\sum_{m=1}^{n} EX_{n,m}^2\to\sigma^2>0$
+
+(ii) For all $\epsilon>0$, $\lim_{n \to \infty}\sum_{m=1}^{n} E(|X_{n,m}|^21_{|X_{n,m}|>\epsilon})=0$.
+
+Then $S_n\to_d\mathcal N(0,\sigma^2)$.
+
+_Remark_ This contains case for i.i.d. r.v.'s: suppose $X_1,X_2,...$ are i.i.d. with mean 0 and variance $\sigma^2$,then $E(X_1/n^{1/2})^2+...+(X_n/n^{1/2})=\sigma^2$ and $\sum_{i=1}^{n} E(X_n^2/n\ 1_{|X_n/\sqrt{n}|>\epsilon})=EX_1^21_{|X_1|>\epsilon\sqrt{n}}\to 0$ by DCT.
+
+<font color='red'>_proof of Theorem 3.4.10_</font> Let $\varphi_{n,m}(t)=E\exp(itX_{n,m})$, $\sigma_{n,m}^2=EX_{n,m}^2$, by **Theorem 3.3.17** it suffices wo show that $\prod_{m=1}^n \varphi_{n,m}(t)\to\exp(-t^2\sigma^2/2)$.
+
+Let $z_{m,n}=\varphi_{m,n}(t)$ and $w_{m,n}=(1-t^2\sigma_{n,m}^2/2)$. By above estimation, we have
+$$
+\begin{aligned}
+|z_{n,m}-w_{n,m}|&\le E(|tX_{n,m}|^3\wedge 2|tX_{n,m}|^2)
+\\&\le E(|tX_{n,m}|^31_{|X_{n,m}|\le\epsilon})+E(2|tX_{n,m}|^21_{|X_{n,m}}|>\epsilon)
+\\&\le \epsilon t^3E(|X_{n,m}|^21_{|X_{n,m}|<\epsilon})+2t^2E(|X_{n,m}|^21_{|X_{n,m}|>\epsilon})
+\end{aligned}
+$$
+So 
+$$
+\limsup_{n\rightarrow\infty}\sum_{m=1}^{n}|z_{n,m}-w_{n,m}|\le \epsilon t^3\sigma^3
+$$
+Since $\epsilon$ is arbitrary, it follows that the sequence converges to 0. 
+
+Since we have this, we want to use **Lemma 3.4.3** to show 
+$$
+\bigg|\prod_{m=1}^n \varphi_{n,m}(t)-\prod_{m=1}^n(1-t^2\sigma_{n,m}^2/2)\bigg|\to 0
+$$
+verify the necessary condition. $|\varphi_{n,m}|\le 1$, and $\sigma_{n,m}^2\le\epsilon^2+E(|X_{n,m}|^21_{|X_{n,m}|>\epsilon})$. So when $n$ is large enough, since $\epsilon$ is arbitrary, $\sup_m\sigma_{n,m}^2\to 0$. So $|1-t^2\sigma_{n,m}^2/2|<1$. So let $\theta=1$ there, we can know the limit holds.
+
+Let $c_{m,n}=-t^2\sigma_{n,m}^2/2$. By (i), $\sum_{m=1}^{n} c_{m,n}\to -\sigma^2t^2/2$. since $\sup_m\sigma_{n,m}^2\to 0$, we have $\prod_{m=1}^n (1+c_{m,n})\to\exp(-\sigma^2t^2/2)$. The proof is complete. 
+
+**Example 3.4.11 Cycles in a random permutation and record values** Let $Y_1,Y_2,...$ be independent with $P(Y_m=1)=1/m$ and $P(Y_m=0)=1-1/m$. So$EY_m=1/m$ and $var(Y_m)=1/m-1/m^2$. So $ES_n\sim\log n$ and $var (S_n)\sim\log n$. Let $X_{n,m}=(Y_m-1/m)/(\log n)^{1/2}$, then $EX_{n,m}=0$ and $\sum_{m=1}^{n} var X_{n,m}\to 1$. Moreover, $\sum_{m=1}^n E(|X_{n,m}|^21_{|X_{n,m}|>\epsilon})\to 0$, actually it equals to 0 when $\epsilon\sqrt{\log n}>1$.
+
+This indicates $(\log n)^{-1/2}(S_n-\sum_{m=1}^{n} 1/m)\to\mathcal N(0,1)$. Since $|\log n-\sum_{m=1}^n 1/m|\le 1$, we can know $(S_n-\log n)/(\log n)^{1/2}\to \mathcal N(0,1)$.
+
+**Example 3.4.12 The converse of three series theorem** Recall **Theorem 2.5.8**
+
+> [!NOTE]
+>
+> **Theorem 2.5.8 Kolmogorov's three-series theorem** Let $X_1,X_2,...$ be independent, and let $A>0$, $Y_i=X_i1_{|X_i|\leq A}$. $\sum_{n=1}^\infty X_n$ converges a.s. iff
+>
+> (i) $\sum_{n=1}^\infty P(|X_n|>A)<\infty$ (ii) $EY_n$ converges (iii)$\sum_{n=1}^\infty var(Y_n)<\infty$
+
+We have proven $\Leftarrow$, now we prove $\Rightarrow$.
+
+<font color='red'>_proof_</font> (i) otherwise since $X_n$ are independent, $|X_n|>A$ i.o., so it cannot converge.
+
+(iii) Suppose otherwise it's infinite. Let $c_n=\sum_{m=1}^{n} var(Y_m)$ and $X_{n,m}=(Y_m-EY_m)/c_n^{1/2}$. We can verify $EX_{m,n}=0$, $\sum_{m=1}^{n} var(X_{m,n})=1$, and $\sum_{m=1}^{n} E(|X_{m,n}|^21_{|X_{m,n}>\epsilon|})\to 0$, since actually when $2A/c_n^{1/2}<\epsilon$ the sum is 0. (So $c_n\to\infty$ is necessary for this). So $S_n\to_d \mathcal N(0,1)$.
+
+Now by (i), we know if $\lim_{n \to \infty}\sum_{m=1}^{n} X_m$ exists then $\lim_{n \to \infty}\sum_{m=1}^{n} Y_m$ exists. Since $c_n\to\infty$, $T_n=(\sum_{m=1}^{n} Y_m)/c_n^{1/2}\to 0$ a.s.. So $S_n-T_n\to_d \mathcal N(0,1)$.But $S_n-T_n$ isn't random.
+
+(ii) If (i) and (iii) hold, then $\lim_{n \to \infty}\sum_{m=1}^{n} Y_m-EY_m$ exists. Since $\sum_{m=1}^{\infty} Y_m$ exists, so does $\lim_{n \to \infty} \sum_{m=1}^{n} EY_m$.
+
+_Remark_ So when the sum of variance is infinite, it's very likely to follow CLT.
+
+**Example 3.4.13 Infinite variance** Suppose $X_1,X_2,...$ are i.i.d. and for $x\ge 1$, $P(X_1>x)=P(X_1<-x)$ and $P(|X_1|>x)=x^{-2}$. This has infinite variance
+$$
+E|X_1|^2=\int_0^\infty 2xP(|X_1|>x)dx=\infty
+$$
+but it turns out that when $S_n$ is suitably normalized it converges to a normal distribution. Let $Y_{n,m}=X_m1_{|X_m|\le c_n}$, where $c_n=n^{1/2}\log\log n$. This is chosen large enough so that $\sum_{m=1}^{n} P(Y_{n,m}\ne X_m)\le nP(|X_1|>c_n)\to 0$, and small enough such that the variance is small. Indeed, $EY_{n,m}^2\sim\log n$:
+
+- upper bound:
+  $$
+  EY_{n,m}^2\le\int_0^{c_n}2yP(|X_1|>y)dy=c+\int_1^{c_n} 2/y dy=c+\log n+2\log\log\log n\sim\log n
+  $$
+
+- lower bound:
+
+  Notice $P(|Y_{m,n}|>x)=P(|X_1|>x)-P(|X_1|>c_n)$. When $x\le\sqrt{n}$, $RHS\ge(1-(\log\log n)^{-2})P(|X_1|>x)$. So
+  $$
+  EY_{n,m}^2\ge (1-(\log\log n)^{-2})\int_1^{\sqrt{n}}2/y dy\sim\log n
+  $$
+
+So if we let $S_n'=Y_{n,1}+...+Y_{n,n}$, then $var(S_n')\sim n\log n$. So we apply the Lindeberg-Feller CLT to $X_{m,n}=Y_{m,n}/(n\log n)^{1/2}$. The conditions all hold, so $S_n'/(n\log n)^{1/2}\to_d \mathcal N(0,1)$. So $S_n/(n\log n)^{1/2}\to_d \mathcal N(0,1)$.
+
+**Theorem 3.4.14** Let $X_1,X_2,...$ be i.i.d. and $S_n=X_1+...+X_n$. In order that there exists constants $a_n$ and $b_n>0$ so that $(S_n-a_n)/b_n\to \mathcal N(0,1)$, it's necessary and sufficient that $y^2P(|X_1|>y)/E(|X_1|^21_{|X_1|<y})\to 0$.
+
+In below exercises $X_i$ are independent.
+
+**Exercise 3.4.9** Condition in **Theorem 3.4.10** is not necessary. Consider this example: Suppose $X_m$ are independent with distribution $P(X_m=\pm m)=1/2m^2$ and $P(X_m=\pm 1)=(1-m^{-2})/2$ when $m>1$. 
+
+- $EX_m=0$ and $var(X_m)=2-m^{-2}$. So $var(S_n)/n\to 2$.
+- $S_n/\sqrt{n}\to_d\mathcal N(0,1)$. Using ch.f. can be much complicated. So we argue in a more indirect way. Let $Y_m=X_m\wedge 1$, $S_m'=\sum_{m=1}^{n} Y_m$. Then by De Moivre Laplace theorem $S_m'/\sqrt{m}\to_d \mathcal N(0,1)$. And $P(Y_m-X_m\ne 0)=m^{-2}$ is summable. By Borel-Cantelli lemma, $Y_m\ne X_m$ only occurs for finite times. In this case,$(S_m'-S_m)/\sqrt{m}\to 0$ a.s. since $\sqrt{n}\uparrow\infty$. So finally $S_n/\sqrt{n}\to_d \mathcal N(0,1)$ by Slutsky's theorem.
+- The problem is, $\sum_{m=1}^{n} E(X_m/\sqrt{n})^21_{|X_{m}/\sqrt{n}|\ge1}\approx \sum_{m=[\sqrt{n}]}^{n}\frac{1}{\sqrt{n}}\approx\sqrt{n}\to\infty$.
+
+**Exercise 3.4.10** If $|X_i|\le M$ and $\sum_{n=1}^{\infty}var(X_n)=\infty$, then $(S_n-ES_n)/\sqrt{var(S_n)}\to_d\mathcal N(0,1)$.
+
+<font color='red'>_proof of Exercise 3.4.10_</font> Since $X_i$ are bounded, the mean is finite, so WLOG assume $EX_i=0$. Consider triangular series $X_{n,m}=X_m/\sqrt{var(S_n)}$. Notice $\sum_{m=1}^{n}EX_{n,m}^2=1$, and for all $\epsilon$, when $\epsilon\sqrt{var(S_n)}>M$, $\sum_{m=1}^{n}EX_{n,m}1_{|X_{n,m}|>\epsilon}=0$. So by **Theorem 3.4.10** the CLT holds.
+
+**Exercise 3.4.11** Suppose $EX_i=0,EX_i^2=1$ and $E|X_i|^{2+\delta}\le C$ for some $0<\delta,C<\infty$. Then $S_n/\sqrt{n}\to_d\mathcal N(0,1)$.
+
+**Exercise 3.4.12 Lyapunov's theorem** Let $\alpha_n=\{var(S_n)\}^{1/2}$. If there is some $\delta>0$ s.t. $\lim_{n \to \infty} \alpha_n^{-(2+\delta)}\sum_{m=1}^{n}E(|X_m-EX_m|^{2+\delta})=0$. Then $(S_n-ES_n)/\alpha_n\to_d\mathcal N(0,1)$.
+
+_Remark_ **Exercise 3.4.11** is a special case.
+
+**Exercise 3.4.13** This is a good example to show different convergence. Let $X_j$ be independent with law $P(X_j=\pm j)=1/2j^\beta$, 0 otherwise. 
+
+(i) when $\beta>1$, Then $P(X_j\ne 0)=1/j^\beta$ is summable, so $X_j=0$ for all $j>K$ for some $K$. So $S_n\to S_\infty$ a.s.
+
+(ii) when $\beta<1$,$S_n/n^{(3-\beta)/2}\to_d c\mathcal N(0,1)$: just verify.
+
+(iii) when $\beta=1$ then $S_n/n\to X$ with $\varphi_X(t)=\exp(-\int_0^1 x^{-1}(1-\cos xt)dx)$:
+
+First, $\varphi_{X_j}=1-\frac{2\sin^2 (jt)/2}{j}$. So $\varphi_{S_n/n}=\prod_{j=1}^n (1-2\frac{\sin^2(jt)/(2n)}{j})$. Take logarithm,
+$$
+\begin{aligned}
+\log\varphi_{S_n/n}&=\sum_{j=1}^{n} \ln(1-2\frac{\sin^2\frac{jt}{2n}}{j})
+\\&=\sum_{j=1}^{n} -2\frac{\sin^2\frac{jt}{2n}}{j}+O(\frac{\sin^4\frac{jt}{2n}}{j^2})
+\\\sum_{j=1}^{n}\frac{\sin^4\frac{jt}{2n}}{j^2}&\le\sum_{j=1}^{n}\frac{j^4t^4}{16n^4j^2}\le t^4C/n\to 0
+\\\sum_{j=1}^{n} -2\frac{\sin^2\frac{jt}{2n}}{j}&=\sum_{j=1}^{n} -2\frac{\sin^2\frac{jt}{2n}}{j/n}\frac{1}{n}\to-2\int_0^1\frac{\sin^2 tx/2}{x}dx
+\end{aligned}
+$$

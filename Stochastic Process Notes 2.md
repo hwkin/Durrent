@@ -301,3 +301,68 @@ Combine these two we know $\Phi\geq \Psi$.
 <font color='red'>_proof_</font> On $\partial D$, $\Phi=\Psi$ by definition. In $D$, the proof is identical to proof of **Lemma 1**, if we notice two inequalities can take equality (The second is from Bounded convergence theorem).
 
 It remains to prove that $\Psi$ is a solution.
+
+Due to linearity, we need only to consider:
+
+(i) $f=0$. In this case, first suppose $c$ is compactly supported. 
+
+- **Lemma 3** If $g$ is compactly supported and twice cts differentiable, then $\mathbb E_0[\int_0^\infty g(x+B_t)dt]$ is twice differentiable w.r.t. $x$ when $d\ge 3$.
+
+  <font color='red'>_proof_</font> By definition,
+  $$
+  \mathbb E_0[\int_0^\infty g(x+B_t)dt]=\int_\mathbb {R^d} \int_0^\infty g(y)p_t(x-y)dtdy=\int_0^\infty P_tg(x)dt
+  $$
+  Bound $P_tg$, we have $|P_tg(x)|\le\|g\|_\infty$, and $|P_tg(x)|\le |g|_{L^1}(2\pi t)^{-d/2}$. So 
+  $$
+  |\int_0^\infty P_tg(x)dt|\le \|g\|_\infty+\int_1^\infty |g|_{L^1}(2\pi t)^{-d/2}<\infty
+  $$
+  and the bound is uniform. 
+
+  Differentiate $P_tg$ w.r.t. x, we have for $\alpha=1,2$,
+  $$
+  \partial_x^\alpha P_t g(x)=\int_{\mathbb R^d}\partial^\alpha g(x-z)p_t(z)dz
+  $$
+  Differentiate $u$, for example, consider 
+  $$
+  \frac{u(x+he_i)-u(x)}{h}=\int_0^\infty\frac{P_tg(x_he_i)-P_tg(x)}{h}dt
+  $$
+  the integral term converges to $\partial_i P_t g(x)=P_t (\partial_i g)(x)$, and it's uniformly bounded, 
+  $$
+  \bigg|\frac{P_tg(x+he_i)-P_tg(x)}{h}\bigg|\le \sup_{\theta\in[0,1]}|\partial_iP_tg(x+\theta he_i)|=\sup_{\theta\in[0,1]}|P_t(\partial_ig)(x+\theta he_i)|
+  $$
+  By above bound we see this is uniformly bounded by $\|\partial_i g\|_\infty$. So the differentiation is valid. Similarly we can show this for twice order derivatives.
+
+- So $\Delta\Psi(x)=\mathbb E\int_0^\infty \Delta c(x+X_t)dt$. Estimate this, we have
+  $$
+  \int_0^\infty \Delta c(x+X_t)dt=\int_0^s+\int_s^t+\int_t^\infty \Delta c(x+X_t)dt
+  $$
+  Since $\Delta c$ is bounded, as $s\to  0$ the first term goes to 0; since $\Delta c$ is compactly supported and $X_t$ is transient when $d\ge 3$, as $t\to\infty$ the third terms goes to 0 too.
+
+  For the second term, we have 
+  $$
+  \frac{1}{2}\int_s^t\mathbb E \Delta c(x+X_u)du=\frac{1}{2}\int_s^t\int_\mathbb {R^d} p_u(x,y)\Delta c(y)dydx=_{\text{Heat equation}}\int_s^t \partial_up_u(x,y)c(y)dy=\int_\mathbb R (p_t(x,y)-p_s(x,y))c(y)dy=P_tc(x)-P_sc(x)
+  $$
+  as $t\to \infty$, the first term goes to $0$ by our boundary; as $s\to 0$, the second term $=\mathbb E[c(x+X_s)]\to c(x)$. So the integral is actually $-c(x)$. This finishes our proof when c is compactly supported.
+
+- When $c$ is not compactly supported, since the boundary is finite, we can extend it to a function a compactly supported set, say $\tilde c$, and stop at $T(x)$,the exit time of $D$ starting from $x$.
+
+(ii) $c=0$. Now $\Psi(x)=\mathbb E_x[f(X_T)\mathbb 1_{T<\infty}]$.
+
+- $\Psi$ satisfies sphere-average property: 
+
+  <font color='red'>_proof_</font> If $\overline{B(x,r)}\subset D$, let $:tau=\inf\{t\ge 0:X_t\notin B(x,r) \}$, then $\tau<T$. By Strong Markov property,
+  $$
+  \Psi(x)=\mathbb E_x[f(X_T)1_{T<\infty}]=\mathbb E_x[\mathbb E_x[f(X_T)1_{T<\infty}|\mathcal F_\tau]]=\mathbb E_x[\mathbb E_{X_\tau}[f(X_T)1_{T<\infty}]]=E_x [\Psi(X_\tau)]
+  $$
+  Since $X_\tau\in\partial B(x,r)$, and BM is invariant under rotation, $X_\tau$ is uniformly distributed on $\partial B(x,r)$. Hence 
+  $$
+  \Psi(x)=\mathbb E_x[\Psi(X_\tau)]=\frac{1}{|\partial B(x,r)|}\int_{\partial B(x,r)} \Psi(y)d\sigma(y)
+  $$
+
+- $\Psi$ satisfies the boundary condition. 
+
+  $\Psi(x)=f(x)$ on boundary is trivial.
+
+  Suppose the boundary is $C^1$, we prove $\lim_{x\to z, x\in D}\Psi(x)=f(z)$.
+
+  
