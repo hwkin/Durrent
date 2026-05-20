@@ -174,7 +174,7 @@ By **Theorem 2.3.1**, we can consider the following process: Let $N(t)$ be a Poi
 
 **Proposition 2.3.2** For fixed $t$, $N_1(t)$ and $N_2(t)$ are independent Poisson r.v.'s with means $\lambda tp$ and $\lambda t(1-p)$ respectively, where $p=\frac{1}{t}\int_0^t P(s)ds$. 
 
-_Remark_ $N_i(t)$ isn't a Poisson process in general, since $p$ may vary. However, if $p$ is a constant, i.e., irrelevant to $t$, They are Poisson processes. We will discuss this in the "compound Poisson process".
+_Remark_ $N_i(t)$ isn't a Poisson process in general, since $p$ may vary. However, if $p$ is a constant, i.e., irrelevant to $t$, They are Poisson processes. 
 
 <font color='red'>_proof of Proposition 2.3.2_</font> We compute the joint distribution of $N_1(t)$ and $N_2(t)$. First, 
 $$
@@ -191,6 +191,8 @@ $$
 So $N_i(t)$ are independent Poisson distribution with means $\lambda tp$ and $\lambda t(1-p)$.
 
 _Remark_ The proof can be easily generalized to any fixed number of types.
+
+**Thinning** consider $N(t)\sim P_\lambda (t)$, and each event is marked as type-k with probability $p_k$ independently, where $1\le k\le n$, and $\sum_{k=1}^{n} p_k=1$. Then consider the occurrence of type-k event, they are independent Poisson process with rate $\lambda p_k$. Denote them as $N_k(t)\sim P_{\lambda p_k}(t)$, we have $N(t)=\sum_{k=1}^{n} N_k$.
 
 **Example 2.3 (B) The infinite server Poisson queue** Suppose that customers arrive at a service station $\sim P_\lambda(t)$. Upon arrival the customer is immediately served by one of an infinite number of possible servers, and the service time are assumed to be independent with a common distribution $G$.
 
@@ -327,7 +329,7 @@ $$
 &P(\tau_k\le \sum_{i=1}^{k} Y_i\ \forall k\le m-1\mid \sum_{i=1}^{n}Y_i=t)\\&=P(t-\tau_{n-k}\le \sum_{i=1}^{k}Y_i\forall k\le m-1\mid \sum_{i=1}^{n}Y_i=t)=P(t-\tau_{n-k}\le t-\sum_{i=k+1}^{n}Y_i\forall k\le n-1\mid \sum_{i=1}^{n} Y_i=t)\\&=P(\tau_{n-k}\ge \sum_{i=k+1}^{n}Y_i\forall k\le n-1\mid \sum_{i=1}^{n} Y_i=t)=P(\tau_{n-k}\ge\sum_{i=1}^{n-k}Y_i\forall k\le n-1\mid \sum_{i=1}^{n} Y_i=t)\\&=P(\sum_{i=1}^{k}Y_i\le \tau_k\forall k\le n-1\mid \sum_{i=1}^{n} Y_i=t)=1/n
 \end{aligned}
 $$
-So $f_{T,M}(t,m)=e^{-\lambda t}\frac{(\lambda t)^{m-1}}{m!}dG_m(t)$, and $f_T(t)=\sum_{m=1}^\infty f_{T,M}(t,m)$.
+So $f_{T,M}(t,m)=e^{-\lambda t}\frac{(\lambda t)^{m-1}}{m!}\frac{dG_m(t)}{dt}$, $f_T(t)=\sum_{m=1}^\infty f_{T,M}(t,m)$, and $P(M=m)=\int_0^\infty e^{-\lambda t}\frac{(\lambda t)^{m-1}}{m!}dG_m(t)$.
 
 ### 2.4 Nonhomogeneous Poisson process
 
@@ -462,3 +464,118 @@ $$
 ***
 
 Below are exercises.
+
+2.3 If $N(t)\sim P_\lambda(t)$, $P(N(s)=k|N(t)=n)=\binom{n}{k}(s/t)^k(1-s/t)^{n-k}$, $k=1,...,n$.
+
+<font color='red'>_proof_</font> Conditioned on $N(t)=n$, The Poisson process behaves like $n$ events occur randomly, uniformly w.r.t. $t$. In this case, $N(s)\sim B(n,s/t)$.
+
+2.5 If $N_1(t)\sim P_{\lambda_1}(t), N_2(t)\sim P_{\lambda_2}(t)$ are independent, then $N_1(t)+N_2(t)\sim P_{\lambda_1+\lambda_2}(t)$. Moreover, the first event comes from $N_1$ with prob. $\lambda_1/(\lambda_1+\lambda_2)$, independent of the time of the event.
+
+<font color='red'>_proof_</font> For the first statement, notice $N_1+N_2$ has independent increments, and if $X_1\sim P(\lambda_1),X_2\sim P(\lambda_2)$ are independent, then $X_1+X_2\sim P(\lambda_1+\lambda_2)$ (verify directly). This can be better understood when we know the Poisson process on a measurable space.
+
+For the second statement, suppose the waiting times for the first event of $N_1,N_2,N_1+N_2$ are $\xi_1,\xi_2,T$, then $\xi_1,\xi_2$ are independent and $\xi_i\sim Exp(\lambda_i)$, and $T=\min\{\xi_1,\xi_2\}\sim Exp(\lambda_1+\lambda_2)$.  The event is exactly $\xi_1<\xi_2$. So 
+$$
+\begin{aligned}
+P(\xi_1<\xi_2)&=\int_{\mathbb R_+} e^{-\lambda_2 t}d(1-e^{-\lambda_1 t})=\frac{\lambda_1}{\lambda_1+\lambda_2}
+\\P(\xi_1<\xi_2\mid T=t)&=\frac{\partial_tP(\xi_1<\xi_2,T\le t)}{f_T(t)}=\frac{\partial_t \int_0^t e^{-\lambda_2 s}d(1-e^{-\lambda_1 s})}{(\lambda_1+\lambda_2)e^{-(\lambda_1+\lambda_2) t}}=\frac{\lambda_1}{\lambda_1+\lambda_2}
+\end{aligned}
+$$
+which implies they are independent.
+
+2.6 Suppose $X_1,...,X_n$ are i.i.d. $\sim Exp(\mu_1)$ and $Y_1,...,Y_m$ are i.i.d. $\sim Exp(\mu_2)$, calculate $E[\min (\sum_{i=1}^{n} X_i,\sum_{i=1}^{m} Y_i)]$.
+
+<font color='red'>_proof_</font> First calculate the distribution. A more clever way is to embed them into Poisson processes instead of calculating gamma distributions. Let $N_1\sim P_{\mu_1}(t), N_2\sim P_{\mu_2}(t)$ be independent, 
+$$
+P(\min (\sum_{i=1}^{n}X_i,\sum_{i=1}^{m} Y_i)\ge t)=P(\sum_{i=1}^{n} X_i\ge x)P(\sum_{i=1}^{m} Y_i\ge t)=P(N_1(t)\le n-1)P(N_2(t)\le m-1)=\sum_{i=0}^{n-1}\sum_{j=0}^{m-1}\frac{(\mu_1 t)^i}{i!}e^{-\mu_1 t}\frac{(\mu_2 t)^j}{j!}e^{-\mu_2 t}
+$$
+Then integrate $t$ on $\mathbb R_+$.
+
+2.11 Suppose car arrives $N(t)\sim P_\lambda(t)$, and someone is waiting for crossing the street. If he finds in time $T$, there will not be any cars, he will cross, and otherwise waits. Compute the expected time of waiting, $EW$.
+
+<font color='red'>_proof_</font> Condition on the waiting time for the first car, which is exponential, and restart as one car passes,
+$$
+EW=0\cdot e^{-\lambda T}+\int_0^T E(W+t)d(1-e^{-\lambda t})=EW(1-e^{-\lambda t})+\lambda^{-1}(1-e^{-\lambda t})-Te^{-\lambda t}
+$$
+So $EW=\lambda^{-1} (e^{\lambda t}-1)-T$.
+
+2.12 Events occurring as $P_\lambda (t)$. A counter registers these events. After each registration, it will shut down for time $b$, during which events cannot be registered. (i) find the probability of the first $k$ events are all registered. (ii) For $t\ge (n-1)b$, find $P(R(t)\ge n)$.
+
+<font color='red'>_proof_</font> (i) denote the time between two occurrences $\xi_i$, then $\xi_i\sim Exp(\lambda)$. The event is exactly $\cap\{\xi_i>b\}$, so the prob. is $\prod_{i=1}^k (e^{-\lambda b})=e^{-\lambda kb}$.
+
+(ii) Commonly we can use induction on $n$, by $P(R(t)\ge 1)=1-e^{-\lambda t}$, and 
+$$
+P(R(t)\ge n)=\int_0^{t-(n-1)b}P(R(t-b-s)\ge n-1)d(1-e^{-\lambda s})
+$$
+by conditioning on the first waiting time. The result is $P(R(t)\ge n)=P(X_n(t)\ge n)$, where $X_n(t)\sim P_\lambda (t-nb)$.
+
+The result is not a "coincidence". Actually Poisson process has strong Markov property and independent increments, so we can skip for $b$ time units after the first $k$ registered events (The registration time is a stopping time). Then the process has the same distribution with $X_n$.
+
+2.13 Suppose that shocks occur $\sim P_\lambda (t)$, and each shock causes the system fail with prob. $p$ independently. Let $N$ be the number of shocks that is takes for the system to fail and $T$ be the time the system fails. Find $P(N=n\mid T=t)$.
+
+<font color='red'>_proof_</font> By thinning the Poisson event, actually $N|_{T=t}\sim P(t(1-p)\lambda)+1$.
+
+2.18 Let $U_{(i)}$ be the order statistics of n i.i.d. r.v. $\sim U(0,t)$. Then conditioned on $U_{(n)}=y<t$, $(U_{(i)})_{i=1}^{n-1}=_d (U'_{(i)})_{i=1}^{n-1}$, where $U'\sim U(0,y)$.
+
+2.25 Suppose $N(t)\sim P_\lambda(t)$, and an event occurring at time $s$, independent of the past, contributes a r.v. having distribution $F_s$. Denote $W_t$ to be the sum of contributions by time $t$, then $W_t$ is a compound Poisson r.v.. 
+
+<font color='red'>_proof_</font> Conditioned on $N(t)$, $W_t$ is a sum of $N(t)$ r.v.'s of distributions, say $X_i$, whose distribution is given by $P(X_i\le x)=\int_0^t F_s(x)\frac{1}{t}ds$. So let $N=N(t)\sim P(\lambda t)$, and $X_i$ i.i.d. with that distribution, we have $W_t=\sum_{i=1}^{N} X_i$. But in general, $W_t$ is not a Poisson process, since the distribution of $X_i$ may vary.
+
+2.30 Let $T_i$ denote the interarrival times of events of a nonhomogeneous Poisson process having intensity $\lambda(t)$.
+
+(a) Are $T_i$ independent? No, since $P(T_i\ge t\mid T_{i-1})=\exp(-[m(t+T_{i-1})-m(T_{i-1})])$, which depends on $T_{n-1}$ in general.
+
+(b) Are $T_i$ identically distributed? No, since $P(T_1\ge t)=e^{-m(t)}$, and
+$$
+P(T_2\ge t)=\int_0^\infty \exp(-[m(t+s)-m(s)])d(1-e^{-m(s)})=\int_0^\infty \exp(-m(t+s))dm(s)
+$$
+which in general is not the same as $P(T_1\ge t)$.
+
+So in contrast to a Poisson process, nonhomogeneous Poisson process doesn't have independent nor identically distributed interarrival times.
+
+2.31 Turn a nonhomogeneous Poisson process to a Poisson process: Suppose $N(t)\sim P_{\lambda(t)} (t)$, and $m(t)$ is strictly increasing. Then $N^*(t)=N(m^{-1}(t))$ is a Poisson process with rate 1. This can be seen as a "clock" for a non. Poisson process.
+
+<font color='red'>_proof_</font> Obviously $N^*(t)$ has independent increments. And for stationary increments, suppose $s<t$, we have $N^*(t)-N^*(s)=N(m^{-1}(s))-N(m^{-1}(t))\sim P(s-t)$.
+
+2.32 Conditional nonhomogeneous Poisson process behaves like conditional Poisson process: (a) Let $N(t)$ is a nonhomogeneous Poisson process with mean value function $m(t)$. Given $N(t)=n$, the arrival times has the same distribution of ordered $n$ i.i.d. r.v.'s with distribution function $F(x)=m(x)/m(t),x\le t; 1,x>t$.
+
+<font color='red'>_proof_</font> First, we have 
+$$
+f_{S_n\mid S_{n-1}}(t)=-\frac{d}{dt}\exp[-(m(t)-m(S_{n-1}))]=\lambda(t)\exp[-(m(t)-m(S_{n-1}))]
+$$
+So the joint density is given by
+$$
+f_{(S_1,...,S_n)|N(t)=n}(s_1,...,s_n)=\frac{\lambda(s_1)e^{-m(s_1)}\lambda(s_2)e^{-m(s_2)+m(s_1)}...\lambda(s_n)e^{-m(s_n)+m(s_{n-1})}e^{-m(t)+m(s_n)}}{m(t)^n (n!)^{-1} e^{-m(t)}}=n!\prod_{i-1}^n \frac{\lambda(s_i)}{m(t)}
+$$
+Meanwhile, the ordered r.v.'s, say $\xi_{(1)},...,\xi_{(n)}$, has distribution 
+$$
+f_{\xi_{(1)},...,\xi_{(n)}}(x_1,...,x_n)=\frac{1}{n!}f_{\xi_1,...,\xi_n}(x_1,...,x_n)=\frac{1}{n!}\prod_{i=1}^n\frac{\lambda(x_i)}{m(t)}
+$$
+Another proof can be given by 2.31, i.e., apply change of variable on $t$. 
+
+(b) Suppose under this setting, each occurrence has contribution with distribution $F$. Calculate $E[X(t)]$, $var[X(t)]$.
+
+<font color='red'>_proof_</font> Take $Y_i$ i.i.d. $\sim F$,
+$$
+E[X(t)]=\sum_{i=1}^{N(t)} Y_i=\sum_{i=1}^{N^*(m(t))} Y_i=m(t)EY_i
+$$
+Variance needs similar computing. Of course, conditioning on $N(t)$ gives identical result and can be more rigorous, since $m(t)$ may be not strictly increasing.
+
+2.35 Strong Markov Property of Poisson process: Let $\tau$ be a stopping time with distribution $F$, then $N^*(t)=N(\tau+t)-N(\tau)$ is a Poisson process.
+
+<font color='red'>_proof_</font> suppose $s_1<t_1<s_2<t_2$ (for more intervals the proof is identical)
+$$
+P(N^*(t_1)-N^*(s_1)=m, N^*(t_2)-N^*(s_2)=n)=\int_0^\infty P(N(t_1+t)-N(s_1+t)=m,N(t_2+t)-N(s_2+t)=n)dF(t)=\int_0^\infty P(N(t_1)-N(s_1)=m)P(N(t_2)-N(s_2)=n)dF(t)=P(N(t_1)-N(s_1)=m)P(N(t_2)-N(s_2)=n)
+$$
+So $N^*$ has independent and stationary increments, which is Poisson.
+
+But this may not hold for nonhomogeneous Poisson process, since the increments are not independent nor identically distributed.
+
+2.37 Let $X(t)$ be a compound Poisson process with $X(t)=\sum_{i=1}^{N(t)} X_i$ and $X_i$ takes finitely many values. Prove $X(t)\to_d$ a normal r.v..
+
+<font color='red'>_proof_</font> Suppose $P(X_i=k_i)=p_i$, then $X(t)=\sum_{i=1}^n k_i N_i(t)$, where $N_i\sim P_{\lambda p_i}(t)$ are independent. 
+
+Since for $X\sim P(\lambda t)$, $\varphi_X (s)=\exp(\lambda (e^{it}-1))\approx \exp(i\lambda t-1/2\ \lambda^2t^2)$, we have $P(\lambda t)\to_d \mathcal N(\lambda t,\lambda t)$. And notice the sum of independent normal r.v.'s is normal.
+
+2.40 
+
+2.41 
