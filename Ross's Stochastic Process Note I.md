@@ -458,7 +458,7 @@ In this case, $P(N(t+s)-N(s)=n)=\int_0^\infty e^{-\lambda t}\frac{(\lambda t)^n}
 
 We can, by Bayes Formular, determine the distribution of $\Lambda$ given $N(t)$. It's given by 
 $$
-P(\Lambda\le x|N(t)=n)=\frac{\int_0^x P(N(t)=n\mid \Lambda= x)dG(\lambda)}{\int_0^\infty P(N(t)=n\mid\Lambda=\lambda)dG(\lambda)}
+P(\Lambda\le x|N(t)=n)=\frac{\int_0^x P(N(t)=n\mid \Lambda= \lambda)dG(\lambda)}{\int_0^\infty P(N(t)=n\mid\Lambda=\lambda)dG(\lambda)}
 $$
 
 ***
@@ -576,6 +576,37 @@ But this may not hold for nonhomogeneous Poisson process, since the increments a
 
 Since for $X\sim P(\lambda t)$, $\varphi_X (s)=\exp(\lambda (e^{it}-1))\approx \exp(i\lambda t-1/2\ \lambda^2t^2)$, we have $P(\lambda t)\to_d \mathcal N(\lambda t,\lambda t)$. And notice the sum of independent normal r.v.'s is normal.
 
-2.40 
+2.40 Except Poisson process, a counting process $(N(t))$ can also have the property: conditioned on $N(t)=n$, the first $n$ occurrence time are distributed as order statistics from $n$ $U(0,t)$. A direct example is conditional Poisson process: Conditioning on $N(t)=n$, whatever $\Lambda$ we are conditioning on, the conditioned process is a order statistics whose distribution is irrelevant to $\Lambda$, so only conditioned on $N(t)=n$, the process is also a order statistics.
 
-2.41 
+2.41 For a conditional Poisson process,
+
+(a) It has stationary but not independent increments. (We've proven before.)
+
+(b) Conditioned on $\{N(s),0\le s\le t \}$, the distribution of $\Lambda$ is identical to that conditioned on $N(t)$, i.e., it's somehow Markov.
+
+<font color='red'>_proof_</font> 
+$$
+P(\Lambda\le x|N(s)=n_s,0\le s\le t)=\frac{\int_0^x P( N(s)=n_s,0\le s\le t\mid N(t)=n,\Lambda=\lambda)P(N(t)=n\mid \Lambda= \lambda)dG(\lambda)}{\int_0^\infty P(N(s)=n_s, 0\le s\le t\mid N(t)=n,\Lambda=\lambda)P(N(t)=n\mid\Lambda=\lambda)dG(\lambda)}
+$$
+And notice $P(N(s)=n_s,0\le s\le t\mid N(t)=n,\Lambda=\lambda)$ is irrelevant to $\Lambda$ since it's exactly the order statistics of $n$ r.v.'s $\sim U(0,t)$.
+
+(c) Given $N(t)=n$, the time of the first event after $t$, say $T$,  is given by 
+$$
+P(T\ge t+x\mid N(t)=n)=\int_0^\infty P(T\ge t+x|N(t)=n,\Lambda=\lambda)dP(\Lambda\le\lambda\mid N(t)=n)=\int_0^\infty e^{-\lambda t}\frac{P(N(t)=n\mid \Lambda= \lambda)dG(\lambda)}{\int_0^\infty P(N(t)=n\mid\Lambda=\lambda)dG(\lambda)}
+$$
+(d) Using some $\epsilon-\delta$ argument, we can conclude
+$$
+\lim_{h \to 0}\frac{P(N(h)\ge 1)}{h}=\lim_{h \to 0}\frac{1}{h} \int_0^\infty (1-e^{-\lambda h})dG(\lambda)=E(\Lambda)
+$$
+(e) Interarrival times, $X_i$ has joint distributions
+$$
+f_{X_1,X_2,...,X_n}(x_1,x_2,...,x_n)=\int_0^\infty \lambda e^{-\lambda x_1}...\lambda e^{-\lambda x_n}dG(\lambda)=\int_0^\infty \lambda^n e^{-\lambda (x_1+...+x_n)}dG(\lambda)
+$$
+which is generally not separable, whence they are not independent. 
+
+As for marginal distributions, condition on $\Lambda$, 
+$$
+f_{X_i}(t)=\int_0^\infty f_{X_i\mid \Lambda=\lambda}(t)dG(\lambda)=\int_0^\infty \lambda e^{-\lambda t}dG(\lambda)
+$$
+which indicated $X_i$ are identically distributed.
+
