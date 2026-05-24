@@ -122,3 +122,59 @@ To state the key renewal theorem, we need a notion:
 A useful sufficient condition for $h$ to be directly Riemann integrable is that $h$ is nonnegative, nonincreasing and integrable on $\mathbb R_+$.
 
 **Theorem Key renewal theorem** Suppose $F$ is not lattice, $h$ is directly Riemann integrable, then $\lim_{t \to \infty} \int_0^t h(t-x)dm(x)=\frac{1}{\mu}\int_0^\infty h(t)dt$. Notice w.r.t. $F$, $m(x)=\sum_{n=1}^\infty F_n(x)$ and $\mu=\int_0^\infty (1-F(t))dt$.
+
+_Remark_ By key renewal theorem, we can compute the limit of $g(t)$, some probability or expectation at time $t$ by first conditioning on the time of last renewal prior to $t$. This can yield an equation of the form 
+$$
+g(t)=h(t)+\int_0^t h(t-x)dm(x)
+$$
+To illustrate this, we consider $S_{N(t)}$. Its distribution is given by 
+
+**Lemma 3.4.3** $P(S_{N(t)}\le s)=\bar{F}(t)+\int_0^s \bar{F}(t-y)dm(y)$, where $\bar{F}=1-F$.
+
+<font color='red'>_proof of Lemma 3.4.3_</font> 
+$$
+\begin{aligned}
+P(S_{N(t)}\le s)&=\sum_{n=0}^\infty P(S_{N(t)}\le s, N(t)=n)=\sum_{n=0}^\infty P(S_n\le s, S_{n+1}> t)\\&=\bar{F}(t)+\sum_{n=1}^\infty P(S_n\le s, S_{n+1}>t)
+\\&=\bar{F}(t)+\sum_{n=1}^\infty \int_0^\infty P(S_n\le s, S_{n+1}>t\mid S_n=y)dF_n(y)
+\\&=\bar{F}(t)+\sum_{n=1}^\infty \int_0^s P(S_{n+1}-S_n> t-y)dF_n(y)
+\\&=\bar{F}(t)+\int_0^s \bar{F}(t-y)dm(y)
+\end{aligned}
+$$
+_Remark_ $P(S_{N(t)}=0) =\bar{F}(t)$, and $dF_{S_{N(t)}}(y)=\bar{F}(t-y)dm(y)$.
+
+Intuitively, we can argue that $dm(y)=P(\text{renewal occurs in }(y,y+dy))$. So $dF_{S_{N(t)}}(y)=P(\text{renewal in }(y,y+dy),\text{ next arrival}>t-y)=dm(y)\bar{F}(t-y)$.
+
+#### 3.4.1 Alternating renewal processes
+
+_Setting_ Consider a system with two states, on and off. Initially it's on, and remains for $Z_1$, goes off and remains for $Y_1$, and repeat this process. Suppose $(Z_i,Y_i)$ are i.i.d. (So $Z_i$ are i.i.d., so are $Y_i$), but $Z_i$ and $Y_i$ can be dependent. Denote the distribution of $Z_i,Y_i,Z_i+Y_i$ by $H,G,F$, and denote the event is on at $t$ by $A_t$. We have:
+
+**Theorem 3.4.4** If $E[Z_n+Y_n]<\infty$, and $F$ is nonlattice, then $\lim_{t \to \infty} P(A_t)=\frac{EZ_n}{EZ_n+EY_n}$.
+
+<font color='red'>_proof of Theorem 3.4.4_</font> Think of switching on as renewal, and condition on $S_{N(t)}$, 
+$$
+\begin{aligned}
+P(A_t)&=P(A_t\mid S_{N(t)}=0)P(S_{N(t)}=0)+\int_0^\infty P(A_t\mid S_{N(t)}=y)dF_{S_{N(t)}}(y)\\
+P(A_t\mid S_{N(t)}=0)&=P(Z_1>t\mid Z_1+Y_1>t)=\bar{H}(t)/\bar{F}(t)\\
+P(A_t\mid S_{N(t)}=y)&=P(Z>t-y\mid Z+Y>t-y)=\bar{H}(t-y)/\bar{F}(t-y),y<t\\
+\Rightarrow P(A_t)&=\bar{H}(t)+\int_0^t \bar{H}(t-y)dm(y)\\
+&\to 0+\frac{\int_0^\infty \bar{H}(t)dt}{\mu}=\frac{EZ}{EZ+EY}
+\end{aligned}
+$$
+_Remark_ Similarly, if the initial state is off, $P(\bar{A}_t)\to EY/(EY+EZ)$. Meanwhile, by the theorem, if the initial state is on, $P(\bar{A}_t)=1-P(A_t)\to EY/(EY+EZ)$. This fact implies the initial state makes no difference in the limit.
+
+_Application_ Consider a renewal process. Let $Y(t)=S_{N(t)+1}-t$ be the **residual life at $t$**, $A(t)=t-S_{N(t)}$ be the **age at $t$**. We can interpret this by thinking of renewal as replacing a failed component. Now we wonder the asymptotic distribution of $A(t)$:
+
+**Proposition 3.4.5** If the interarrival time is nonlattice and $\mu<\infty$, then $\lim_{t \to \infty} P(Y(t)\le x)=\lim_{t \to \infty} P(A(t)\le x)=\mu^{-1}\int_0^x \bar{F}(y)dy$.
+
+<font color='red'>_proof of Proposition 3.4.5_</font> 
+
+The strategy is to build an alternating renewal process. Fix an $x$, We say it's on when $A(t)\le x$, and it's off when $A(t)> x$. Then if $F$ is nonlattice we have by **Theorem 3.4.4**:
+$$
+\lim_{t \to \infty} P(A(t)\le x)=E[\min (X,x)]/EX=\frac{\int_0^x \bar{F}(y)dy}{\mu}
+$$
+Similarly, for a renewal process we say it's on when $Y(t)\le x$ and off when $Y(t)>x$. The asymptotic distribution of $Y(t)$ is given by 
+$$
+\lim_{t \to \infty} P(Y(t)\le x)=E[\min (X,x)]/EX=\frac{\int_0^x \bar{F}(y)dy}{\mu}
+$$
+_Remark_ $Y(t)$ and $A(t)$ has identical distribution, which is not so surprising. This symmetry has been implied in the proof: imagine we run a two-side renewal process, then in two direction we can see identical renewal process, and age in one direction is residual life in another direction.
+
