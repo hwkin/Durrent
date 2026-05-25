@@ -178,3 +178,220 @@ $$
 $$
 _Remark_ $Y(t)$ and $A(t)$ has identical distribution, which is not so surprising. This symmetry has been implied in the proof: imagine we run a two-side renewal process, then in two direction we can see identical renewal process, and age in one direction is residual life in another direction.
 
+_Remark_ $Y(t)$ and $A(t)$ are not independent.
+
+Now we turn to the distribution of the whole lifetime, $Y(t)=S_{N(t)+1}-S_{N(t)}=A(t)+Y(t)$.  First, we have an interesting fact:
+
+**Proposition Inspection paradox** $P(X_{N(t)+1}>x)\ge \bar{F}(x)$.
+
+<font color='red'>_proof_</font> 
+$$
+\begin{aligned}
+P(X_{N(t)+1}>x)&=\sum_{n=0}^\infty P(X_{N(t)+1}>x\mid N(t)=n)P(N(t)=n)
+\\&=\sum_{n=0}^\infty P(X_{n+1}>x\mid X_{n+1}>t-S_{n})P(N(t)=n)
+\\&=\sum_{n=0}^\infty\frac{P(X_{n+1}>x)}{P(X_{n+1}>t-S_n)}P(N(t)=n)
+\\&\ge \sum_{n=0}^\infty P(X>x)P(N(t)=n)=P(X>x)
+\end{aligned}
+$$
+_Remark_ Take expectation, we have $EX_{N(t)+1}\ge \mu$. This is to say, if you are in a renewal process, it's more likely that the renewal interval you are in is longer than an ordinary renewal interval. The reason is that, a longer interval is more likely to fetch some point $t$. 
+
+We can claim, an interval of length $y$ is $y$ times more likely to contain $t$ than an interval of length 1. In this case, denote the density of $X_{N(t)+1}$ by $g$, we have approximately $g(y)dy=d (yF(y)/\mu)$. Actually, this is true.
+
+_Correction_ Ross uses alternating renewal argument, which is incorrect. If we mark the intervals with length $>x$ on and $<x$ off, then whole cycle contains at least 2 renewal intervals. Actually, the distribution of length of "on" and"off" states also change.
+
+**Proposition** $\lim_{t \to \infty} P(X_{N(t)+1}>x)=\int_x^\infty ydF(y)/\mu$.
+
+<font color='red'>_proof_</font> Use the primary renewal equation argument, 
+$$
+\begin{aligned}
+P(X_{N(t)+1}>x)&=P(X_{N(t)+1}>x, S_{N(t)}=0)+\int_0^t P(X_{N(t)+1}>x\mid S_{N(t)}=y)dF_{S_{N(t)}}(y)
+\\&=P(X_1>\max\{x,t\})+\int_0^t P(X_i>\max\{x,t-y\}\mid X_i>t-y)\bar{F}(t-y)dm(y)
+\\&\to \mu^{-1}\int_0^\infty P(X_i>\max\{x,y\})dy=\mu^{-1} \int_x^\infty ydF(y)
+\end{aligned}
+$$
+**Example 3.4(A)** Suppose customers arrive at a store to buy some kind of commodity. The amount desired by customers are $Y_i$ i.i.d. $\sim G$. The store uses the following $(s,S)$ ordering policy: if the inventory level is below $s$ after serving a customer, an order is placed to bring t up to $S$ immediately. Let $X(t)$ denote the inventory level at time $t$, now we wonder it's asymptotic distribution. Fix $s<x<S$.
+
+- Construct an alternating renewal process. Since we are investigating the asymptotic behavior, WLOG let $X(0)=S$. Set it on when $X(t)\ge x$ and off otherwise. At the beginning and the end of a cycle, $X(t)=S$, so it's a renewal process. So
+  $$
+  \lim_{t \to \infty}P(X(t)>x)=\frac{E[\text{amount of time the inventory}\ge x\text{ in a cycle}]}{E[\text{ time of a cycle}]}
+  $$
+
+- Let $N_x=\min\{n: Y_1+...+Y_n>S-x\}$ to be the first renewal when the inventory falls below $x$.Then $N_s$ is the renewal starting the new cycle. So
+  $$
+  \lim_{t \to \infty} P(X(t)>x)=\frac{E[\sum_{i=1}^{N_x} Y_i]}{E[\sum_{i=1}^{N_s}Y_i]}=\frac{EN_x}{EN_s}
+  $$
+
+- Consider the renewal process $Y_i$. $N_x-1$ is the number of renewals before $S-x$, so $E[N_x-1]=m_G(S-x)$. So 
+  $$
+  \lim_{t \to \infty}P(X(t)>x)=\frac{m_G(S-x)+1}{m_G(S-s)+1}
+  $$
+
+#### 3.4.2 Limiting mean excess and the expansion of $m(t)$
+
+**Proposition 3.4.6** If $F$ is nonlattice, $EX_i^2<\infty$, then $E[Y(t)]\to E[X_i^2]/2\mu$.
+
+<font color='red'>_proof of Proposition 3.4.6_</font> Take expectation for the renewal equation of $Y(t)$, we have 
+$$
+\begin{aligned}
+EY(t)&=E[Y(t)\mid S_{N(t)}=0]\bar{F}(t)+\int_0^t E[Y(t)\mid S_{N(t)}=y]\bar{F}(t-y)dm(y)
+\\&=E[X-t\mid X>t]\bar{F}(t)+\int_0^t E[X-(t-y)\mid X>t-y]\bar{F}(t-y)dm(y)
+\\E[X-t\mid X>t]&=\int_t^\infty (s-t)dF(s)/\bar{F}(t) 
+\\\Rightarrow EY(t)&\to \mu^{-1}\int_0^\infty E[X-t\mid X>t]\bar{F}(t)dt
+\\&=\mu^{-1}\int_0^\infty \int_t^\infty (s-t)dF(s)dt=\mu^{-1}\int_0^\infty\int_0^s (s-t)dtdF(s)
+\\&=\mu^{-1}\int_0^\infty \frac{s^2}{2}dF(s)=\frac{EX^2}{2\mu}
+\end{aligned}
+$$
+(i) $E[X-t\mid X>t]\bar{F}(t)\to 0$ as $t\to\infty$: By Schwarz inequality
+$$
+\int_t^\infty (s-t)^2 dF(s)\int_t^\infty dF(s)\ge [\int_t^\infty (s-t)dF(s)]^2
+$$
+and the second moment is finite.
+
+(ii) $E[X-t\mid X>t]\bar{F}(t)$ is directly Riemann integrable: differentiate it w.r.t. $t$, it's negative.
+
+**Corollary 3.4.7** If $EX^2<\infty$ and $F$ is nonlattice, then $m(t)-t/\mu\to EX^2/1\mu^2-1$.
+
+<font color='red'>_proof of Corollary 3.4.7_</font> Since $S_{N(t)+1}=t+Y(t)$, $ES_{N(t)+1}\to t+EX^2/2\mu$. But $ES_{N(t)+1}=\mu [m(t)+1]$ by Wald's equality. 
+
+#### 3.4.3 Age-dependent branching processes
+
+_Setting_ Suppose that an organism at the end of its life produce random numbers of offspring with law $P(X=j)=p_j$. The lifetime of everyone is i.i.d. $\sim F$, and the number of offspring of everyone is independent of anything else. Denote the alive individuals at $t$ by $X(t)$. $X(t)$ is called **age-dependent branching process**. We are concerning the asymptotic behavior of $M(t):=E[X(t)]$, where we assume $m:=\sum_{j=1}^\infty jp_j>1$.
+
+**Theorem 3.4.8** If $X_0=1,m>1$, and $F$ is nonlattice, then 
+$$
+e^{-\alpha t}M(t)\to\frac{m-1}{m^2 \alpha EXe^{-\alpha X}},t\to\infty
+$$
+where $\alpha$ is chosen s.t. $Ee^{-\alpha X}=1/m$.
+
+<font color='red'>_proof of Theorem 3.4.8_</font> By conditioning on $T_1$,
+$$
+\begin{aligned}
+M(t)&=\int_0^\infty E[X(t)\mid T_1=s]dF(s)
+\\&=\int_0^t mM(t-s)dF(s)+\int_t^\infty 1dF(s)=\bar{F}(t)+m\int_0^t M(t-s)dF(s)
+\end{aligned}
+$$
+To make this a renewal equation (to absorb m) , introduce $G(s)=m\int_0^s e^{-\alpha y}dF(y)$ which is a distribution, and replace $F$ by $G$ by 
+$$
+e^{-\alpha t}M(t)=e^{-\alpha t}\bar{F}(t)+\int_0^t e^{-\alpha (t-s)}M(t-s)\ me^{-\alpha s}dF(s)=e^{-\alpha t}\bar{F}(t)+\int_0^t e^{-\alpha (t-s)}M(t-s)dG(s)
+$$
+Let $f(t)=e^{-\alpha t}M(t)$ and $h(t)=e^{-\alpha t}\bar{F}(t)$, we have $f=h+f*G$.  By induction, $f=h+h*m_G$. $h$ is decreasing and $h(\infty)=0$, so it's Riemann integrable, and by renewal theorem,
+$$
+f(t)\to \mu_G^{-1}\int_0^\infty h(t)dt=\frac{\int_0^\infty e^{-\alpha t}\bar{F}(t)dt}{\int_0^\infty xdG(x)}=\frac{\alpha^{-1}(1-\int_0^\infty e^{-\alpha t}dF(t))}{\int_0^\infty xme^{-\alpha x}dF(x)}=\frac{1-1/m}{\alpha m EXe^{-\alpha X}}
+$$
+
+### 3.5 Delayed Renewal Processes
+
+**Definition** Let $X_i,i\ge 2$ be i.i.d. $\mathbb R_+$-valued, $\sim F$, and $X_1$ be independent of $X_i,i\ge 2$, $\sim G$. Let $S_0=0,S_n=\sum_{i=1}^{n} X_i$, $N_D(t)=\sup\{n: S_n\le t\}$, then $N_D$ is a **delayed renewal process**.
+
+Consider those properties of interest:
+
+-  $P(N_D(t)=n)=P(S_n\le t)-P(S_{n+1}\le t)=G*F_{n-1}-G*F_n$.
+- $E[N_D(t)]=\sum_{n=0}^\infty P(S_n\le t)=\sum_{n=1}^\infty G*F_{n-1}(s)$.
+- w.p.1., $N_D(t)/t\to 1/\mu$
+- $m_D(t)/t\to1/\mu$
+- If $F$ is nonlattice, $m_D(t+a)-m_D(t)\to a/\mu$.
+- If $F$ and $G$ are lattice with period $d$, $E[\#\text{renewals at }nd]\to d/\mu$.
+- If $F$ is nonlattice and $h$ is directly Riemann integrable, then $\int_0^t h(t-x)dm_D(x)\to\mu^{-1} \int_0^\infty h(t)dt$.
+
+**Example 3.5 (A)** Consider $X_i$ i.i.d. are discrete. Call a finite sequence $(x_1,...,x_k)$ a pattern, and say it occur at $n$ if $X_n=x_k,...,X_{n-k+1}=x_1$. Denote the number of occurrence of the pattern by $n$ by $N(n)$. 
+
+Notice $N(n)$ is a delayed renewal process, since the occurrence after the first one can draw support from the former pattern, i.e., $T_1$ is the time for occurrence and $T_i,\ge 2$ are time for repetition, where $T_i$ are interarrival times. It's a ordinary renewal process iff $(x_1,...,x_i)$ and $(x_{n-i+1},...,x_n)$ are different pattern for all $i<n$. If the condition doesn't hold, say the longest such subsequence head-tail.
+
+The rate at which the pattern occurs is given by
+$$
+\frac{N(n)}{n}\to_{a.s.}\frac{1}{\mu}=\lim_{n \to \infty} E[\#\text{renewals at }n]=\prod_{i=1}^k P(X=x_k)
+$$
+Now we consider a concrete case. Suppose $P(X_n=1)=p,P(X_n=0)=1-p:=q$, and the pattern is $0101$. Then $ET_i=p^{-2}q^{-2}$. Now we wonder $ET_1$.
+
+Observe the pattern. If the pattern has occurred, to make it occur again, the "helpful" pattern is $01$, which encourages $0101|01$ occurs. So $ET_i$ can be regarded as the mean waiting time from pattern $01$ to $0101$, i.e., $ET_{1,0101}=ET_{1,01}+p^{-2}q^{-2}$. Notice the pattern $01$ induces an ordinary renewal process, so $ET_{1,01}=p^{-1}q^{-1}$ by the above derivation. So $ET_{1,0101}=p^{-1}q^{-1}+p^{-2}q^{-2}$.
+
+From this we can conclude, for a pattern $(x_i)$, if the head-tail is empty, $ET_{1,(x_i)}=ET_{n,(x_i)}=\prod_{i=1}^k P(X=x_i)$. If it's not empty, denote by $(y_k)$, $ET_{1,(x_i)}=ET_{1,(y_k)}+ET_{n,(x_i)}$. And by induction we can get the final result. So
+$$
+\begin{aligned}
+ET_{1,0100100}&=ET_{1,0100}+p^{-2}q^{-5}=ET_{1,0}+p^{-1}q^{-3}+p^{-5}q^{-2}=p^{-1}+p^{-1}q^{-3}+p^{-5}q^{-2}
+\\ET_{1,1*n}&=p^{-n}+ET_{1,1*(n-1)}=p^{-n}+...+p^{-1}
+\end{aligned}
+$$
+In this setting, we consider the probability that the pattern $A$ occurs ahead of $B$. For example, $A=1010$ and $B=0100$. Denote $N_{B|A}$ to be the time of occurrence of $B$ starting from the occurrence of $A$, $N_{A}=T_{1,A}$ . 
+
+Notice $EN_{0100|1010}=EN_{0100|010}$. Meanwhile, $EN_{0100}=EN_{010}+EN_{0100|010}$, since $010$ is necessary for $0100$. By calculation, $EN_{0100}=q^{-1}+q^{-3}p^{-1}$, $EN_{010}=q^{-1}+q^{-2}p^{-1}$. So $EN_{B|A}=q^{-3}p^{-1}-q^{-2}p^{-1}$. Also $EN_{A|B}=E[N_A]=p^{-2}q^{-2}+p^{-1}q^{-1}$.
+
+Now let $P_A$ be the probability that $A$ occurs before $B$, let $M=\min\{N_A,N_B\}$, we have 
+$$
+EN_A=EM+E[N_A-M]=EM+EN_{A|B}(1-P_A)
+$$
+similarly $EN_B=EM+EN_{B|A}P_A$. By this, we can solve $P_A=[EN_B+EN_{A|B}-EN_A]/[EN_{B|A}+EN_{A|B}]$, and $EM=EN_B-EN_{B|A}P_A$.
+
+when $p=1/2$, we have $EN_A=20,EN_B=18,P_A=9/14,EM=90/7$. Notice although $EN_A>EN_B$, $P_A>1/2$. 
+
+**Example 3.5(B)** _Setting_ Consider this process: A system consists of $n$ independent components, each of which runs a alternating renewal process $(X_n^i,Y_n^i)_{n>0}$, where $X_n^i$ i.i.d.$\sim Exp(\lambda_i)$, $Y_n^i$ i.i.d. $\sim Exp(\mu_i)$, respectively representing on and off. Suppose the system is parallel, say it's functional if at least one of the components are working, nonfunctional if non of them are working. Let $N(t)$ denote the times the system is nonfunctional. 
+
+This process is a delayed renewal process, since it starts from the state that all components are working, and renewal happens when all components break down.
+
+Now we wonder $\mu$. The strategy is to apply Blackwell's theorem. Consider the probability of breakdown in $(t,t+h)$. On each component, the probability of breakdown we have 
+$$
+\lim_{t \to \infty}P(\text{breakdown at }(t,t+h))=\lim_{t \to \infty} P(\text{on at t})P(\text{last time<}h\mid\text{on at }t)=\frac{\lambda_i}{\lambda_i+\mu_i}(1-e^{-h/\lambda_i})=\frac{h}{\lambda_i+\mu_i}+o(h)
+$$
+by the memoryless property of exponential distribution.
+
+As for the whole system, when $t\gg h$, in $(t,t+h)$ we only need to consider this case: one will break down, and others have already broken down (since other cases is $o(h)$), i.e., 
+$$
+\lim_{t \to \infty} P(\text{breakdown at }(t,t+h))=\sum_{i=1}^{n} \frac{1}{\lambda_i+\mu_i}\prod_{j\ne i}\frac{\mu_j}{\lambda_j+\mu_j}\ h+o(h)
+$$
+By Blackwell's renewal theorem, $\mu=(\prod_{j=1}^n \frac{\mu_i}{\mu_i+\mu_j}\sum_{i=1}^{n} \mu_i^{-1})^{-1}$.
+
+Once the system breaks down, the broken time follows $Exp(\sum_{i=1}^{n} \mu_i^{-1})$. So the mean broken time is $(\sum_{i=1}^{n} \mu_i^{-1})^{-1}$. The mean functional time is the difference of the two mean.
+
+**Example 3.5(c)** Consider two coins, which land on tails with probability $p_1,p_2$ (unknown). Now we construct a strategy to continually flip the coins a.t. the long-run proportion of tails is $\min(p_1,p_2)$.
+
+_Strategy_ Start by flipping coin 1 until a tail occurs, at which point switch to coin 2 and flip it until a tail occurs. Say that cycle 1 ends at this point. Now flip coin 1 until two tails in a row occur, and then switch and do the same with coin 2. Say that cycle 2 ends at this point. In general, when cycle n ends, return to coin 1 and flip it until n + 1 tails in a row occur and then flip coin 2 until this occurs, which ends cycle n + 1.
+
+_proof_ 
+
+- Let $p=\max(p_1,p_2),\alpha p=\min(p_1,p_2)$, where $\alpha<1$. Call the coin with tail probability $p$ the bad coin, $\alpha p$ the good one. In the cycle $m$, let $B_m$ be the flips of bad coin and $G_m$ the flips of good coin. 
+
+- **Lemma** For $\epsilon>0$, $P(B_m\ge \epsilon G_m i.o.)=0$.
+
+  <font color='red'>_proof_</font> 
+  $$
+  P(G_m\le B_m/\epsilon)=E[P(G_m\le B_m/\epsilon\mid B_m)]=E[\sum_{i=1}^{B_m/\epsilon} P(G_m=i\mid B_m)]\le E[\sum_{i=1}^{B_m/\epsilon}(\alpha p)^m]=\epsilon^{-1} ((\alpha p) ^m EB_m)
+  $$
+  $P(G_m=i\mid B_m)=P(G_m=i)\le (\alpha p)^m$, since in the $m$th cycle there must be $m$ tails of good coins regardless of any condition.
+
+  Recall **Example 3.5(A)**, $EB_m=\sum_{i=1}^{m} p^{-i}=\frac{(1/p)^m-1}{1-p}$.
+
+  So 
+  $$
+  \sum_{m=1}^\infty P(G_m\le B_m/\epsilon)=\epsilon^{-1}\sum_{m=1}^\infty \frac{1-p^m}{1-p}\alpha^m<\infty
+  $$
+  By Borel-Cantelli lemma, $P(B_m\ge \epsilon G_mi.o.)=0$.
+
+- The lemma shows that $B_m/(B_m+G_m)\ge \epsilon/(1+\epsilon)$ can only happens for finitely many times. So the long-run proportion of flips of bad coins is $0$. Now since almost we only use the good coin, by SLLN, the proportion of tails is $\alpha p$.
+
+_Correction_ We don't need to assume which coin is flipped first.
+
+
+
+As proved before, $P(S_{N(t)}\le s)=\bar{G}(t)+\int_0^s \bar{F}(t-y)dm_D(y)$, and the limit is $\mu^{-1}\int_0^\infty \bar{F}(y)dy$. The limit distribution of residual life, $F_e(x)=\int_0^x \bar{F}(y)dy/\mu$, is called **equilibrium distribution** of $F$. The delayed distribution with $G=F_e$ is called **equilibrium renewal process**. This process arises naturally: suppose someone starting to observe the renewal process at time $t$. As $t\to\infty$, it's nearly an equilibrium renewal process. This process has some interesting properties, e.g., it has stationary increments, while in general ordinary renewal process doesn't enjoy this property.
+
+**Theorem 3.5.2** For the equilibrium renewal process, 
+
+(i) $m_D(t)=t/\mu$
+
+(ii) $P(Y_D(t)\le x)=F_e(x)$
+
+(iii) $N_D$ has stationary increments.
+
+<font color='red'>_proof of Theorem 3.5.2_</font>
+
+(i) By Laplace transformation $\mathcal L(F)(s)=\int e^{-st}dF(t)$, we have $\mathcal L(m_D)(s)=\sum_{n=1}^\infty \mathcal L(G)(s)\mathcal L(F_{n-1})(s)=\frac{\mathcal L(G)(s)}{1-\mathcal L(F)(s)}$, and $\mathcal L(F_e)(s)=\frac{1-\mathcal L(F)(s)}{\mu s}$. Since $G=F_e$, $\mathcal L(m_D)(s)=(\mu s)^{-1}$, whose inverse is $t/\mu$. By uniqueness, $m_D(t)=t/\mu$.
+
+(ii) Similarly 
+$$
+P(Y_D(t)>x)=\bar{G}(t+x)+\int_0^t \bar{F}(t+x-s)dm_D(s)
+$$
+Let $G=F_e$, 
+$$
+P(Y_D(t)>x)=\bar{F}_e(t+x)+\int_0^t \bar{F}(t+x-s)ds/\mu=\bar{F}_e(t+x)+F_e(t+x)-F_e(x)=1-F_e(x)
+$$
+(iii) $\forall s,t$, $N_D(t+s)-N_D(s)$ is the process one starts to observe the renewal process at time $t$. By (ii), The distribution of $X_1$ is exactly $F_e$. So $N_D(t+s)-N_D(s)=_d N_D(t)$.
