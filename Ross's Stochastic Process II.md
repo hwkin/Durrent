@@ -395,3 +395,265 @@ $$
 P(Y_D(t)>x)=\bar{F}_e(t+x)+\int_0^t \bar{F}(t+x-s)ds/\mu=\bar{F}_e(t+x)+F_e(t+x)-F_e(x)=1-F_e(x)
 $$
 (iii) $\forall s,t$, $N_D(t+s)-N_D(s)$ is the process one starts to observe the renewal process at time $t$. By (ii), The distribution of $X_1$ is exactly $F_e$. So $N_D(t+s)-N_D(s)=_d N_D(t)$.
+
+### 3.6 Renewal Reward Process
+
+_Setting_ Consider a renewal process $N(t)$ with interarrival times $X_n$ i.i.d.$\sim F$, and each renewal brings a reward $R_n$, which are i.i.d. but can depend on $X_n$, or formally, $(X_n,R_n)$ are i.i.d.. Let $R(t)=\sum_{i=1}^{N(t)} R_n$ be the total reward earned by time $t$. 
+
+**Theorem 3.6.1** If $ER,EX<\infty$, we have 
+
+(i) w.p.1, $R(t)/t\to ER/EX$
+
+(ii) $ER(t)/t\to ER/EX$.
+
+<font color='red'>_proof of Theorem 3.6.1_</font>
+
+(i) By SLLN and SLLN of renewal process, we have $\frac{R(t)}{t}=\frac{\sum_{i=1}^{N(t)}R_n}{N(t)}\frac{N(t)}{t}\to ER/EX$.
+
+(ii) _Correction_ $N(t)+1$ is not a stopping time for $R_n$. It's a stopping time for $(X_n,R_n)$.
+
+Use Wald's equation, 
+$$
+ER(t)=E\sum_{i=1}^{N(t)} R_i=E\sum_{i=1}^{N(t)+1} R_i-ER_{N(t)+1}=(m(t)+1)ER-E[R_{N(t)+1}]
+$$
+So $ER(t)/t=(m(t)+1)/t\ ER-ER_{N(t)+1}/t$. By elementary renewal theorem, $(m(t)+1)/t\to 1/EX$. Now it suffices to show $ER_{N(t)+1}/t\to 0$. 
+
+Notice we cannot assume $ER_{N(t)+1}=ER$ since $R_n$ may depends on $X_n$, and $X_{N(t)+1}$ may be longer than normal (inspection paradox), so they can be different.
+
+Prove this by truncation. For any $A>0$, 
+$$
+R_{N(t)+1}\le A+R_{N(t)+1}1_{R_{N(t)+1}>A}\Rightarrow ER_{N(t)+1}\le A+ER_{N(t)+1}1_{R_{N(t)+1}>A}
+$$
+Consider the expectation of $Y=R_n1_{R_n>A}$, we have 
+$$
+\begin{aligned}
+EY_{N(t)+1}&=\sum_{n=1}^\infty EY_n1_{N(t)+1=n}\le \sum_{n=1}^\infty EY_n1_{N(t)+1\ge n}\\&=\sum_{n=1}^\infty EY_nE1_{N(t)+1\ge n}=EY_nEN(t)+1=EY(m(t)+1)
+\end{aligned}
+$$
+The subtle point is, $Y_n$ is independent of $\{N(t)+1\ge n\}$ but maybe not independent of $\{N(t)+1=n\}$.
+
+In this way, 
+$$
+ER_{N(t)+1}/t\le A/t+EY(m(t)+1)/t\to EY/EX
+$$
+But since $A$ is arbitrary and $ER<\infty$, $ER_{N(t)+1}/t\to 0$, which completes our proof. 
+
+_Remark_ The "reward" can be given at the end of the cycle or gradually during the cycle. Under both cases the theorem hold, since $\sum_{n=1}^{N(t)}R_n\le R(t)+\sum_{n=1}^{N(t)} R_n+R_{N(t)+1}$.
+
+**Example 3.6(A) Alternating renewal process** Suppose we earn at a rate of one per unit time when the system is on. Then $R(t)$ is the total on time by $t$. By **Theorem 3.6.1**, $R(t)/t\to EX/(EX+EY)$ w.p.1. This is, the long-run probability of the system is on is exactly the long-run proportion of the on time.
+
+**Example 3.6(B) Average age and excess** Let $A(t)$ denote the age at $t$ of a renewal process, now we compute $\lim_{t \to \infty} \int_0^t A(s)ds/t$. Reward the process at rate $A(t)$, we have w.p.1,
+$$
+\frac{\int_0^t A(s)ds}{t}\to \frac{E\int_0^X sds}{EX}=\frac{EX^2}{2EX}
+$$
+For $Y(t)$, similarly, reward at rate $Y(t)$, w.p.1,
+$$
+\frac{\int_0^t Y(s)ds}{t}\to\frac{E\int_0^X (X-t)dt}{EX}=\frac{EX^2}{2EX}
+$$
+Since $X_{N(t)+1}=A(t)+Y(t)$, 
+$$
+\frac{\int_0^t X_{N(s)+1}ds}{t}\to \frac{EX^2}{EX}\ge EX
+$$
+**Example 3.6 (c)** _Setting_ Suppose travelers arrive at a train depot as a renewal process with mean interarrival time $\mu$, and whenever there are $N$ travelers waiting at the depot a train leaves. When there is $n$ travelers, it costs at rate $nc$, and when a train leaves it costs $K$. Now we are interested in the mean cost.
+
+In this setting, we have $E[\text{length of a cycle}]=N\mu$, and $E[\text{cost of a cycle}]=EcX_1+...+(N-1)cX_{N-1}+K=\frac{c\mu N(N-1)}{2}+K$. The ratio is the limit mean cost.
+
+#### 3.6.1 A queueing application
+
+_Setting_ Customers arrive as a renewal process with interarrival time $X_i$. There is only one desktop, and the service time for each customer is $Y_i$ which are i.i.d..$X_i,Y_j$ are independent. Assume $EY<EX<\infty$. Suppose the first customer arrives at time $0$, and let $n(t)$ denote the number of people in the system at $t$. 
+
+Let $L=\lim_{t \to \infty} \int_0^t n(s)ds/t$. To investigate this, we think of the renewal as the beginning of a busy period (notice this truly leads to a renewal process), and reward the process at rate $n(s)$. So 
+$$
+L=\frac{E[\text{reward during a cycle}]}{E[\text{time of a cycle}]}=\frac{E\int_0^T n(s)ds}{ET}
+$$
+Let $W_i$ denote the amount of the time the $i$th customer spends in the system (including service time and queueing time), and $W=\lim_{n \to \infty} \sum_{i=1}^{n} W_i/n$. To investigate this, we abandon time and only investigate the number of people in the queue. This is also a renewal process if we think of the state the system is free as a renewal. Reward the process $W_i$ as $i$th people left, we have $W=E[\sum_{i=1}^{N}W_i]/[EN]$ where $N$ denotes the cycle time of the renewal process.
+
+$L$ the average queue length and $W$ the average time cost of everyone has the following interesting relation:
+
+**Theorem 3.6.2** Let $\lambda=1/EX$ denotes the arrival rate, then $L=\lambda W$. 
+
+<font color='red'>_proof of Theorem 3.6.2_</font> 
+
+- Notice $T=\sum_{i=1}^{N} X_i$. Notice $N$ is a stopping time of $(X_i,Y_i)$. So by Wald's equation, $ET=EN/\lambda$.
+
+- $$
+  L=\frac{E\int_0^T n(s)ds}{ET}=\lambda\frac{\int_0^T n(s)ds}{EN}=\lambda W\frac{E[\int_0^T n(s)ds]}{E[\sum_{i=1}^{N} W_i]}
+  $$
+
+- Indeed $\int_0^T n(s)ds=\sum_{i=1}^{N} W_i$. One can convince himself by noticing this is two slicing of the same amount.
+
+_Remark_ Indeed, the theorem is true as long as the queueing model restarts itself probabilistically and $ET<\infty$ from our proof. Consider the case of multiple desktop, let the renewal takes place when every desktop is empty. If $EY<kEX$, $ET$ will be finite, and the theorem holds.
+
+### 3.7 Regenerative processes
+
+**Definition** If the s.p. $X_t$ satisfies: $\exists S>0$ a r.v., $X_{t+S}=_d X_t$, then $X_t$ is called **regenerative process**. 
+
+From the definition, the restart time, usually called **regeneration time**, is infinitely many. Denote them by $S_1,...$. Then $S_1,...$ constitutes the time of a renewal process, i.e., $N(t):=\max\{n: S_n\le t\}$ is a renewal process. Denote the interarrival time for the renewal process by $T_i$,we have 
+
+**Theorem 3.7.1** If $X$ is $\mathbb Z_+$-valued, then 
+$$
+P_j:=\lim_{t \to \infty} P(X(t)=j)=\frac{E[\text{amount of time in state j during a cycle}]}{ET_i}
+$$
+<font color='red'>_proof of Theorem 3.7.1_</font> Conditioning on the last renewal before $t$,
+$$
+\begin{aligned}
+P(X(t)=j)&=P(X(t)=j\mid S_{N(t)}=0)\bar{F}(t)+\int_0^t P(X(t)=j\mid S_{N(t)}=s)\bar{F}(t-s)dm(s)
+\\&=P(X(t)=j, S_1>t)+\int_0^t P(X(t-s)=j,S_1>t-s)dm(s)
+\\&\to \int_0^\infty P(X(t)=j,S_1>t)dt/ES_1
+\end{aligned}
+$$
+And $\int_0^\infty P(X(t)=j,S_1>t)dt$ is exactly the amount of time in state $j$ in a cycle.
+
+**Proposition 3.6.2** Under the same setting, 
+$$
+\lim_{t \to \infty}\frac{\text{amount of time in j by t}}{t}=\frac{E[\text{time in j during a cycle}]}{ES_1}
+$$
+<font color='red'>_proof of Proposition 3.6.2_</font> Reward the process at rate 1 when it is at state $j$. Then this follows directly from **Theorem 3.6.1**.
+
+_Remark_ limit probability=long-time proportion=E time at some state in a cycle /E cycle length
+
+#### 3.7.1 The symmetric random walk and the arc sine laws
+
+_Setting_ Let $Y_i$ i.i.d. with $P(Y_i=\pm 1)=1/2$, and $Z_0=0,Z_n=\sum_{i=1}^{n} Y_i$. The process $Z_n$ is called symmetric random walk process.
+
+$Z_n$ induces a regenerative process $X_n=sgn Z_n$, which regenerates whenever $X_n=0$. 
+
+- Let $u_n=P(Z_{2n}=0)=\binom{2n}{n} 2^{-2n}$. Notice $u_n=\frac{2n-1}{2n}u_{n-1}$.  We can conclude the distribution of the interarrival time by conclusions from ballot's problem,
+  $$
+  P(Z_1,Z_2,...,Z_{2n-1}\ne 0,Z_{2n}=0)=u_n\frac{n-(n-1)}{n+(n-1)}=\frac{u_n}{2n-1}
+  $$
+  
+
+- Also we can conclude the probability it doesn't hit $0$ before $2n$,
+
+  **Lemma 3.7.3** $P(Z_1,...,Z_{2n}\ne 0)=u_n$
+
+  <font color='red'>_proof of Lemma 3.7.3_</font> Since $LHS=1-\sum_{i=1}^{n}\frac{u_i}{2n-1}$, by induction it holds.
+
+- By Stirling's formular, $u_n\sim(n\pi)^{-1/2}$. So w.p.1, the SRW returns to 0.
+
+- The distribution of the last visit to 0 by $2n$ is given by 
+
+  **Proposition 3.7.4** For $k< n$, $P(Z_{2k}=0,Z_i\ne0\forall 2k+1\le i\le n)=u_ku_{n-k}$ 
+
+Now we illustrate the SRW by connecting $Z_k,Z_{k+1}$ by straight line, then its path is cts.
+
+**Theorem 3.7.5** Let $E_{k,n}$ denote the event that by time $2n$, SRW is positive for $2k$ time units and negative for $2n-2k$ time units, and $b_{k,n}=P(E_{k,n})$, we have $b_{k,n}=u_ku_{n-k}$.
+
+<font color='red'>_proof of Theorem 3.7.5_</font> Use induction on $n$. 
+
+- When $n=1$, $b_{1,1}=b_{0,1}=1/2$ since it's determined by the first step to move upward or downward. Meanwhile $u_0=1, u_1=1/2$. So for this case it holds.
+
+- Assume $b_{k,m}=u_ku_{m-k}$ holds for all $k\le m<n$. 
+
+  - First we prove $b_{n,n}=u_n$. Conditioning on the first visit to 0, we have 
+    $$
+    \begin{aligned}
+    b_{n,n}&=\frac{1}{2}\sum_{r=1}^{n} b_{n-r,n-r}P(T=2r)+\frac{1}{2}P(T>2n)
+    \\&=\frac{1}{2}\sum_{r=1}^{n} u_{n-r}P(T=2r)+\frac{1}{2}P(T>2n)\text{ induction hypothesis} 
+    \\&=\frac{1}{2}\sum_{r=1}^{n} P(Z_{2n-2r}=0)P(T=2r)+\frac{1}{2}P(T>2n)
+    \\&=\frac{1}{2}\sum_{r=1}^{n} P(Z_{2n}=0\mid T=2r)P(T=2r)+\frac{1}{2}P(T>2n)\text{ (restart) }
+    \\&=\frac{1}{2}P(Z_{2n}=0)+\frac{1}{2}P(T>2n) \text{ since }T<2n
+    \\&=u_n
+    \end{aligned}
+    $$
+
+  - Next we consider common $k$, we have 
+    $$
+    \begin{aligned}
+    b_{k,n}&=\sum_{r=1}^{n} P(E_{k,n}\mid T=2r)P(T=2r)
+    \\&=\sum_{r=1}^{n} b_{k-r,n-r}\frac{1}{2}P(T=2r)+\sum_{r=1}^{n} b_{k,n-r}\frac{1}{2} P(T=2r)
+    \\&=\sum_{r=1}^{n} u_{k-r}u_{n-k}\frac{1}{2}P(T=2r)+\sum_{r=1}^{n} u_ku_{n-r-k}\frac{1}{2} P(T=2r)
+    \\&=u_{n-k}\frac{1}{2} u_k+u_k\frac{1}{2} u_{n-k}=u_ku_{n-k}\text{ from the last case}
+    \end{aligned}
+    $$
+    With the invalid index implying corresponding item is 0.
+
+- In this case it's true for $m=n$. So the theorem holds for all $k\le n$.
+
+By **Theorem 3.7.5**. If we denote $R_n$ to be the time units when it's positive, we have $P(R_n=2k)=u_ku_{n-k}\sim \frac{1}{\pi\sqrt{k(n-k)}}$, which is called the discrete arc sine distribution. So 
+$$
+P(\frac{R_n}{2n}\le x)\approx \frac{1}{\pi}\int_0^{nx}\frac{1}{\sqrt{y(n-y)}}dy=\frac{1}{\pi}\int_0^x \frac{1}{\sqrt{w(1-w)}}dw=\frac{2}{\pi }\arcsin \sqrt{x}
+$$
+For instance, $P(R_n/2n\le 1/2)\approx 2/\pi \arcsin \sqrt{2}/2=1/2$.
+
+_Remark_ $R_n/2n$ doesn't converge to some constant, e.g., $1/2$, as we expected. An interesting fact is that, notice that $u_n\to 0$ and that SRW is symmetric implies $P(X_n=1)\to 1/2$, but the  proportion $R_n/2n$ doesn't converge to some constant. The reason is that $ET=\infty$, since 
+$$
+ET\ge\sum_{n=1}^\infty P(T\ge 2n)=\sum_{n=1}^\infty u_n
+$$
+where $u_n=O(n^{-1/2})$.
+
+_Remark_ **Proposition 3.7.4** says $P(\text{no zeros between }2nx\text{ and }2n)=1-\sum_{k=nx}^n u_ku_{n-k}$, which is approximately $2/\pi\arcsin\sqrt{x}$.
+
+### 3.8 Stationary point process
+
+**Definition** A **stationary point process** is a counting process with stationary increments. One example is equilibrium renewal process.
+
+**Theorem 3.8.1** If $N(t)$ is a nontrivial stationary point process, we have $\lim_{t \to 0} \frac{P(N(t)>0)}{t}:=\lambda>0$.
+
+<font color='red'>_proof of Theorem 3.8.1_</font> Let $f(t)=P(N(t)>0)$. we have 
+$$
+f(s+t)=P(N(t+s)-N(t)>0\text{ or }N(t)>0)\le f(s)+f(t)
+$$
+i.e., $f$ is concave, and $f(0)=0$. So $f'(0)$ makes sense.
+
+**Example 3.8(A)** For equilibrium renewal process, $P(N(t)>0)=F_e(t)=\int_0^t \bar{F}(y)dy/\mu$. By L-Hospital rule $\lambda=\mu^{-1}$.
+
+Notice $EN(t+s)=EN(t)+EN(s)$ and is increasing, by Cauchy equation, there is $c$ s.t. $EN(t)=ct$. Generally, 
+$$
+c=\sum_{n=1}^\infty\frac{nP(N(t)=n)}{t}\ge \sum_{i=1}^{n}\frac{P(N(t)=n)}{t}=\frac{P(N(t)>0)}{t}\to\lambda
+$$
+When $c=\lambda$ holds? First, let's introduce a notion: A stationary point process is said to be **regular** or **orderly** if $P(N(t)\ge 2)=o(t)$. This implies the probability that two events occur simultaneously with probability 0.
+
+**Theorem Korolyook's theorem** If $N(t)$ is regular, $\lambda=c$.
+
+The proof refers to Ross.
+
+_Remark_ If the increments are independent, it's Poisson process.
+
+***
+
+3.4 $m(t)=F(t)+\int_0^t m(t-x)dF(x)$
+
+<font color='red'>_proof_</font> conditioning on $X_1$, we have 
+$$
+m(t)=\int_0^t [m(t-x)+1]dF(x)=F(t)+\int_0^t m(t-x)dF(x)
+$$
+3.5 $m(t)$ uniquely determines $F(t)$.
+
+<font color='red'>_proof_</font> denote Laplace transform $\hat{f}$, we have $\hat{m}(t)=\frac{\hat{F}(t)}{1-\hat{F}(t)}$. By the uniqueness of Laplace transform, $m(t)$ determines $F(t)$.
+
+3.6 Let $N(t)$ be a renewal process, and suppose that conditioning on $N(t)=n$, $S_1,...,S_n$ is distributed as the order statistics of $U_i\sim U(0,t)$. Prove $N(t)$ is a Poisson process.
+
+<font color='red'>_proof_</font> When $s<t$, $E[N(s)\mid N(t)]=N(t)s/t$, so $EN(s)=EN(t)s/t$. This implies $m(t)=ct$ for some $t$. Since $m(t)$ uniquely determines $F$, so $F$ is exponential with rate $1/c$. 
+
+3.7 If $F$ is the uniform distribution on $(0,1)$, then $m(t)=e^t-1$.
+
+<font color='red'>_proof_</font> solve 3.4, $m(t)=t+\int_0^t m(x)dx$, the solution is $m(t)=e^t-1$. 
+
+_Corollary_ If $X_i$ i.i.d. $\sim U(0,1)$, then the expected number of $X$ to sum up until $>t$ is $e^t$.
+
+3.11 (simplified) Let $X_i$ i.i.d., and $P(X_i=2)=P(X_i=4)=P(X=8)=1/3$, $N$ is a stopping time so that $N=n$ when $X_n=2,X_i\ne 2\forall i<n$.
+
+By Wald's equation, $ET=ENEX$. $EX=14/3$ by calculation, and $N\sim G(1/3)$, so $EN=3$ and $ET=14$.
+
+Another derivation is somewhat complicated, but can help us better understand Wald's equation: 
+$$
+ET=E[E[T\mid N]]=E[E[\sum_{i=1}^{N} X_i\mid N]]=E[(N-1)\frac{4+8}{2}+2]=14
+$$
+Notice conditioning on the stopping time forces the distribution of $X_i$ to change.
+
+3.15 Let $A(t),Y(t)$ denotes the age and excess,
+
+(a) 
+$$
+P(Y(t)>x\mid A(t)=s)=P(X>x+s\mid X>s)=\bar{F}(x+s)/\bar{F}(s)
+$$
+(b) 
+$$
+P(Y(t)>x\mid A(t+x/2)=s)=\left\{\begin{aligned}&0,&s\le x/2\\&\bar{F}(s+x/2)/\bar{F}(s-x/2),&s>x/2\end{aligned}\right.
+$$
+(d) 
+$$
+P(Y(t)>x,A(t)>y)=\int_0^{t-y} P(Y(t)>x\mid S_{N(t)}=s)\bar{F}(t-s)dm(s)=\int_0^{t-y} \frac{\bar{F}(x+t-s)}{\bar{F}(t-s)}\bar{F}(t-s)dm(s)=\int_0^{t-y}\bar{F}(x+t-s)dm(s)
+$$
