@@ -127,6 +127,8 @@ _Remark_ By key renewal theorem, we can compute the limit of $g(t)$, some probab
 $$
 g(t)=h(t)+\int_0^t h(t-x)dm(x)
 $$
+_Remark_ We can derive Blackwell's theorem from Key renewal theorem: Let $h(t)=1_{[0,a]}(t)$, when $t$ is large, $g(t)=m(t)-m(t-a)$. By renewal theorem, the limit is $\int_0^\infty h(t)dt/a=\mu/a$.
+
 To illustrate this, we consider $S_{N(t)}$. Its distribution is given by 
 
 **Lemma 3.4.3** $P(S_{N(t)}\le s)=\bar{F}(t)+\int_0^s \bar{F}(t-y)dm(y)$, where $\bar{F}=1-F$.
@@ -523,7 +525,6 @@ $Z_n$ induces a regenerative process $X_n=sgn Z_n$, which regenerates whenever $
   P(Z_1,Z_2,...,Z_{2n-1}\ne 0,Z_{2n}=0)=u_n\frac{n-(n-1)}{n+(n-1)}=\frac{u_n}{2n-1}
   $$
   
-
 - Also we can conclude the probability it doesn't hit $0$ before $2n$,
 
   **Lemma 3.7.3** $P(Z_1,...,Z_{2n}\ne 0)=u_n$
@@ -657,3 +658,54 @@ $$
 $$
 P(Y(t)>x,A(t)>y)=\int_0^{t-y} P(Y(t)>x\mid S_{N(t)}=s)\bar{F}(t-s)dm(s)=\int_0^{t-y} \frac{\bar{F}(x+t-s)}{\bar{F}(t-s)}\bar{F}(t-s)dm(s)=\int_0^{t-y}\bar{F}(x+t-s)dm(s)
 $$
+3.16 Consider an interesting renewal process, where the interarrival times has Gamma distribution with parameters $(n,\lambda)$, $n\in\mathbb Z$.
+
+By Proposition 3.4.6, $\lim_{t \to \infty} EY(t)\to EX^2/2EX=(n+1)/2\lambda$.
+
+On the other hand, Gamma distribution is exactly the sum of $n$ exponential distribution. Denote $I(t)$ so that at time $t$, the process is in the $I(t)$th exponential distribution of a cycle, we have 
+$$
+\lim_{t \to \infty} EY(t)=\lim_{t \to \infty} \sum_{i=1}^{n}E[Y(t)\mid I(t)=i]P(I(t)=i)
+$$
+Conditioning on $I(t)=i$, $Y(t)$ is the sum of $(n-i)$ complete exponential waiting time intervals and the current exponential interval, by memoryless property, it's the sum of $(n-i+1)$ exponential waiting time intervals. So $E[Y(t)\mid I(t)=i]=\lambda^{-1}(n-i+1)$. And by rewarding the process at rate 1 when $I(t)=i$, we have $\lim_{t \to \infty} P(I(t)=i)=1/n$. Combine these argument, we can get the same result.
+
+3.17 Conditioning on $X_1$, we often get the renewal-type equation, whose form is $g(t)=h(t)+\int_0^t g(t-x)dF(x)$. Its solution is given by $g(t)=h(t)+\int_0^t h(t-x)dm(x)$ by Laplace transform. By key renewal theory, its limit is given by $\lim_{t \to \infty} g(t)=\mu^{-1} \int_0^\infty h(t)dt$ whenever $h$ is directly Riemann integrable.
+
+3.21 Suppose a gambler will win or lose $1$ unit with probability $p$ and $1-p$ respectively in each epoch. He will quit for the first time he wins $k$ consecutive bets. At the moment she quits, find expected winnings $EW$ and expected epoch of wins $EK$. 
+
+<font color='red'>_proof_</font> Let $X_i$ i.i.d. with $P(X_i=1)=p,P(X_i=-1)=1-p$. Let $N$ denote the time when $k$ consecutive wins occur. $N$ is a stopping time, so by Wald's equation,
+$$
+EW=E\sum_{i=1}^{N} X_i=EX_iEN=(2p-1)EN
+$$
+Consider this as coin flip, we have $EN=p^{-k}+...+p^{-1}$.
+
+For $EK$, suppose the number of total epochs is $M$, we have $W=2K-N$, so $EK=EN+EW/2=pEN$. 
+
+3.27 For a renewal reward process, we have $\lim_{t \to \infty} E[R_{N(t)+1}]=E[R_1X_1]/EX_1$.
+
+<font color='red'>_proof_</font> Write renewal equation,
+$$
+\begin{aligned}
+E[R_{N(t)+1}]&=\int_0^t E[R_i\mid X_i>t-s] dF_{S_n}(s)
+\\&=\int_0^t \int_0^\infty P(R_i>r\mid X_i>t-s)dr\bar{F}(t-s)dm(s)
+\\&=\int_0^t\int_0^\infty P(R_i>r,X_i>t-s)drdm(s)
+\\&\to\int_0^\infty \int_0^\infty P(R_i>r,X_i>x)drdx/\mu
+\end{aligned}
+$$
+The limit is just $EXR/EX$, since 
+$$
+\begin{aligned}
+\\RHS&=\int_0^\infty\int_0^\infty \int_x^\infty P(R_i>r\mid X_i=y)dF(y)dx/\mu dr
+\\&=\int_0^\infty\int_0^\infty\int_0^yP(R_i>r\mid X_i=y)dx/\mu dF(y)dr
+\\&=\int_0^\infty\int_0^\infty yP(R_i>r\mid X_i=y)dF(y)dr/\mu
+\\&=\int_0^\infty\int_0^\infty P(R_iX_i>r\mid X_i=y)dF(y)dr/\mu
+\\&=\int_0^\infty P(X_iR_i>r)dr/\mu=EX_iR_i/\mu
+\end{aligned}
+$$
+3.32 Consider a M/G/1 queue, with arrival rate $\lambda$ and mean service time $\mu_G$, then we have 
+
+(a) The proportion of time the system is busy is $1-\lambda\mu_G$, since as $t$ large, there is approximately $\lambda t$ arrival, with service time $\lambda t\mu_G$ in total.
+
+(b) the expected length of a busy period can be derived by an alternating renewal process: say the busy periods $X_i$ and free periods $Y_i$, we have $\lambda\mu_G=EX/EX+EY$. Since the process is Poisson, $X\sim Exp(\lambda)$, with $EX=1/\lambda$, so $EY=\mu_G/(1-\lambda\mu_G)$.
+
+(c) The expected number of customers served in a busy period can be derived from Wald's equation: $EY=\mu_G EN$, so $EN=1/(1-\lambda\mu_G)$.
+
