@@ -438,6 +438,8 @@ _Intuition_ if it's time reversible, we must be able to solve $x_ip_{ij}=x_jp_{j
 
 $\Leftarrow$ Pick $i,j$ fixed, we have $p_{ii_1}...p_{i_kj}p_{ji}=p_{ij}p_{ji_k}...p_{i_1i}$. Sum up w.r.t. $i_1,...,i_k$, we have $p_{ij}^{k+1}p_{ji}=p_{ji}^{k+1}p_{ij}$. Since $\pi_i=\lim_{n \to \infty}\sum_{k=1}^{n} p_{ji}^k/n$, we have $\pi_j p_{ji}=\pi_ip_{ij}$.
 
+_Remark_ When the chain is ergodic, irreducible, and of finite state, then it suffices to verify $p_{ij}p_{jk}p_{ki}=p_{ik}p_{kj}p_{ji}$, since we can decompose $i\to i_1\to i_2...\to_1$ into $i\to i_1\to i_2\to i\to i_2\to i_3\to i...\to i_{n}\to i$.
+
 **Example 4.7(D) A list problem** This is an example for **Theorem 4.7.2**. Suppose we have $1,...,n$ placed in some order, $P_j$ is the probability for $j$ to be picked. When someone is picked, it moves one step closer to the head (if it's the head, it doesn't move). The orders construct a Markov chain with state $n!$, for from $i_1....i_n$ to $i_1...i_n$, every element must moves forward and backward for equal steps, which should have equal probability. 
 
 Moreover, we can verify $\pi(i_1,...,i_n)=Cp_{i_1}^np_{i_2}^{n-1}...p_{i_n}$ is a stationary distribution, where $C$ is a normalization constant. 
@@ -529,5 +531,29 @@ _Remark_ So the returning time $T\approx n/\sqrt{n}\to\infty$. To argue this rig
 
 4.22 Let $T_i$ denote the number of plays in a gambler's problem that the fortune starts from $i$ and ends at $0$ or $N$. Compute $ET_i$.
 
-_Solution_ By moving one step forward, $ET_0=ET_N=0$ and $ET_i=1+\frac{1}{2}(ET_{i-1}+ET_{i+1})$. The solution is $ET_i=i(N-i)$.
+_Solution_ By moving one step forward, $ET_0=ET_N=0$ and $ET_i=1+pET_{i+1}+(1-p)ET_{i-1}$. The solution is
+$$
+ET_k=\left\{\begin{aligned}&\frac{1}{1-2p}[k-N\frac{1-(q/p)^k}{1-(q/p)^N}]&p\ne 1/2\\&k(N-k)&p=1/2\end{aligned}\right.
+$$
+4.27 Consider a particle that moves along a set of $m+1$ nodes, labelled $0,1,...,m$, with $p_{i,i+1}=p=1-p_{i,i-1}$, where $m+1=0$. If the chain starts at $0$, find the probability to visit $i$ for the last. 
+
+_Solution_ Before node $i$ is hit, the other $m$ nodes form a line $i+1,...,m,0,1,...,i-1$, where $0$ is $(m-i+1)$st. To visit $0$, the particle must visit $i-1$ or $i+1$. This is a gambler's ruin. After visiting two endpoints, wlog it has visited $i-1$, To visit all nodes except $i$, consider the line $i,i+1,...,i-1$, now for the nodes it must visits $i-1$ before $i$. This results in another gambler's ruin. 
+
+Denote $P_x(T_a^i<T_b^i)$ to be the probability of starting from $x$, the $i$th ($i$=1,2) gambler's ruin hits a before $b$. For simplicity let $r=q/p$. So 
+$$
+\begin{aligned}
+P_i&=P_0(T_{i+1}^1<T_{i-1}^1)P_{i+1}(T_{i-1}^2<T_i^2)+P_0(T_{i-1}^1<T_{i+1}^1)P_{i-1}(T_{i+1}^2<T_i^2)
+\\&=[1-\frac{1-r^{m-i}}{1-r^{m-1}}]\frac{1-r}{1-r^m}+\frac{1-r^{m-i}}{1-r^{m-1}}[1-\frac{1-r^{m-1}}{1-r^m}]
+\\&=\frac{r^{m-i}}{1+r+...+r^{m-1}}
+\end{aligned}
+$$
+Especially, as we noted, when $r=1$, $P_i\equiv 1/m$.
+
+4.33 The branching process $X_n$ has the property: $X_n\to 0$ or $X_n\to\infty$.
+
+_proof_ Suppose $\mu>1$, since when $\mu\le 1$, w.p.1 the extinction happens. Notice despite $\mu>1$, the extinction is still likely to happen. Denote the extinction probability by $q<1$, then when $X_n=k$, the probability that it finally dies out is $q^k$ and that it finally survives is $1-q^k$.
+
+Suppose $X_n$ doesn't converge to 0 nor $\infty$. Then there is some $K$ s.t. $1\le X_n\le K$ i.o.. If the process has visited $r$ times of $1,...,K$, the probability that it finally survives is less than $(1-q^K)^r$, since each time it visits $0,...,K$, it dies out with probability at least $q^K$ . When $r\to\infty$, we see it finally dies out, which is a contradiction. 
+
+
 
