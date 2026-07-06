@@ -8,17 +8,17 @@ _Remark_ We assume that $P(X(t+s)=j\mid X(s)=i)$ is independent of $s$, i.e., $X
 
 Denote the waiting time between some two transitions by $\tau$, by Markovian property we have $P(\tau>s+t\mid \tau>s)=P(\tau>t)$, so $\tau$ is exponentially distributed. 
 
-By this, we can see the chain in this way: as it enters state $i$, it waits for $T\sim Exp(\nu_i)$ ($0\le \nu_i<\infty$) and transits to state $j$ with $p_{ij}$.($\sum_{j\ne i}p_{ij}=1$). Waiting times are independent of each other.
+By this, we have <font color='red'>Perspective 1</font> for cts-time Markov chain: as it enters state $i$, it waits for $T\sim Exp(\nu_i)$ ($0\le \nu_i<\infty$) and transits to state $j$ with $p_{ij}$.($\sum_{j\ne i}p_{ij}=1$). Waiting times are independent of each other, and transitions are also independent.
 
-_Remark_ A continuous-time Markov chain is said to be **regular** if w.p.1. the number of transitions in any finite length of time is finite. We assume the chains are regular. But the chain can be nonregular. Let $p_{i,i+1}=1$ and $v_i=i^2$, then since $\sum_i 1/i^2<\infty$, with positive probability the chain can transit for infinite times in finite time.
+**Definition** Call $q_{ij}=\nu_ip_{ij}$ the **transition rate** from $i$ to $j$, since it's the rate at which the process transits into $j$ from $i$. Meanwhile, let $p_{ij}(t)=P(X(t+s)=j\mid X(s)=i)$, and $p_{ij}'(t)$ be the derivative of $p_{ij}(t)$, which can be seen as the rate of transition from state $i$ to $j$.
 
-**Definition** Call $q_{ij}=\nu_ip_{ij}$ the **transition rate** from $i$ to $j$, since it's the rate at which the process transits into $j$ from $i$. Meanwhile, let $p_{ij}(t)=P(X(t+s)=j\mid X(s)=i)$, and $p_{ij}'(t)$ be the corresponding density.
+By this, we have <font color='red'>Perspective 2</font> for cts-time Markov chain: as it enters state $i$, there are clocks corresponding to states except $i$, with independent holding times $T_j\sim Exp(q_{ij})$. The chain transits to the state whose clock is the first to go off. This is because $\min_{j\ne i}T_j\sim Exp(\nu_i)$ and $P(T_k\le T_j,j\ne i,k)=p_{ij}$.
 
 ### 5.3 Birth and Death Processes
 
 **Definition** A cts-time Markov chain with states $\mathcal S=\mathbb N$, with $q_{ij}=0\ \forall|i-j|>1$ is called a **birth and death process**. Consider the states as the scale of some population, then if the state increases by $1$, we say a birth occurs and if the state decreases by $1$ we say a death occurs. 
 
-We can consider the chain in the following way: whenever there are $i$ people, a birth will occur in $T\sim Exp(\lambda_i)$ and a death will occur in $T'\sim Exp(\mu_i)$ independently, with $\lambda_i=q_{i,i+1}$ (**birth rates**) and $\mu_i=q_{i,i-1}$ (**death rates**). The reason is that $T\wedge T'\sim Exp(\lambda_i+\mu_i)$ and $P(T<T')=\lambda_i/(\lambda_i+\mu_i)=p_{i,i+1}$.
+By <font color='red'>Perspective 2</font>, whenever there are $i$ people, a birth will occur in $T\sim Exp(\lambda_i)$ and a death will occur in $T'\sim Exp(\mu_i)$ independently, with $\lambda_i=q_{i,i+1}$ (**birth rates**) and $\mu_i=q_{i,i-1}$ (**death rates**). 
 
 **Example 5.3(A) Two Birth and Death Processes** 
 
@@ -32,23 +32,18 @@ _Example_ Poisson process is pure.
 
 _Example_ Consider a population where there is no death and everyone gives birth independently $\sim Exp(\lambda)$, then the number of population is also pure with $\lambda_n=n\lambda$, which is called a **Yule process**.
 
-> [!IMPORTANT]
+> [!Note]
 >
 > Consider a Yule process with $X(0)=1$, and $T_i$ be the waiting times from state $i$ to $i+1$. Then $T_i$ are independent and $T_i\sim Exp(i\lambda)$. 
 >
-> 1. The distribution of $S_n=T_1+...+T_n$ can be determined by induction:
->    $$
->    \begin{aligned}
->    P(S_1<t)&=1-e^{-\lambda t}\\
->    P(S_2<t)&=\int_0^t (1-e^{-2\lambda(t-s)})\lambda e^{-\lambda s}ds=(1-e^{-\lambda t})^2 \\
->    \text{when } P(S_n<t)&=(1-e^{-\lambda t})^n\text{:}\\
->    P(S_{n+1}<t)&=\int_0^t P(S_{n+1}<t\mid S_n=s)dF_{S_n}(t)\\
->    &=\int_0^t(1-e^{-(n+1)\lambda(t-s)})d(1-e^{\lambda s})^n
->    \\&=(1-e^{\lambda t})^{n+1}
->    \end{aligned}
->    $$
->    So $p_{1j}(t)=(1-e^{-\lambda t})^{j-1}-(1-e^{-\lambda t})^j=e^{-\lambda t}(1-e^{-\lambda t})^{j-1}$, $X(t)\sim G(e^{-\lambda t})$. Moreover, if $X(0)=i$, $X(t)$ is the sum of $i$ geometric r.v.'s, i.e., negative binomial distribution.
->
+> 1. The distribution of $S_n=T_1+...+T_n$ can be determined by induction on $n$ and direct computation. The result is: $P(S_n<t)=(1-e^{-\lambda t})^n$.
+>    
+>    Or more elegantly, consider $n$ clocks, each with holding time $T\sim Exp(\lambda)$ independent of each other. Let $R_i$ be the time of the $i$th ring. Then $R_i\sim Exp((n+1-i)\lambda)$, and by the memoryless property $R_i$ are independent. On the one hand, $\sum_{i=1}^n T_i=_d \sum_{i=1}^{n} R_i$; on the other hand, $P(S_n<t)=P(\sum_{i=1}^{n} R_i<t)=(1-e^{-\lambda t})^n$ by independence of clocks.
+>    
+>    So $p_{1j}(t)=(1-e^{-\lambda t})^{j-1}-(1-e^{-\lambda t})^j=e^{-\lambda t}(1-e^{-\lambda t})^{j-1}$, $X(t)\sim G(e^{-\lambda t})$. 
+>    
+>    Moreover, if $X(0)=i$, $X(t)$ is the sum of $i$ geometric r.v.'s, i.e., negative binomial distribution.
+>    
 > 2. Conditioned on $X(t)=n+1$, the distribution of $S_1,...,S_n$ is given by 
 >    $$
 >    \begin{aligned}
@@ -69,6 +64,8 @@ _Example_ Consider a population where there is no death and everyone gives birth
 >    f_{S_1,...,S_n\mid X(t)=n+1}(s_1,...,s_n)=n!\prod_{i=1}^n f(s_i)
 >    $$
 >    i.e., the conditional distribution is the order statistics of $X_,...,X_n$ i.i.d. with density $f$.
+>    
+>    Also, consider $n$ clocks, then conditioning on $X(t)=n+1$ is equivalent to conditioning on the case that all clocks go off. Then the density of the holding time for each clock is exactly $f$. So $S_1,...,S_n$ is an order statistic.
 
 **Example 5.3(B)** Consider a Yule process with $X(0)=1$, and let $A(t)=a_0+t+\sum_{i=1}^{X(t)-1}(t-S_i)$ be the sum of ages of all individuals, where $a_0$ is the age of the first individual at $t=0$. Conditioned on $X(t)$,
 $$
@@ -78,13 +75,13 @@ So
 $$
 E[A(t)]=E[E[A(t)\mid X(t)=n+1]]=a_0+t+(e^{\lambda t}-1)\frac{1-e^{-\lambda t}-\lambda te^{-\lambda t}}{\lambda(1-e^{-\lambda t})}=a_0+\lambda^{-1}(e^{\lambda t}-1)
 $$
-Or use $A(t)=a_0+\int_0^t X(s)ds$ and take expectation.
+Or use $A(t)=a_0+\int_0^t X(s)ds$ and take expectation (Fubini).
 
 **Example 5.3(c) A simple epidemic model** 
 
 _Setting_ Consider a population of $m$ individuals. At time $0$, one is infected. In any time interval $h$, any given infected person will cause any given susceptible to be infected with probability $\alpha h+o(h)$. As one is infected, it's infected forever. 
 
-Let $X(t)$ denote the number of infected individuals in the population at time $t$. $X(t)$ is a pure birth process, with $\lambda_n=((m-n)\vee 0)n\alpha$. Let $T$ be the time until the total population is infected, i.e., $T=\sum_{i=1}^{m-1} T_i$. $T_i\sim Exp(\lambda_i)$ are independent, so $ET=\sum_{i=1}^{m-1} \frac{1}{\alpha i(m-i)}$ and $var(T)=\sum_{i=1}^{m-1}\frac{1}{(\alpha i(m-i))^2}$.
+Let $X(t)$ denote the number of infected individuals in the population at time $t$. $X(t)$ is a pure birth process, with $\lambda_n=(m-n)n\alpha$. Let $T$ be the time until the total population is infected, i.e., $T=\sum_{i=1}^{m-1} T_i$. $T_i\sim Exp(\lambda_i)$ are independent, so $ET=\sum_{i=1}^{m-1} \frac{1}{\alpha i(m-i)}$ and $var(T)=\sum_{i=1}^{m-1}\frac{1}{(\alpha i(m-i))^2}$.
 
 ### 5.4 The Kolmogorov Differential Equations
 
@@ -96,7 +93,7 @@ Let $X(t)$ denote the number of infected individuals in the population at time $
 >
 > Let $N(t)$ be the number of jumps during $[0,t]$ given $X(0)=i$ and $T_1$ be the first holding time, then $T_1\sim Exp(\nu_i)$. Let $K$ be the state entered at the first jump, so that $P(K=k)=p_{ik}$. Then 
 > $$
-> P^i(N(t)\ge 2)=\sum_{k\ne i}\int_0^t \nu_i e^{-\nu_i s}p_{ik}(1-e^{-\nu_k(t-s)})ds=\sum_{k\ne i}t\int_0^1\nu_i e^{-\nu_i ut}p_{ik}(1-e^{-\nu_k(1-u)t})
+> P^i(N(t)\ge 2)=\sum_{k\ne i}\int_0^t \nu_i e^{-\nu_i s}p_{ik}(1-e^{-\nu_k(t-s)})ds=\sum_{k\ne i}t\int_0^1\nu_i e^{-\nu_i ut}p_{ik}(1-e^{-\nu_k(1-u)t})du
 > $$
 > Since $0\le\sum_{k\ne i}\nu_i e^{-\nu_i ut}p_{ik}(1-e^{-\nu_k(1-u)t})\le \sum_k \nu_ip_{ik}\nu_kt$, by Fubini and DCT, push $t\to 0$, we have $P^i(N(t)\ge 2)/t\to 0$.
 >
@@ -126,8 +123,6 @@ when $h$ is small. By DCT,
 $$
 \lim_{h\to 0}\sum_{k\ne i}\frac{p_{ik}(h)}{h}p_{kj}(t)=\sum_{k\ne i}\lim_{h\to 0}\frac{p_{ik}(h)}{h}p_{kj}(t)=\sum_{k\ne i}q_{ik}p_{kj}(t)
 $$
-_Remark_ They are called **backward equations** since in computing the distribution of state at time $t+h$, we conditioned on the state back at time $h$.
-
 In contrast, we have 
 
 **Theorem 5.4.4 Kolmogorov's Forward Equations** Under suitable regularity conditions,
@@ -139,6 +134,8 @@ $$
 \frac{p_{ij}(t+h)-p_{ij}(t)}{h}=\frac{\sum_k p_{ik}(t)p_{kj}(h)-p_{ij}(t)}{h}=\sum_{k\ne j}p_{ik}(t)\frac{p_{kj}(h)}{h}-\frac{1-p_{jj}(h)}{h}p_{ij}(t)
 $$
 Notice $\sum_{k\ne j}p_{ik}(t)\frac{p_{kj}(h)}{h}$ may not be dominated by an integrable function in general, since the limits $\lim_{h\to 0}\frac{p_{kj}(h)}{h}$ are not uniform. But in many models DCT can hold.
+
+_Remark_ The difference comes from the moment that the state shifts. For the backward equations, transition happens at $0$ and for the forward equations transition happens at $t$. 
 
 **Example 5.4(A)** Consider a two-state cts Markov chain that $\nu_0=\lambda,\nu_1=\mu,p_{ij}=\delta_{ij}$.Then the forward equations yield
 $$
@@ -174,7 +171,7 @@ Now $X(0)=i$ and $Y(0)=j$.
 $$
 \begin{aligned}
 E[X(t+h)\mid X(t)]&=X(t)+(\lambda p-\mu)X(t) h+o(h)
-\\\Rightarrow EX(t+h)&=EX(t)+(\lambda p-\mu)X(t)h+o(h)
+\\\Rightarrow EX(t+h)&=EX(t)+(\lambda p-\mu)EX(t)h+o(h)
 \\\Rightarrow \frac{d}{dt}EX(t)&=(\lambda p-\mu)X(t)
 \\\Rightarrow EX(t)&=ie^{(\lambda p-\mu)t}
 \end{aligned}
@@ -213,32 +210,67 @@ $$
 
 ### 5.5 Limiting probabilities
 
-Recall theorems for semi-Markov process, we have: if the corresponding discrete Markov chain is positive-recurrent with invariant distribution $\pi$,  
+Recall theorems for semi-Markov process, if the corresponding discrete Markov chain is positive-recurrent with invariant distribution $\pi$,  
 $$
 p_j:=\lim_{t \to \infty} p_{ij}(t)=\frac{\pi_j/\nu_j}{\sum_i \pi_i/\nu_i}
 $$
-Since $\pi_j$ is the unique solution to $\pi_j=\sum_i \pi_i p_{ij},\sum_j \pi_j=1$, $p_j$ is the unique solution to $p_j=\sum_i p_i q_{ij},\sum_{j} p_j=1$. This gives us ways to compute this. 
+- Since $\pi_j$ is the unique solution to $\pi_j=\sum_i \pi_i p_{ij},\sum_j \pi_j=1$, $p_j$ is the unique solution to $p_j=\sum_i p_i q_{ij},\sum_{j} p_j=1$. This gives us ways to compute this. 
 
-Another method for computing this is worth mentioning: Consider forward equations $p_{ij}'(t)=\sum_{k\ne j}q_{kj}p_{ik}(t)-\nu_j p_{ij}(t)$. Suppose $\lim_{t \to \infty} p_{ij}(t)$ exists, $p_{ij}'(t)\to 0$, then $\sum_{k\ne j} q_{kj}p_k=\nu_j p_j$.
+- Another method for computing this is worth mentioning: Consider forward equations $p_{ij}'(t)=\sum_{k\ne j}q_{kj}p_{ik}(t)-\nu_j p_{ij}(t)$. Suppose $\lim_{t \to \infty} p_{ij}(t)$ exists, $p_{ij}'(t)\to 0$, then $\sum_{k\ne j} q_{kj}p_k=\nu_j p_j$.
 
-_Remark_ According to properties of semi-Markov process, $p_j$ is also the long-run proportion of the chain staying at state $i$.
+_Remarks_ 
 
-_Remark_ If the initial distribution is $p_j$, the chain is stationary, i.e., $\sum_i p_i p_{ij}(t)=p_j\forall t$.
+- According to properties of semi-Markov process, $p_j$ is also the long-run proportion of the time when the chain stays at state $i$.
 
-_proof_ by DCT,
+- If the initial distribution is $p_j$, the chain is stationary, i.e., $\sum_i p_i p_{ij}(t)=p_j\forall t$.
+
+  _proof_ by DCT,
+  $$
+  \sum_i p_ip_{ij}(t)=\sum_i \lim_{s \to \infty}p_{ki}(s)p_{ij}(t)=\lim_{s \to \infty}\sum_i p_{ki}(s)p_{ij}(t)=\lim_{s \to \infty} p_{kj}(s+t)=p_j
+  $$
+- Like what we have done for reversed Markov chain, this has a nice interpretation: In interval $(0,t)$, transitions into j and transitions out of $j$ differ at most $1$. So in the long run the rate at which transitions into state $j$ occur must equal the rate at which transitions out of state $j$ occur. The former is $\sum_{i\ne j} p_i q_{ij}$, and the latter is $p_j\nu_j$. So we attain again that
+  $$
+  \sum_{i\ne j} p_i q_{ij}=p_j \nu_j
+  $$
+  By this, the equations are also called "balance equations".
+
+**Limiting probabilities for a birth and death process** Consider the rate at which the chain leaves or enters some state, we have 
+
+| State | Rate Process Leaves    | Rate Process Enters                     |
+| ----- | ---------------------- | --------------------------------------- |
+| 0     | $\lambda_0p_0$         | $\mu_1 p_1$                             |
+| n     | $(\lambda_n+\mu_n)p_n$ | $\mu_{n+1}p_{n+1}+\lambda_{n-1}p_{n-1}$ |
+
+They should be equal. Solve this we have $p_0=\big[1+\sum_{n=1}^\infty\frac{\lambda_0...\lambda_{n-1}}{\mu_1...\mu_n} \big]^{-1}$,$p_n=\frac{\lambda_{n-1}...\lambda_0}{\mu_n...\mu_1}p_0$. So when $\sum_{n=1}^\infty\frac{\lambda_0...\lambda_{n-1}}{\mu_1...\mu_n}$ exists, the limiting probabilities also exist.
+
+**Example 5.5(A) The M/M/1 queue** with $\lambda_n=\lambda$ and $\mu_n=\mu$, we have $p_n=(\lambda/\mu)^n(1-\lambda/\mu)$ when $\lambda<\mu$. Intuitively, if $\lambda>\mu$, the queue will be infinitely long, and if $\lambda=\mu$ the chain behaves like a SRW, which is null recurrent.
+
+**Example 5.5(B)** 
+
+_Setting_ There are $M$ machine, each of which will break down in $Exp(\lambda)$. There is a repairman, who fixes a machine for $Exp(\mu)$. The state $n$ is the number of down machine. 
+
+This is a birth and death process, with $\mu_n=\mu$ and $\lambda_n=(M-n)\lambda$ ($n\le M$). This gives $p_0=\big[1+\sum_{n=1}^{M} (\frac{\lambda}{\mu})^n\frac{M!}{(M-n)!} \big]^{-1}$ and $p_n$, whence we know the mean of down machines in the long run.
+
+Moreover, for the long-run probability that some machine is running, we have 
 $$
-\sum_i p_ip_{ij}(t)=\sum_i \lim_{s \to \infty}p_{ki}(s)p_{ij}(t)=\lim_{s \to \infty}\sum_i p_{ki}(s)p_{ij}(t)=\lim_{s \to \infty} p_{kj}(s+t)=p_j
+P(\text{machine is running})=\sum_{n=0}^M P(\text{machine is running}\mid\text{n not working})p_n=\sum_{n=0}^M \frac{M-n}{M}p_n
 $$
-_Remark_ Like what we have done for reversed Markov chain, this has a nice interpretation:
+**Visits to a fixed state** Suppose the chain is positive-recurrent and irreducible. Consider state $0$, by **CLT for renewal process** we have when $t\gg 1$, $\#\text{number of visits}\approx \mathcal N (t/ET_{00},t\ var[T_{00}]/E^3[T_{00}])$, where $T_{00}$ is the time between successive visits to $0$. 
 
-In interval $(0,t)$, transitions into j and transitions out of $j$ differ at most $1$. So in the long run the rate at which transitions into state $j$ occur must equal the rate at which transitions out of state $j$ occur. The former is $\sum_{i\ne j} p_i q_{ij}$, and the latter is $p_j\nu_j$. By this, the equations are also called "balance equations".
+- View this as an alternating renewal process, we have $ET_{00}\ p_0=ET_0=1/\nu_0$, where $T_0$ is the holding time of $0$.
+- View this as an reward renewal process, with reward rate at $t$ equal to the time from $t$ to the next visit to $0$. Then the average reward rate is $\frac{ET_{00}^2}{2ET_{00}}$. On the other hand, in the long-run proportion, the average reward rate can be also expressed as $\sum_i p_i ET_{i0}$. $ET_{i0}$ can be solved via $ET_{i0}=1/\nu_i+\sum_{j\ne 0}p_{ij}ET_{j0}$.
+- Upon having $ET_{00}$ and $ET_{00}^2$, we can determine the asymptotic distribution of the number of visits.
 
-**Example Limiting probabilities for a birth and death process** 
-$$
-\begin{aligned}
-\lambda_0p_0&=\mu_1p_1\\
-(\lambda_n+\mu_n)p_n&=\mu_{n+1}p_{n+1}+\lambda_{n-1}p_{n-1}\Rightarrow \lambda_n p_n=\mu_{n+1}p_{n+1}+\lambda_{n-1}p_{n-1}-\mu_np_n\\
-\Rightarrow \lambda_np_n&=\mu_{n+1}p_{n+1}\\
-\Rightarrow p_n&=\frac{\lambda_{n-1}...\lambda_0}{}
-\end{aligned}
-$$
+### 5.6 Time Reversibility
+
+Consider a chain starting from $-\infty$, which is stationary. Now consider it going backwards in time,
+
+- Conditioned on $X(t)$, $X(r),r<t$ and $X(s),s>t$ are independent for all $r,s$. So the reversed process is also Markov.
+
+- If the holding time of $i$ has law $Exp(\nu_i)$, then for the reversed chain, the holding time has the same law: 
+  $$
+  P(X(r)=i\forall r\in[t-s,t]\mid X(t)=i)=\frac{P(X(r)=i\forall r\in [t-s,t])}{P(X(t)=i)}=\frac{P(X(r)=i\forall r\in[t-s,t]\mid X(t-s)=i)P(X(t-s)=i)}{P(X(t)=i)}=P(X(r)=i\forall r\in[t-s,t]\mid X(t-s)=i)
+  $$
+  Since $P(X(t-s)=i)=P(X(t)=i)=p_i$.
+
+- The corresponding discrete Markov chain for reversed process has transition probability $p_{ij}^*=\frac{\pi_j p_{ij}}{\pi_i}$. Let $q_{ij}^*=\nu_i p_{ij}^*$, we have $p_i q_{ij}^*=p_j q_{ji}$
