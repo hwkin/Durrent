@@ -479,7 +479,7 @@ $L$ the average queue length and $W$ the average time cost of everyone has the f
 - Notice $T=\sum_{i=1}^{N} X_i$. Notice $N$ is a stopping time of $(X_i,Y_i)$. So by Wald's equation, $ET=EN/\lambda$.
 
 - $$
-  L=\frac{E\int_0^T n(s)ds}{ET}=\lambda\frac{\int_0^T n(s)ds}{EN}=\lambda W\frac{E[\int_0^T n(s)ds]}{E[\sum_{i=1}^{N} W_i]}
+  L=\frac{E\int_0^T n(s)ds}{ET}=\lambda\frac{E\int_0^T n(s)ds}{EN}=\lambda W\frac{E[\int_0^T n(s)ds]}{E[\sum_{i=1}^{N} W_i]}
   $$
 
 - Indeed $\int_0^T n(s)ds=\sum_{i=1}^{N} W_i$. One can convince himself by noticing this is two slicing of the same amount.

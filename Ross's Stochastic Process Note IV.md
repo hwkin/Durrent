@@ -273,4 +273,383 @@ Consider a chain starting from $-\infty$, which is stationary. Now consider it g
   $$
   Since $P(X(t-s)=i)=P(X(t)=i)=p_i$.
 
-- The corresponding discrete Markov chain for reversed process has transition probability $p_{ij}^*=\frac{\pi_j p_{ij}}{\pi_i}$. Let $q_{ij}^*=\nu_i p_{ij}^*$, we have $p_i q_{ij}^*=p_j q_{ji}$
+- The corresponding discrete Markov chain for reversed process has transition probability $p_{ij}^*=\frac{\pi_j p_{ij}}{\pi_i}$. Let $q_{ij}^*=\nu_i p_{ij}^*$, we have $p_i q_{ij}^*=p_j q_{ji}$.
+
+  _Intuition_ Since $p_i$ is the long-run proportion of time when the chain stays at state $i$, it's also that of the reversed chain, therefore $p_i$ is also the stationary distribution for reversed chain. (Or more rigorously, verify the balanced equation.) So $p_j q_{ji}$ is the long-run rate at which the chain transits from $j$ to $i$, and $p_i q_{ij}^*$ is the long-run rate at which the reversed chain transits from $i$ to $j$. They should be equal.
+
+**Definition** The stationary cts-time Markov chain is **time reversible** if the reversed process$=_d$ the original process, i.e., $q_{ij}^*=q_{ij}$. It's equivalent to $p_i q_{ij}=p_j q_{ji}$. 
+
+**Proposition 5.6.1** An ergodic birth and death is time reversible in steady state.
+
+<font color='red'>_proof of Proposition 5.6.1_</font> Since in state $i$ the chain only moves to $i-1$ or $i+1$, so the rate at which the chain transits from $i$ to $i+1$ is equal to that from $i+1$ to $i$.
+
+**Corollary 5.6.2** For a $M/M/s$ queue where customers arrive $\sim P_{\lambda }(t)$ and service time $\sim Exp(\mu)$, if $\lambda<s\mu$, then the output process of customers departing is, in steady state, a Poisson process with rate $\lambda$.
+
+<font color='red'>_proof of Corollary 5.6.2_</font> For the forward process, those $+1$ transitions constitute a Poisson process. Since the $M/M/s$ queue is time-reversible, the $+1$ transitions of reversed chain also constitute a Poisson process with rate $\lambda$, which corresponds $-1$ transitions of original chain.
+
+**Proposition** If $x_j>0$ satisfies $\sum_j x_j=1$ and $x_i q_{ij}=x_j q_{ji}$, then the chain is time reversible, and $x_i$ are just the stationary distribution.
+
+<font color='red'>_proof_</font> 
+$$
+\sum_{j\ne i}x_j q_{ji}=\sum_{j\ne i}x_i q_{ij}=x_i \nu_i
+$$
+So balanced equations hold, whence $x_i$ are stationary distribution.
+
+**Proposition 5.6.3** A time-reversible chain with limiting probabilities $p_j$, $j\in \mathcal S$, that is truncated to the set $A\subset \mathcal S$, i.e., $q_{ij}$ is set to $0$ for all $i\in\mathcal S,j\notin \mathcal S$, and remains irreducible is also time reversible and has limiting probabilities $p_j^A=p_j/\sum_{j\in A} p_j, j\in A$.
+
+<font color='red'>_proof of Proposition 5.6.3_</font> $p_i^A q_{ij}=p_j^A q_{ji}$ also holds for $i,j\in A$.
+
+**Example 5.6(A)** Consider a $M/M/1$ queue with capacity $N$. This is a truncated $M/M/1$ queue, so it's also time-reversible, and the limiting probabilities is given by $p_j=\frac{(\lambda/\mu)^j}{\sum_{i=0}^N (\lambda/\mu)^i}$.
+
+#### 5.6.1 Tandem Queues
+
+_Setting_ Consider a 2-server system in which customers enter the first service $\sim P_\lambda (t)$, after being serviced the customers enter the second service. The service time has law $Exp(\nu_i),i=1,2$, and each time only one customer is serviced at one desk.
+
+First, we have concluded the output of the first service, also the entrance of the second, follows $P_{\lambda}(t)$. So the second service is also a $M/M/1$ queue. Now we wonder more results.
+
+**Lemma 5.6.3** In an ergodic $M/M/1$ queue in steady state, 
+
+(i) The number of customers presently in the system is independent of the sequence of the past departure times.
+
+(ii) The waiting time spent in the system (waiting+service) by a customer is independent of the departure process prior to his departure.
+
+<font color='red'>_proof of Lemma 5.6.3_</font> 
+
+(i) For a $M/M/1$ queue, the arrivals $\sim P_\lambda (t)$, so the future arrivals are independent of the present state. Then see the reverse process, by reversibility the departures of original process, also the arrivals of reversed process, $\sim P_\lambda (t)$. So the past departures are independent of the present state.
+
+(ii) Denote $T_1$ and $T_2$ to be the time one enters and exits the queue. Since the queue is FIFO and arrivals$\sim P_\lambda(t)$, $T_2-T_1$ is independent of arrival process after $T_1$. Then reverse the chain. 
+
+_Remark_ past departure $\leftrightarrow$ future arrival.
+
+**Theorem 5.6.4** For the ergodic tandem queue in steady state, denote $X_1(t),X_2(t)$ to be the number of customers in the first and second service, we have
+
+(i) $X_1(t),X_2(t)$ are independent, with $P(X_1(t)=n,X_2(t)=m)=(\lambda/\mu_1)^n (1-\lambda/\mu_1)(\lambda/\mu_2)^m(1-\lambda/\mu_2)$.
+
+(ii) the waiting time of a customer at service $1$ is independent of that at service $2$.
+
+<font color='red'>_proof of Theorem 5.6.4_</font>  
+
+(i) Independence: By **Lemma 5.6.3(i)**, $X_1(t)$ is independent of the sequence of the departure process prior to time $t$, which determines $X_2(t)$.
+
+Probabilities: $P(X_1(t)=n)=(\lambda/\mu_1)^n(1-\lambda/\mu_1)$ since the chain is stationary; since the arrivals of service $2$ $\sim P_\lambda (t)$, $P(X_2(t)=m)=(\lambda/\mu_2)^m(1-\lambda/\mu_2)$. 
+
+(ii) By **Lemma 5.6.3(ii)**, the waiting time of a customer at service $1$ is independent of the departure process prior to his departure at $1$, which in conjunction with service time at service $2$ determines the waiting time at $2$.
+
+_Remark_ For a fixed customer, the waiting time in two services are independent, but the waiting time in two queues are not independent in general. 
+
+> _Counterexample_ Suppose $\lambda\ll\mu_1=\mu_2$, then almost all customers have zero wait in queue at both services. However given that the wait in queue $1$ is positive, the wait in queue $2$ is also positive with high probability: Suppose customer $A$ has positive waiting time, then there is a customer ahead of him, say $B$. The moment $B$ enters the second queue,$A$ enters the service 1. Even if $B$ enters the service 2 immediately, that the service time of $B$ is longer than that of $A$ has probability $1/2$ since $\mu_1=\mu_2$. So $A$ waits for positive time in 2 has probability $\ge1/2$. This indicates the waiting time in queue may be dependent.
+
+#### 5.6.2 A Stochastic Population Model
+
+_Setting_ Suppose that mutant individuals enter a population $\sim P_\lambda (t)$, and upon arrival every mutant becomes an ancestor of a family. All individuals independently give birth $\sim Exp(\nu)$ and die $\sim Exp(\mu)$ ($\nu<\mu$).
+
+_Notation_ Let $N_j(t)$ denote the number of families at time $t$ that consists of exactly $j$ members, $j\ge 0$, and $\underline{N}(t)=(N_1(t),N_2(t),...)$, then $\underline{N}(t)$ is a cts-time Markov chain. its state is denoted by $\underline n=(n_1,n_2,...)$. Let $B_j\underline n=(n_1,...,n_{j-1},n_j-1,n_{j+1}+1,...),j\ge 1$, $B_0\underline n=(n_1+1,n_2,...)$ and $D_j\underline n=(n_1,n_2,...,n_{j-1}+1,n_j-1,n_{j+1})$ and $D_1\underline n=(n_1-1,n_2,...)$. Then $B_0\underline n$ represents the join of a new mutant, $B_j\underline n$ represents a birth and $D_j\underline n$ represents a death.
+
+The transition rate is given by $q(\underline n,B_0\underline n)=\lambda$, $q(\underline n,B_j\underline n)=jn_j \nu$ and $q(\underline n,D_j \underline n)=jn_j\mu$.
+
+> [!Tip]
+>
+> Recall the compound Poisson process: If individuals occur $\sim P_\lambda (t)$, and for each individual occur at time $s$, it will be independently marked as type $k$ with probability $p_k(s)$, where $\sum_k p_k(s)=1\forall t$. Then at time $t$, the number of individuals of type $k$ $\sim P(t\lambda p_k)$, where $p_k=\frac{\int_0^t p_k(t)dt}{t}$.
+
+See this as a compound Poisson process by marking every mutant as type $k$ if the family will have $k$ members at time $t$. This is reasonable since the reproduction and death of every family is independent of each other. So $N_j(t)\sim P(\lambda\int_0^t p_j(s;t)ds)$.
+
+**Theorem 5.6.5 Limiting Probabilities** The cts-time Markov chain $N(t)$ is in steady state time-reversible with limiting probabilities $P(\underline n)=\prod_{i=1}^\infty e^{-\alpha_i}\frac{\alpha_i^{n_i}}{n_i !}$, where $\alpha_i=\frac{\lambda}{i\nu}(\frac{\nu}{\mu})^i$. In other words, $N_j(t)\to_d P(\alpha_j)$.
+
+<font color='red'>_proof of Theorem 5.6.5_</font> 
+
+Similarly to that of birth and death process, the chain is also time-reversible in steady state. Meanwhile, the limit distribution of $N_j(t)$ is Poisson, so $p(\underline n)=\prod_{i=1}^\infty e^{-\alpha_i}\frac{\alpha_i^{n_i}}{n_i !}$.
+
+Now solve $p(\underline n)q(\underline n, B_0\underline n)=p(B_0\underline n)q(B_0\underline n,\underline n)$, we have $\alpha_1=\lambda/\mu$; solve $p(\underline n)q(\underline n,B_j\underline n)=p(B_j \underline n)q(B_j \underline n, \underline n)$, we have $\alpha_{j+1}=\alpha_j \frac{\nu}{\mu}\frac{j}{j+1}$. By this we have $\alpha_j=\frac{\lambda}{j\nu}(\frac{\nu}{\mu})^i$. Actually, we can also conclude the time-reversibility of the chain from here.
+
+**Corollary** For a fixed family, let $T_i$ be the amount of time that the family has $i$ members, then $ET_i=(\nu/\mu)^i/(i\nu)$.
+
+<font color='red'>_proof_</font> Actually this corollary arises from the meaning of $p_j(s):=\lim_{t \to \infty} p_j(s;t)$. From **Theorem 5.6.5** We know that $\lambda\int_0^\infty p_j(s)ds=\alpha_j$. Notice if we let $A(s)$ to be the event that after $s$ from the origination the family has $j$ members, we have 
+$$
+\int_0^\infty p_j(s)ds=\lim_{t \to \infty} \int_0^t p_j(s;t)ds=\lim_{t \to \infty}\int_0^t E 1_{A(s)}ds=_\text{Fubini}\lim_{t \to \infty}E\int_0^t 1_{A(s)}ds=_\text{DCT}E\int_0^\infty 1_{A(s)}ds=ET_j
+$$
+**The Oldest family** Consider now the population model in steady state and suppose that the present state is $\underline n^*$. We would like to determine the probability that a given family of size $i$ is the oldest family in the population. 
+
+By time reversibility, this probability is equal to the probability that the given family will be the last surviving family among present families. But from the state spaces, we can't determine the extinction for a **given** family. So now we need to construct a new state space.
+
+- For technical reason (one cannot uniformly choose one from infinite objects) , truncate the state space s.t. $\sum_i n_i\le M$, where $M\ge \sum_i n_i^*$. The resulting chain is also time reversible with limit probabilities scaled by $C>0$. This means whenever there are $M$ families, mutants are not allowed to join.
+- To keep track of a given family, label them by $1,...,M$, and a new family will be uniformly assigned an unused label. Let $s_i$ to be the number of members in family $i$, then $\underline s=(s_1,...,s_M)$ makes up of a state space. $\underline n(\underline s)$ is defined as above.
+
+**Proposition 5.6.6** The chain with states $\underline s=(s_1,...,s_M)$ is time reversible and has stationary probabilities given by 
+$$
+p(\underline s)=\frac{(M-\sum_i n_i)!\prod_{i=1}^\infty n_i!}{M!}C\prod_{i=1}^\infty e^{-\alpha_i}\frac{\alpha_i^{n_i}}{n_i!}
+$$
+_Intuition_ 
+$$
+p(\underline s)=p(\underline n)p(\underline s\mid\underline n)=p(\underline s\mid \underline n)C\prod_{i=1}^\infty e^{-\alpha_i}\frac{\alpha_i^{n_i}}{n_i!}
+$$
+Since the labels are random, indeed $p(\underline s\mid \underline n)=\binom{M}{n_1,...,n_k,...,M-\sum_i n_i}^{-1}$.
+
+<font color='red'>_proof_</font> Verify equations.
+
+**Corollary 5.6.7** If in steady state, there are $n_i$ families of size $i$, then the probability that a given family of size $i$ is the oldest family in the population is $i/\sum_j n_j$.
+
+<font color='red'>_proof of Corollary 5.6.7_</font> By time reversibility, equivalently we can consider the probability that from the current state on, the given family survives the longest. By symmetry it's just $i/\sum_j n_j$. Let $M\to\infty$.
+
+### 5.7 Applications of the reversed chain to queueing theory
+
+**Theorem 5.7.1** Consider an irreducible cts-time Markov chain with transition rates $q_{ij}$. If we can find $q_{ij}^*$ and $p_i$ s.t. $\sum_i p_i=1$, $p_i q_{ij}=p_j q_{ji}^*$, and $\sum_{j\ne i} q_{ij}=\sum_{j\ne i} q_{ij}^*$, then $q_{ij}^*$ are transition rates for the reversed chain and $p_i$ are the limiting probabilities for both chains.
+
+_Remark_ This is very useful when we can guess $p_i$ and $q_{ij}^*$. We need only to verify those equations.
+
+#### 5.7.1 Network of Queues
+
+_Setting_ There are $k$ desks, and for each desk customers enter the queue from outside $\sim P_{r_i}(t)$. Service time $\sim Exp(\mu_i)$. After being serviced, the customer will join the queue of $j$th desk with probability $p_{ij}$ and leave with probability $1-\sum_{j\ne i} p_{ij}$. Let $X_i$ be the length of queue in front of desk $i$.
+
+Let $\lambda_i$ to be the total arrival rate of desk $i$, we can solve that from $\lambda_i=r_i+\sum_{j\ne i}\lambda_j p_{ji}$.
+
+Now we consider the limiting probabilities. Inspired by that of tandem queue, we can claim:
+
+**Theorem 5.7.2** Assuming that $\lambda_i<\mu_i$ for all $i$, in steady state, $X_i$ are independent, and the limiting probabilities are given by $p(n_1,...,n_k)=\prod_{i=1}^k (\lambda_i/\mu_i)^{n_i}(1-\lambda_i/\mu_i)$.
+
+_Intuition_ 
+
+- From that of tandem queue, we can expect $X_i$ are independent and $p(n_1,...,n_k)=p_1(n_1)...p_k(n_k)$.
+
+- In steady state, the entrance rate equals the departure rate, so for the reversed process the total arrival rate is also $\lambda_i$ for desk $i$. Consider the transition from $i$ to $j$, we have $\lambda_j p_{ji}=\lambda_i \bar{p}_{ij}$, where $\bar{p}_{ij}$ are reversed correspondence of $p_{ij}$.
+
+- The departure rates of the original and reversed process are equal since the service time are equal. 
+
+  Notice here is something subtle: $\lambda_i$ is the long-run departure rate of the process, while $\mu_i$ is the instantaneous departure rate of the process. The difference lies in that the queue may be idle. So the relation is $\lambda_i=\mu_i P(X_i>0)$ in steady state.
+
+- The arrivals from outside correspond to departure. 
+
+<font color='red'>_proof of Theorem 5.7.2_</font> Actually we will justify our intuitions.
+
+The core is to apply **Theorem 5.7.1**. Let $\mathcal S=\{(n_1,...,n_k) \}$.
+
+By our conjecture, now we verify:
+
+- $\underline n=(n_1,...,n_j...,n_k)$ and $\underline n'=(n_1,...n_j+1,...,n_k)$: $\underline n\to\underline n'$ is caused by outside arrival, and the inverse is caused by a departure. This commands:
+  $$
+  p(\underline n) r_j=p(\underline n')\mu_j(1-\sum_{k\ne j}\bar p_{jk})
+  $$
+  By independence, we have
+  $$
+  p_j(n_j)r_j=p_j(n_j+1)\mu_j (1-\sum_{k\ne j}\frac{\lambda_k p_{kj}}{\lambda_j})=p_j(n_j+1)\mu_jr_j/\lambda_j
+  $$
+  which gives that $p_j(n)=(\lambda_j/\mu_j)^n(1-\lambda_j/\mu_j)$.
+
+- $\underline n=(n_1,...,n_i,...,n_j,...,n_k)$ and $\underline n'=(n_1,...,n_i-1,...,n_j+1,...,n_k)$: $\underline n\to\underline n'$ and the inverse are both caused by shifting between queues, so we should have 
+  $$
+  \begin{aligned}
+  &p(\underline n)\mu_ip_{ij}=p(\underline n')\mu_j\bar p_{ji}
+  \\\Leftarrow&p_i(n_i)p_j(n_j)\mu_ip_{ij}=p_i(n_i-1)p_j(n_j+1)\mu_j\frac{\lambda_i p_{ij}}{\lambda_j}
+  \\\Leftarrow&(\lambda_i/\mu_i)\mu_i=(\lambda_j/\mu_j)\mu_j (\lambda_i/\lambda_j)
+  \end{aligned}
+  $$
+  which is right.
+
+- $\underline n=(n_1,...,n_j,...,n_k)$ and $\underline n'=(n_1,...,n_j-1,...,n_k)$: Similar to case 1, it suffices to justify 
+  $$
+  p(\underline n)\mu_j (1-\sum_{k\ne j}p_{jk})=p(\underline n')\bar r_j 
+  $$
+  where $\bar r_j=\lambda_j-\sum_{k\ne j}\lambda_k\bar p_{kj}$. This also holds.
+
+By these, we have found solutions for equations in **Theorem 5.7.1**. So the limiting probabilities are $p(\underline n)=\prod_k p_k(n_k)=\prod_k (\lambda_k/\mu_k)^{n_k}(1-\lambda_k/\mu_k)$, and the inverse transition rates are given above. The form of $p(\underline n)$ indicates $X_i$ are independent.
+
+Moreover, from the third case, we can conclude the departure of desk $j$ $\sim P_{\bar r_j}(t)$.
+
+**Corollary 5.7.3** Customers leave the system from desk $j$ $\sim P_{\bar r_j}(t)$.
+
+_Remark_ (i) For desk $i$, its limiting distribution is the same as that of $M/M/1$ queue. But in contrast to the fact that $M/M/1$ queue requires Poisson arrival, the arrival of desk $i$ may not be Poisson. This can happen when a customer can visit a service more than once. 
+
+_Counterexample_ Suppose $r_k$ is much smaller than others, $\mu_k$ is much larger than others and with high probability the customer will return. Then after a customer arrive, he will finish the service and return fast with high probability. This implies that a short period after an arrival it's highly likely to occur another arrival while during the period there isn't an arrival around, it's not so likely to occur an arrival. So the increments are not independent, so it can't be Poisson. 
+
+(ii) One can generalize the results for $M/M/k$ queue.
+
+#### 5.7.2 The Erlang Loss Formula
+
+_Setting_ Queueing loss model: customers arrive at $k$ desks $\sim P_\lambda(t)$. If a customer find all desks busy, he will leave. The service time has distribution $G$, density $g$, hazard rate function $\lambda(t)$, and mean $\mu$.
+
+For this setting, let states to be the ordered service time of current customers, i.e., if there are $n$ customers who have been serviced for $x_1\le...\le x_n$ time units, the state is $(x_1,...,x_n)$. This process is Markov with continuum state space, which can also be dealt by reverse process.
+
+The following theorem is the main result of this section.
+
+**Theorem 5.7.4 Erlang Loss formular** The limiting distribution of the number of customers in the system is given by 
+$$
+P(n\text{ in the system})=\frac{\frac{(\lambda\mu)^n}{n!}}{\sum_{i=0}^{n}\frac{(\lambda\mu)^i}{i!}}
+$$
+And conditioned on the case that there is $n$ customers in the system, the ages/residual times are i.i.d. $\sim G_e$.
+
+> [!Tip]
+>
+> Recall: for a renewal process with interarrival distribution $G$, the long-run distribution of age/residual life is $G_e(x)=\mu^{-1}\int_0^x \bar G(s)ds$, and density is $\mu^{-1}\bar{G}(s)$.
+
+_Intuition_ As we have done before, we can guess that the reverse process is also a $k$-server loss system (since there are at most $k$ customers) , with service time distribution $G$, and arrivals $\sim P_\lambda(t)$ (since in steady state, entrance rate=departure rate. _Notice: The departure includes those who finished their service and those who found all desk occupied._). The state represents the residual service time of present customers.
+
+Also, conditioned on the number of customers, the ages should be i.i.d., and the distribution should be equilibrium distribution.
+
+<font color='red'>_proof of Theorem 5.7.4_</font> Apply **Theorem 5.7.1**.
+
+- Let $\underline x=(x_1,...,x_n)$ and $e_i(\underline x)=(x_1,...,x_{i-1},x_{i+1},...,x_n)$. $\underline x\to e_i(\underline x)$ represents that a customer who has been serviced for $x_i$ exits, so the intensity is $\lambda(x_i)$. $e_i(\underline x)\to \underline x$ represents that a customer enters and will be serviced for $x_i$, so the intensity is $\lambda g(x_i)$. These give:
+  $$
+  p(\underline x)\lambda(x_i)=p(e_i(\underline x))\lambda g(x_i)
+  $$
+
+  - Let $P(\emptyset)$ be the limiting probability that the system is idle. Let $i=1,...,n$, we have 
+    $$
+    p(\underline x)=\prod_{i=1}^n \lambda \bar G(x_i)\ P(\emptyset)
+    $$
+
+  - Integrate over $\underline x$ of length $n$, we have 
+    $$
+    P(n\text{ in the system})=\int_{x_1\le ...\le x_n}P(\emptyset)\prod_{i=1}^n \lambda \bar G(x_i)dx_1...dx_n=P(\emptyset)\frac{(\lambda \mu)^n}{n!}
+    $$
+
+  - Summing over $n$, we have 
+    $$
+    1=P(\emptyset)+\sum_{n=1}^k P(\emptyset)\frac{(\lambda\mu)^n}{n!}
+    $$
+    which yields $P(\emptyset)=(\sum_{n=0}^k \frac{(\lambda\mu)^n}{n!})^{-1}$. This gives the result of the theorem.
+
+  - Conditioned on the number of customers, we have 
+    $$
+    p(\underline x\mid n\text{ in the system})=\frac{p(\underline x)}{P(n\text{ in the system})}=n!\prod_{i=1}^n \frac{\bar G(x_i)}{\mu}
+    $$
+    So the unordered service times are i.i.d. $\sim G_e$.
+
+- Another case to be verify involves $\underline x=(x_1,...,x_n)$ and $(0,\underline x)=(0,x_1,...,x_n)$. $\underline x\to(0,\underline x)$ represents that one customer arrives, whence has intensity $\lambda$, and the inverse represents that one customer leaves, whence has intensity $1$. So
+  $$
+  p(\underline x)\lambda=p(0,\underline x)
+  $$
+  which holds since $\bar G(0)=1$.
+
+**Corollary 5.7.5** The departure process is $P_\lambda (t)$.
+
+#### 5.7.3 The M/G/1 Shared Processor system
+
+_Setting_ Customer arrives $\sim P_\lambda (t)$ with work i.i.d. with distribution $G$. Different from the common $M/G/1$ queue where the desk serves one customer once, for a $M/G/1$ shared queue, if there are $n$ customers in the queue, the desk can serve them simultaneously at rate $1/n$ for each customer. Let $\lambda(t)$ be the hazard rate function of $G$, and $\mu$ be the mean.
+
+Also, let states to be the ordered amounts of work already performed of customers presently in the system, $p(\underline x)$ to be the limiting density of state $\underline x$, and $P(\emptyset)$ to be the limiting probability of idle system.
+
+The main result of this section is:
+
+**Theorem 5.7.6** For the processor sharing model, the number of customers in the system has distribution 
+$$
+P(n\text{ in the system})=(\lambda\mu)^n(1-\lambda\mu)
+$$
+And conditioned that there are $n$ customers in the system, the completed or residual workloads are i.i.d. $\sim G_e$. The departure process is $P_\lambda(t)$.
+
+_Intuition_ The reversed process should also be a processor sharing model with arrival rate $\lambda$ and work distribution $G$. The states are ordered residual workload.
+
+<font color='red'>_proof of Theorem 5.7.6_</font>
+
+Apply **Theorem 5.7.1**.
+
+- Consider $\underline x$ and $e_i(\underline x)$. $\underline x\to e_i(\underline x)$ represents that one customer who has been serviced for $x_i$ leaves, whence has intensity $\lambda(x_i)/n$. $e_i(x)\to x$ represents that one customer who will be serviced for $x_i$ enters, whence has intensity $\lambda g(x_i)$. So we have 
+  $$
+  p(\underline x)\frac{\lambda(x_i)}{n}=p(e_i(\underline x))\lambda g(x_i)
+  $$
+
+  - Similarly, let $i=1,...,n$, we have $p(\underline x)=n!\lambda^n P(\emptyset)\prod_{i=1}^n \bar G(x_i)$.
+
+    Integrate w.r.t $\underline x$, we have 
+    $$
+    P(n\text{ in the system})=\int_{x_1\le...\le x_n} n!\lambda^nP(\emptyset)\prod_{i=1}^n \bar{G}(x_i)=\lambda^nP(\emptyset)\mu^n
+    $$
+
+  - Summing over $n$, we have 
+    $$
+    1=P(\emptyset)+\sum_{n=1}^\infty \lambda^nP(\emptyset)\mu^n
+    $$
+    which yields $P(\emptyset)=1-\lambda\mu$.
+
+  - Conditioned that $n$ people are in the system, we have 
+    $$
+    p(\underline x\mid n\text{ in the system})=\frac{p(\underline x)}{P(n\text{ in the system})}=n!\prod_{i=1}^n \mu^{-1}\bar G(x_i)
+    $$
+    so the unordered amounts of work has distribution $G_e$.
+
+- Consider $\underline x$ and $(0,\underline x)$. $\underline x\to(0,\underline x)$ represents that a customer enters, whence has intensity $\lambda$. Meanwhile, the inverse represents that a customer leaves, since the work of every customer is proceed at rate $1/(n+1)$, it has intensity $1/(n+1)$. So 
+  $$
+  p(\underline x)\lambda=p(0,\underline x)\frac{1}{n+1}
+  $$
+  which holds.
+
+_Remark_ 
+
+(i) the average number of customers in the system $L$ is 
+$$
+L=\sum_{i=0}^\infty n(\lambda\mu)^n(1-\lambda\mu)=\frac{\lambda\mu}{1-\lambda\mu}
+$$
+By **Theorem 3.6.2**, the average time a customer spent in the system $W$ is 
+$$
+W=\frac{L}{\lambda}=\frac{\mu}{1-\lambda\mu}
+$$
+which depends only on the mean of $G$. 
+
+This is surprising. Consider if $G_1$ is point mass of $1$ and $G_2\sim Exp(1)$, the mean of $G_1$ and $G_2$ are both $1$, but the residual workloads have distribution $G_{1e}\sim U(0,1)$ and $G_{2e}\sim Exp(1)$ respectively, whose means are $1/2,1$. But the average time a customer spent are equal.
+
+(ii) For a fixed customer, conditioned on his workload $y$, we wonder the mean time spent in the system, say $W'$.
+
+Pick $\epsilon$ and consider the customers with workload between $y$ and $y+\epsilon$, for convenience say they are special. Let $L'$ be the average number of special customers in the system, $\lambda'$ be their arrival rate, and $W'$ be their average time spent in the system.
+
+1. The density of the total workload of someone present in the system is given by 
+   $$
+   f(w)=\int_0^wf(w\mid \text{has done }x)dG_e(x)=\int_0^w \frac{g(w)}{\bar G(x)}\frac{\bar{G}(x)}{\mu}dx=\frac{wg(w)}{\mu}
+   $$
+   This is indeed the long-run distribution of total life for a renewal process with interarrival distribution $G$. 
+
+   So $L'=Lf(w)\epsilon+o(\epsilon)$.
+
+2. $\lambda'=\lambda g(y)\epsilon+o(\epsilon)$.
+
+3. $L'=W'\lambda'$, so $W'=y/(1-\lambda\mu)$. 
+
+This can be checked by $W=\int W'(y) dG(y)=\mu/(1-\lambda\mu)$.
+
+### 5.8 Uniformization
+
+Consider a cts-time Markov chain with $\nu_i\equiv \nu$. Let $N(t)$ denote the number of transitions by time $t$, then $N(t)\sim P_\nu(t)$, and 
+$$
+\begin{aligned}
+p_{ij}(t)&=P(X(t)=j\mid X(0)=i)
+\\&=\sum_{n=0}^\infty P(X(t)=j\mid X(0)=i,N(t)=n)P(N(t)=n\mid X(0)=i)
+\\&=\sum_{n=0}^\infty p_{ij}^n e^{-\nu t}\frac{(\nu t)^n}{n!}
+\end{aligned}
+$$
+where $p_{ij}^n$ is that of corresponding discrete Markov chain. $P(X(t)=j\mid X(0)=i,N(t)=n)=p_{ij}^n$ holds because the condition $\nu_i\equiv\nu$ gives no information about transition states. This allows one to simplify a cts-time Markov chain to a discrete Markov chain.
+
+To apply this idea into a common cts-time Markov chain, we can lengthen the waiting time by allowing the chain to transit from one state to itself. To be precise, pick $\nu\ge\nu_i\forall i$, and consider a chain with $\nu_i^*\equiv \nu$, and $p_{ij}^*=\left\{\begin{aligned}&1-\nu_i/\nu&j=i\\&\nu_ip_{ij}/\nu&j\ne i\end{aligned}\right.$. This chain has the same distribution as the primary chain. This technique is called "uniformization". 
+
+By this, $p_{ij}(t)=\sum_{n=0}^\infty p_{ij}^{*n}e^{-\nu t}\frac{(\nu t)^n}{n!}$.
+
+**Example 5.8(A)** Consider a chain with $\mathcal S=\{0,1\}$, $p_{01}=p_{10}=1$, $\nu_0=\lambda,\nu_1=\mu$. Now we can uniformize this: Set $\nu=\lambda+\mu$, $\nu_1=\nu_2=\nu$, and transition matrix $P=\begin{bmatrix}\mu/(\lambda+\mu) & \lambda/(\lambda+\mu) \\\mu/(\lambda+\mu) & \lambda/(\lambda+\mu)\end{bmatrix}$. Notice $P^n=P\forall n\ge 1$, so we have 
+$$
+\begin{aligned}
+p_{00}(t)&=\sum_{n=0}^\infty p_{00}^n e^{-(\lambda+\mu)t}\frac{[(\lambda+\mu)t]^n}{n!}=\frac{\mu}{\lambda+\mu}+\frac{\lambda}{\lambda+\mu}e^{-(\lambda+\mu)t}\\
+p_{11}(t)&=\sum_{n=0}^\infty p_{11}^ne^{-(\lambda+\mu)t}\frac{[(\lambda+\mu)t]^n}{n!}=\frac{\lambda}{\lambda+\mu}+\frac{\mu}{\lambda+\mu}e^{-(\lambda+\mu)t}
+\end{aligned}
+$$
+Consider $S_i(t)=\int_0^t 1_{X(s)=i}ds$, the total time up to $t$ the chain stays at state $i$. $S_i(t)$ is called the **occupation time process for state $i$**.
+
+- The mean time in state $0$ is given by
+  $$
+  E[S_0(t)\mid X(0)=0]=E\int_0^t 1_{X^0(s)=0}ds=_\text{Fubini}\int_0^t E1_{X^0(s)=0}ds=\int_0^t p_{00}(s)ds=\frac{\mu}{\lambda+\mu}t+\frac{\lambda}{(\lambda+\mu)^2}[1-e^{-(\lambda+\mu)t}]
+  $$
+
+- The distribution is given by:
+  $$
+  P(S_0(t)\le s)=\sum_{n=0}^\infty e^{-(\lambda+\mu)t}\frac{[(\lambda+\mu)t]^n}{n!}P(S_0(t)\le s\mid N(t)=n)
+  $$
+
+  - $P(S_0(t)\le s\mid N(t)=0)=0\forall s< t$ since conditioned that $N(t)=0$, $S_0(t)=t$.
+
+  - When $N(t)\ge 1$, conditioned that $N(t)=n$, the transition moments are order statistics of $n$ independent $U(0,t)$. Meanwhile, the first interval must be in state $0$ and for other time intervals, the chain stays at state $0$ with probability $\mu/(\lambda+\mu)$ independently. 
+
+    By these, the number of intervals of state $0$ is $1+B(n,\mu/(\lambda+\mu))$. Conditioned that $1+k$ intervals are picked, by the symmetry we can move these intervals into the first $k$ intervals, i.e., assume we choose the first $1+k$ intervals. This yields:
+    $$
+    \begin{aligned}
+    P(S_0(t)\le s\mid N(t)=n)&=\sum_{k=0}^n P(S_0(t)\le s\mid N(t)=n,k+1\text{ is picked})P(k\text{ is picked among the last }n)
+    \\&=\sum_{k=0}^n P(S_0(t)\le s\mid N(t)=n,\text{the first }k+1\text{ is picked})P(k\text{ is picked among the last }n)
+    \\&=\sum_{k=0}^n \bigg(\sum_{i=k+1}^n \binom{n}{i}\bigg(\frac{s}{t}\bigg)^i\bigg(1-\frac{s}{t}\bigg)^{n-i} \bigg)\binom{n}{k}\bigg( \frac{\mu}{\lambda+\mu}\bigg)^k\bigg(\frac{\lambda}{\lambda+\mu}\bigg)^{n-k}
+    \end{aligned}
+    $$
+  
+  Meanwhile, $P(S_0(t)=t\mid X(0)=0)=e^{-\lambda t}$.
+
