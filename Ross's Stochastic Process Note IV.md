@@ -287,7 +287,7 @@ Consider a chain starting from $-\infty$, which is stationary. Now consider it g
 
 <font color='red'>_proof of Corollary 5.6.2_</font> For the forward process, those $+1$ transitions constitute a Poisson process. Since the $M/M/s$ queue is time-reversible, the $+1$ transitions of reversed chain also constitute a Poisson process with rate $\lambda$, which corresponds $-1$ transitions of original chain.
 
-**Proposition** If $x_j>0$ satisfies $\sum_j x_j=1$ and $x_i q_{ij}=x_j q_{ji}$, then the chain is time reversible, and $x_i$ are just the stationary distribution.
+**Proposition** If one can find $x_j>0$ satisfies $\sum_j x_j=1$ and $x_i q_{ij}=x_j q_{ji}$, then the chain is time reversible, and $x_i$ are just the stationary distribution.
 
 <font color='red'>_proof_</font> 
 $$
@@ -653,3 +653,213 @@ Consider $S_i(t)=\int_0^t 1_{X(s)=i}ds$, the total time up to $t$ the chain stay
   
   Meanwhile, $P(S_0(t)=t\mid X(0)=0)=e^{-\lambda t}$.
 
+***
+
+Exercises
+
+5.7 Consider a Yule process with $X(0)=1$. Everyone born in time $s$ will be robust with probability $P(s)$. Compute the distribution of number of robust individuals born in $(0,t)$, say $R(t)$.
+
+_Solution_ Conditioned on birth in $(0,t)$, say $B(t)$, we have 
+$$
+\begin{aligned}
+P(R(t)=k)&=\sum_{n=k}^\infty P(R(t)=k\mid B(t)=n)P(B(t)=n)
+\\P(B(t)=n)&=(1-e^{-\lambda t})^{n-1}e^{-\lambda t}
+\\P(R(t)=k\mid B(t)=n)&=\int_{[0,t]^n}\binom{n}{k}P(s_1)...P(s_k)(1-P(s_{k+1}))...(1-P(s_n))f(s_1)...f(s_n)ds_1...ds_n\\
+&=\binom{n}{k}a^k(1-a)^{n-k},\text{ where } a:=\int_0^t  f(s)P(s)ds
+\\\Rightarrow P(R(t)=k)&=\sum_{n=k}^\infty \binom{n}{k} a^k (1-a)^{n-k}(1-e^{-\lambda t})^{n-1}e^{-\lambda t}=\frac{a^k(1-e^{-\lambda t})^{k-1}e^{-\lambda t}}{(1-(1-a)(1-e^{-\lambda t}))^{k+1}}
+\end{aligned}
+$$
+5.10 $p(t)=p_{00}(t)$ is cts.
+
+(a) 
+$$
+\lim_{t\to 0}\frac{1-p(t)}{t}=\nu_0
+$$
+since in infinitesimal time, the chain can only jump at most once.
+
+(b) 
+$$
+p(t)p(s)\le p(t+s)\le 1-p(s)+p(s)p(t)
+$$
+when one consider $X(s)=0$ or not.
+
+(c) by (b) we have
+$$
+|p(s+t)-p(s)|\le 1-p(t)
+$$
+Let $t\to 0$, we can conclude $p(s)$ is cts. 
+
+5.17 Given $A\subset S$, consider $T^i(t)$, the amount of time during $[0,t]$ when the chain stays in $A$. with $X(0)=i$. Let $Y_i$ i.i.d. $\sim Exp(\lambda^{-1})$, which are independent of $X(t)$. Set $t_i(n)=E[T^i(Y_1+...+Y_n)]$.
+
+(a) Derive a set of linear equations for $t_i(1),i\ge 0$.
+
+_Solution_ Let $1_A(i)=1_{i\in A}$, and $S_1$ be the holding time of state $i$. Conditioned on $S_1$, we have 
+$$
+\begin{aligned}
+t_i(1)&=E[T^i(Y_1)]\\&=E[T^i(Y_1)\mid Y_1>S_1]P(Y_1>S_1)+E[T^i(Y_1)\mid Y_1<S_1]P(Y_1<S_1)\\
+&=^1(E[T^i(S_1)\mid Y_1>S_1]+\sum_{j\ne i}p_{ij}E[T^j(\tilde Y_1)])P(Y_1>S_1)+E[T^i(Y_1)\mid Y_1<S_1]P(Y_1<S_1)\\
+&=ET^i(S_1\wedge Y_1)+\sum_{j\ne i}p_{ij}E[T^j(\tilde Y_1)]P(Y_1>S_1)\\
+&=ES_1\wedge Y_1\ 1_A(i)+\sum_{j\ne i}p_{ij}t_j(1) \frac{\nu_i}{\nu_i+\lambda^{-1}}\\
+&=^2\frac{1_A(i)}{\lambda^{-1}+\nu_i}+\sum_{j\ne i}\frac{q_{ij}}{\nu_i+\lambda^{-1}}t_j(1)\\
+\Rightarrow 1_A(i)&=(\lambda^{-1}+\nu_i)t_i(1)-\sum_{j\ne i}q_{ij}t_j(1)
+\end{aligned}
+$$
+
+1. By the memoryless property of exponential distribution, conditioned that $Y_1>S_1$, the distribution of $Y_1-S_1$ is $Exp(\lambda)$, so let $\tilde Y_1$ be an independent r.v. $\sim Exp(\lambda)$.
+2. $ES_1\wedge Y_1=(\lambda^{-1}+\nu_i)^{-1}$.
+
+(b) Derive a set of linear equations for $t_i(n),i\ge 0$.
+
+_Solution_ 
+$$
+\begin{aligned}
+t_i(n)&=E[T^i(Y_1+...+Y_n)]\\
+=&E[T^i(Y_1+...+Y_n)\mid Y_1>S_1]P(Y_1>S_1)+E[T^i(Y_1+...+Y_n)\mid Y_1<S_1]P(Y_1<S_1)\\
+=&E[T^i(S_1)\mid Y_1>S_1]P(Y_1>S_1)+\sum_{j\ne i}p_{ij}E[T^j(\tilde Y_1+Y_2+...+Y_n)]P(Y_1>S_1)\\
+&+E[T^i(Y_1)\mid Y_1<S_1]P(Y_1<S_1)+E[T^i(Y_2+...+Y_n)]P(Y_1<S_1)\\
+=&\frac{1_A(i)}{\nu_i+\lambda^{-1}}+\sum_{j\ne i}\frac{p_{ij}}{\nu_1+\lambda^{-1}}t_j(n)+\frac{\lambda^{-1}}{\lambda^{-1}+\nu_i}t_i(n-1)
+\end{aligned}
+$$
+By these one can derive $t_i(n)$.
+
+(c) When $n$ is large, the best $\lambda$ s.t. $t_i(n)$ is a good approximation of $E[T_i(t)]$.
+
+_Solution_ when $n$ is large, pick $\lambda=n/t$, let $S_n=T_1+...+T_n$. Notice $Ee^{isS_n}=(\frac{ist}{n}-1)^{-n}\to e^{ist}$, whence we have $S_n\to_d X$ where $P(X=t)=1$.
+
+5.18  Consider a cts-time Markov chain with $X(0)=0$. Let $A$ denote a set of states without $0$, and set $T=\min\{t>0: X(t)\in A \}$. Suppose $T<\infty$ a.s.. Let $q_i=\sum_{j\in A}q_{ij}$. Let $H=\int_0^T q_{X(t)}dt$ which is called the random hazard.
+
+(a) Find the hazard rate function, $\lim_{h \to 0} P(s<H<s+h\mid H>s)/h$.
+
+_Solution_ Conditioned that $H>s$, consider $\tau$ s.t. $\int_0^\tau q_{X(t)}dt=s$, we have 
+$$
+\lim_{h \to 0}P(s<H<s+h\mid H>s)/h=Eq_{X(\tau)}
+$$
+5.19 Consider a cts-time Markov chain with stationary probabilities $p_i$. Let $T$ denote the first time that the chain has been on state $0$ for $t$ consecutive time units. Find $E^0T$.
+
+_Solution_ From equations
+$$
+\begin{aligned}
+E^0T&=tP(S_1>t)+E^0[T\mid S_1<t]P(S_1<t)
+\\&=te^{-\nu_0 t}+\sum_{j\ne 0} p_{0j}(E^j T+\nu_0^{-1}-\frac{te^{-\nu_0 t}}{1-e^{-\nu_0 t}})(1-e^{-\nu_0 t})
+\\&=\nu_0^{-1}(1-e^{-\nu_0 t})+\sum_{j\ne 0}p_{0j}E^j T(1-e^{-\nu_0 t})
+\\\nu_0 E^0 T&=1-e^{-\nu_0 t}+\sum_{j\ne 0}q_{0j}E^jT(1-e^{-\nu_0 t})
+\\E^iT&=\nu_i^{-1} +\sum_{j\ne i}p_{ij} E^jT
+\\\nu_i E^i T&=1+\sum_{j\ne i}q_{ij} E^j T
+\end{aligned}
+$$
+5.24 Consider two independent $M/M/1$ queue with respective parameters $\lambda_i,\mu_i$ where $\lambda_i<\mu_i$. Suppose they share the same service room whose capacity is $N$. Compute the limiting probability that $(X_1(t),X_2(t))=(m,n)$.
+
+_Sketch of solution_
+
+- If $X_1(t)$, $X_2(t)$ are independent time reversible cts-time Markov chain, so is $(X_1(t),X_2(t))$. After limiting to $\mathcal S=\{(m,n):m+n\le N \}$, it's still a cts-time time reversible Markov chain.
+- $q((m,n),(m+1,n))=\lambda_1,q((m,n)(m-1,n))=\mu_1$, so is $X_2$. Then it's easy to compute the limiting probabilities.
+
+5.30 Consider an $M/M/\infty$ queue with desks marked $1,2,3,...$. On arrival, each customer will choose the idle desk with smallest number.
+
+(a) Find the fraction of time that channel $n$ is busy. 
+
+_Solution_ 
+
+_Notations_ The arrival rate is $\lambda$, mean service time is $\mu$.
+
+- If we set the state to be $(i_1,...,i_n)$ where $i_k=1$ when desk $k$ is occupied and $i_k=0$ otherwise, actually we will obtain a cts-time Markov chain which describe a lost $M/M/n$ queue where the customers choose the idle desk with smallest number. For this finite-state Markov chain, we can compute the limit distribution.
+
+  Notice if we set the state space to be this, the chain is **not reversible**.
+
+- Now we set the state to be the number of occupied desk in the first $n$ desks, i.e., $|\underline x|$, we attain a $M/M/n$​ lost queue. By **Erlang's loss formula**, we have 
+  $$
+  P((1,...,1))=\frac{(\lambda\mu)^n/n!}{\sum_{i=0}^n (\lambda\mu)^i/i!}:=p_n
+  $$
+  This yields $P((1,...,1,0))=p_{n-1}-p_n$.
+
+  Consider the state (in fact a set of states) "desk $n$ is busy", whose last state can only be $(1,...,1,0)$, so by balanced equation about desk $n$,
+  $$
+  P((1,...,1,0))\lambda=P(\text{desk n is busy})/\mu
+  $$
+  So the probability is $\lambda\mu(p_{n-1}-p_n)$.
+
+(b) Find the overflow rate from $n$ to $n+1$,i.e., the arrivals that find the first $n$ occupied, and the corresponding overflow process.
+
+_Solution_ the overflow rate is just $p_n\lambda$, i.e., after the first $n$ desks occupied, a new arrival makes  the first $n+1$ arrival. Notice the overflow process is of course a renewal process, but not necessarily Poisson, since overflows tend to happen in cluster, i.e., upon one overflow, the first $n$ desks are still busy, so another overflow tends to happen soon.
+
+5.34 Consider an ergodic cts-time Markov chain, with transition rates $q_{ij}$ and stationary distribution $p_j$. Let $B\subset S$, and $G:=B^c$. Suppose the chain is in steady state.
+
+(a) $P(X(t)=i\mid X(t)\in B)=p_i/\sum_{j\in B}p_j$.
+
+(b) 
+$$
+\begin{aligned}
+&P(X(t)=i\mid X(t)\in B,X(t^-)\in G)\\
+=&\frac{P(X(t)=i,X(t^-)\in G)}{P(X(t)\in B, X(t^-)\in G)}=\frac{\sum_{j\in G}p_j q_{ji}}{\sum_{j\in G}\sum_{k\in B}p_jq_{jk}}
+\end{aligned}
+$$
+(c) For $i\in B$, let $T_i$ denote the time until the process enters $G$ given that the chain starts from state $i$. Let $\tilde F_i(s)=Ee^{-sT_i}$. Then conditioning on the first state to transit,
+$$
+\begin{aligned}
+\tilde F_i(s)&=E[e^{-sT_i}\mid \text{transits into }G]P(\text{transits into }G)+E[e^{-sT_i}\mid \text{transits into }B]P(\text{transits into }B)
+\\&=s\nu_i^{-1}\sum_{j\in G}p_{ij}+\sum_{j \in B,j\ne i}(s\nu_i^{-1}+\tilde F_j(s))p_{ij}
+\\&=s\nu_i^{-1}+\sum_{j\in B,j\ne i}\tilde F_j(s)p_{ij}
+\\\Rightarrow\tilde F_i(s)&=\frac{\nu_i}{\nu_i+s}[\sum_{j\in B}\tilde F_j(s)p_{ij}+\sum_{j\in G}p_{ij}]
+\end{aligned}
+$$
+(d) in steady state, the transitions between two states should be at the same rate, so 
+$$
+\sum_{i\in G}\sum_{j\in B} p_i q_{ij}=\sum_{i\in B}\sum_{j\in G}p_i q_{ij}
+$$
+(e) From (c) and (d) we have 
+$$
+\begin{aligned}
+(\nu_i+s)\tilde F_i(s)&=\sum_{j\in B}\tilde F_j(s)\nu_i p_{ij}+\sum_{j\in G}\nu_i p_{ij}\\
+\sum_{i\in B}(\nu_i+s)\tilde F_i(s)p_i&=\sum_{i\in B}\sum_{j\in B}\tilde F_j(s)\nu_i p_{ij}p_i+\sum_{i\in B}\sum_{j\in G}\nu_i p_{ij}p_i
+\\s\sum_{i\in B}p_i \tilde F_i(s)+\sum_{i\in B}\tilde F_i(s)p_i \nu_i &=\sum_{i\in B}\sum_{j\in B}\tilde F_j(s)q_{ij}p_i+\sum_{i\in G}\sum_{j\in B}p_i q_{ij}\\
+s\sum_{i\in B}p_i \tilde F_i(s)&=\sum_{i\in G}\sum_{j\in B}p_i q_{ij}(1-\tilde F_j(s))
+\end{aligned}
+$$
+(f) Given that the process has just entered $B$ from $G$, let $T_\nu$ denote the time until it leaves $B$. Then 
+$$
+Ee^{-sT_\nu}=\sum_{i\in B}\frac{\sum_{j\in G}p_j q_{ji}}{\sum_{j\in G}\sum_{k\in B}p_jq_{jk}}\tilde F_i(s)
+$$
+(g) From (e) we have 
+$$
+\begin{aligned}
+&\sum_{j\in G}\sum_{k\in B} p_j q_{jk}Ee^{-sT_\nu}=\sum_{i\in B}\sum_{j\in G}p_j q_{ji}\tilde F_i(s)=\sum_{i\in B}\sum_{j\in G}p_j q_{ji}-s\sum_{i\in B}p_i \tilde F_i(s)
+\\\Rightarrow &\sum_{i\in B}\sum_{j\in G}p_j q_{ji}(1-Ee^{-sT_\nu})=s\sum_{i\in B}p_i \tilde F_i(s)
+\\\Rightarrow &\frac{\sum_{i\in B}\sum_{j\in G}p_j q_{ji}(1-Ee^{-sT_\nu})}{s}=\sum_{i\in B}p_i \tilde F_i(s)
+\end{aligned}
+$$
+let $s\to 0$, we have by DCT,
+$$
+\sum_{i\in B}\sum_{j\in G} p_j q_{ji} ET_\nu=\sum_{i\in B}p_i
+$$
+(h) Given that the chain falls into $B$, let $T_x$ be the time until it leaves $B$, then 
+$$
+\begin{aligned}
+Ee^{-sT_x}&=\sum_{i\in B}\tilde F_i(s)\frac{p_i}{\sum_{j\in B}p_j}=\frac{1-Ee^{-sT_\nu}}{sET_\nu }
+\end{aligned}
+$$
+(i) By Laplace inverse transform, 
+
+> [!Tip]
+> $$
+> \bigg(\frac{1-\hat f(s)}{s} \bigg)^\vee=1-\int_0^t f(u)du
+> $$
+
+$$
+P(T_x\le t)=\int_0^t\frac{P(T_\nu>s)}{ET_\nu}ds
+$$
+
+(j) then we have 
+$$
+P(T_x>t)=\int_t^\infty \frac{P(T_\nu>s)}{ET_\nu}ds
+$$
+integrate w.r.t. $t$ we have 
+$$
+ET_x=\frac{ET_\nu^2}{2ET_\nu}\ge\frac{ET_\nu}{2}
+$$
+_Remark_ If we consider a visit to $B$ as a renewal, $T_\nu$ is the interarrival time and $T_x$ is the residual time/age. By this, (g) has a good interpretation : transition rate into $B$= probability of staying in $B$/mean length of one stay in $B$. This is just the SLLN for renewal theorem, since transition rate into $B$ is just the transition rate (there are only two states), and RHS=1/mean length of an interarrival time.
+
+_Remark_ Notice that if we collapse a subset of state into a state, the resulting process is **not Markov** in general.
+
+5.35 Consider a renewal process whose interarrival distribution $F$ is given by $\bar F(x)=pe^{-\lambda_1 x}+qe^{-\lambda_2 x}$, where $q=1-p$. Compute $EN(t)$.
+
+_Solution_ This has a nice interpretation: Imagine at each renewal, a coin that lands heads with $p$, will be flipped, and if it's a head the next interarrival is $Exp(\lambda_1)$ and otherwise $Exp(\lambda_2)$. Let $R(t)$ be the type of interarrival at time $t$. Then $R(t)$ is a cts-time Markov chain in steady state
