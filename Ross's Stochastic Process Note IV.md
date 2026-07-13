@@ -137,6 +137,14 @@ Notice $\sum_{k\ne j}p_{ik}(t)\frac{p_{kj}(h)}{h}$ may not be dominated by an in
 
 _Remark_ The difference comes from the moment that the state shifts. For the backward equations, transition happens at $0$ and for the forward equations transition happens at $t$. 
 
+> [!IMPORTANT]
+>
+> Denote the probabilities $P(t)=(p_{ij}(t))$, and generator $Q=(q_{ij})$ with $q_{ii}:=-\nu_i$. Notice the sum of every row of $Q$ is $0$. 
+>
+> The forward EQ is $P'(t)=P(t)Q$
+>
+> The backward EQ is $P'(t)=QP(t)$.
+
 **Example 5.4(A)** Consider a two-state cts Markov chain that $\nu_0=\lambda,\nu_1=\mu,p_{ij}=\delta_{ij}$.Then the forward equations yield
 $$
 p_{00}'(t)=\mu p_{01}(t)-\lambda p_{00}(t)=-(\lambda+\mu)p_{00}(t)+\mu
@@ -726,14 +734,22 @@ By these one can derive $t_i(n)$.
 
 _Solution_ when $n$ is large, pick $\lambda=n/t$, let $S_n=T_1+...+T_n$. Notice $Ee^{isS_n}=(\frac{ist}{n}-1)^{-n}\to e^{ist}$, whence we have $S_n\to_d X$ where $P(X=t)=1$.
 
-5.18  Consider a cts-time Markov chain with $X(0)=0$. Let $A$ denote a set of states without $0$, and set $T=\min\{t>0: X(t)\in A \}$. Suppose $T<\infty$ a.s.. Let $q_i=\sum_{j\in A}q_{ij}$. Let $H=\int_0^T q_{X(t)}dt$ which is called the random hazard.
+5.18  Consider a cts-time Markov chain with $X(0)=0$. Let $A$ denote a set of states without $0$, and set $T=\min\{t>0: X(t)\in A \}$. Suppose $T<\infty$ a.s.. Let $q_i=\sum_{j\in A}q_{ij}$. Let $H=\int_0^T q_{X(t)}dt$ which is called the random hazard. Find the hazard rate function, $\lim_{h \to 0} P(s<H<s+h\mid H>s)/h$.
 
-(a) Find the hazard rate function, $\lim_{h \to 0} P(s<H<s+h\mid H>s)/h$.
+_Solution_ Conditioned that $H>s$, consider $\tau$ s.t. $\int_0^\tau q_{X(t)}dt=s$, conditioned that $X(\tau)=i$, the waiting time is $Exp(\nu_i)$, so 
+$$
+\frac{P(s<H<s+h\mid H>s, X(\tau)=i)}{h}=\frac{q_i (h/q_i)+o(h)}{h}=1+o(1)
+$$
+which indicates the hazard rate is $1$, and the distribution of $H$ is $Exp(1)$.
 
-_Solution_ Conditioned that $H>s$, consider $\tau$ s.t. $\int_0^\tau q_{X(t)}dt=s$, we have 
-$$
-\lim_{h \to 0}P(s<H<s+h\mid H>s)/h=Eq_{X(\tau)}
-$$
+> [!NOTE]
+>
+> **cumulative hazard transform** Suppose $T\sim F$ whose hazard rate function is $\lambda(t)$, then $\int_0^T \lambda(t)dt\sim Exp(1)$.
+>
+> This can be proven via simple computation. 
+>
+> The idea is that the cumulative hazard is a new clock: it speeds up when the event is likely and slows down when it's unlikely. Then on the new clock the event occurs at constant rate $1$. This works even for random hazard.
+
 5.19 Consider a cts-time Markov chain with stationary probabilities $p_i$. Let $T$ denote the first time that the chain has been on state $0$ for $t$ consecutive time units. Find $E^0T$.
 
 _Solution_ From equations
@@ -742,9 +758,19 @@ $$
 E^0T&=tP(S_1>t)+E^0[T\mid S_1<t]P(S_1<t)
 \\&=te^{-\nu_0 t}+\sum_{j\ne 0} p_{0j}(E^j T+\nu_0^{-1}-\frac{te^{-\nu_0 t}}{1-e^{-\nu_0 t}})(1-e^{-\nu_0 t})
 \\&=\nu_0^{-1}(1-e^{-\nu_0 t})+\sum_{j\ne 0}p_{0j}E^j T(1-e^{-\nu_0 t})
-\\\nu_0 E^0 T&=1-e^{-\nu_0 t}+\sum_{j\ne 0}q_{0j}E^jT(1-e^{-\nu_0 t})
+\\\frac{\nu_0 E^0 T}{1-e^{-\nu_0 t}}&=1+\sum_{j\ne 0}q_{0j}E^jT
 \\E^iT&=\nu_i^{-1} +\sum_{j\ne i}p_{ij} E^jT
 \\\nu_i E^i T&=1+\sum_{j\ne i}q_{ij} E^j T
+\end{aligned}
+$$
+Let $E^i T=h_i$, and allow $q_{ii}=-\nu_i$, we have 
+$$
+\begin{aligned}
+\sum_{j} q_{ij}h_j&=-1,i\ne 0
+\\\sum_j q_{0j} h_j&=\frac{h_0}{e^{\nu_0 t}-1}-1
+\\\Rightarrow \sum_i \sum_j p_iq_{ij}h_j&=-\sum_{i}p_i+\frac{p_0h_0}{e^{\nu_0 t}-1}
+\\\Rightarrow_\text{Balanced equation}0&=-1+\frac{p_0h_0}{e^{\nu_0 t}-1}
+\\\Rightarrow h_0=\frac{e^{\nu_0 t}-1}{p_0}
 \end{aligned}
 $$
 5.24 Consider two independent $M/M/1$ queue with respective parameters $\lambda_i,\mu_i$ where $\lambda_i<\mu_i$. Suppose they share the same service room whose capacity is $N$. Compute the limiting probability that $(X_1(t),X_2(t))=(m,n)$.
@@ -862,4 +888,19 @@ _Remark_ Notice that if we collapse a subset of state into a state, the resultin
 
 5.35 Consider a renewal process whose interarrival distribution $F$ is given by $\bar F(x)=pe^{-\lambda_1 x}+qe^{-\lambda_2 x}$, where $q=1-p$. Compute $EN(t)$.
 
-_Solution_ This has a nice interpretation: Imagine at each renewal, a coin that lands heads with $p$, will be flipped, and if it's a head the next interarrival is $Exp(\lambda_1)$ and otherwise $Exp(\lambda_2)$. Let $R(t)$ be the type of interarrival at time $t$. Then $R(t)$ is a cts-time Markov chain in steady state
+_Solution_ This has a nice interpretation: Imagine at each renewal, a coin that lands heads with $p$ will be flipped, and if it's a head the next interarrival is $Exp(\lambda_1)$ and otherwise $Exp(\lambda_2)$. Let $R(t)$ be the type of interarrival at time $t$. Then $R(t)$ is a cts-time Markov chain with primary distribution $(p,q)$ and transition matrix $Q=\begin{pmatrix}-q\lambda_1&q\lambda_1\\p\lambda_2&-p\lambda_2\end{pmatrix}$.
+
+Use Kolmogorov's forward equation, we have $P'(t)=P(t)Q, P(0)=I$. Multiple $(p,q)$ on the left for both side, we have $(p_1'(t),p_2'(t))=(p_1(t),p_2(t))Q$. Moreover, $p_1(t)+p_2(t)=1,p_1(0)=p,p_2(0)=q$, by these we need to solve 
+$$
+p_1'(t)=p\lambda_2-(p\lambda_2+q\lambda_1)p_1(t),p_1(0)=p
+$$
+which yields 
+$$
+p_1(t)=\frac{p\lambda_2}{p\lambda_2+q\lambda_1}+\frac{pq(\lambda_1-\lambda_2)}{p\lambda_2+q\lambda_1}e^{-(p\lambda_2+q\lambda_1)t}
+$$
+The rate at which renewal happens is $\lambda_1 p_1(t)+\lambda_2 p_2(t)$, so 
+$$
+EN(t)=\int_0^t \lambda_1 p_1(s)+\lambda_2 p_2(s)ds=\frac{\lambda_1\lambda_2}{q\lambda_1+p\lambda_2}t+\frac{pq(\lambda_1-\lambda_2)^2}{(q\lambda_1+p\lambda_2)^2}\bigg(1-e^{-(q\lambda_1+p\lambda_2)t} \bigg)
+$$
+This corresponds to elementary renewal theorem, since $EN(t)/t\to 1/(q/\lambda_2+p/\lambda_1)$, where $q/\lambda_2+p/\lambda_1$ is just the mean length of renewal.
+
