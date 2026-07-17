@@ -6,7 +6,9 @@
 
 _Origin_ A martingale is a generalized version of a fair game: Interpret $Z_n$ as the gambler's fortune after $n$th game, then the mean fortune after $n+1$st game is equal to that after $n$th game, regardless of previous fortunes.
 
-Taking expectations, we have $EZ_n\equiv EZ_1$.
+_Remark_ $E[Z_n\mid Z_1,...,Z_k]=Z_k$ where $k\le n$.
+
+_Remark_ Taking expectations, we have $EZ_n\equiv EZ_1$.
 
 **Examples** (1) Pick $X_i$ independent with mean $0$. Let $Z_n=\sum_{i=1}^{n} X_i$, then $Z_n$ is a martingale.
 
@@ -193,4 +195,241 @@ $$
 P(h(\vec X)-E[h(\vec X)]\ge a)\le e^{-a^2/2n}
 $$
 <font color='red'>_proof of Corollary 6.3.4_</font> Notice $Z_i=E[h(\vec X)\mid X_1,...,X_i]$ is a martingale and $Z_n=h(\vec X)$. Moreover, $|Z_i-Z_{i-1}|\le 1$. Then use Azuma's inequality.
+
+**Example 6.3(c)** Suppose that $n$ balls are to be placed into $m$ urns with each ball independently going into urn $j$ with probability $p_j$. Let $Y_k$ denote the number of urns with exactly $k$ balls. We are seeking a bound for the tail distribution of $Y_k$.
+
+- $$
+  EY_k=E\sum_{i=1}^{m} 1_\text{urn i has exactly k balls}=\sum_{i=1}^{m} \binom{n}{k} p_i^k(1-p_i)^{n-k}
+  $$
+
+- Let $X_i$ denote the urn of $i$th ball. Define $h_k(x_1,...,x_n)$to be the number of urns with exactly $k$ balls. Then $Y_k=h_k(X_1,...,X_n)$.
+
+- When $k=0$, if $\vec x$ and $\vec y$ differs at most $1$ coordinate, $|h(\vec x)-h(\vec y)|\le 1$, so 
+  $$
+  P(Y_0-\sum_{i=1}^{m} (1-p_i)^n\ge a)\le \exp(-a^2/2n)
+  $$
+  When $k\ne 0$, if $\vec x$ and $\vec y$ differs at most $1$ coordinate, $|h(\vec x)-h(\vec y)|\le 2$, so 
+  $$
+  P(Y_k-\sum_{i=1}^{m}\binom{n}{k}p_i^k(1-p_i)^{n-k}\ge 2a)\le \exp(-a^2/2n)
+  $$
+
+**Example 6.3(D)** Consider a set of $n$ components that are to be used in performing certain experiments. $X_i\sim B(1,p_i)$ are independent indicators for $i$th component to function. To perform experiment $j$, a set of components $A_j$ should all function. Assume any component will only be used in at most $3$ experiments.
+
+Let $X$ be the number of experiments that can be performed.
+
+- $EX=\sum_{j=1}^{m}\prod_{i\in A_j} p_i$.
+
+- Let $\vec X=(X_1,...,X_n)$, then let $h(\vec X)$ denote the number of experiments that can be performed, we have if $\vec x$ and $\vec y$ differs at most $1$ components, $|h(\vec x)-h(\vec y)|\le 1$. So 
+  $$
+  P(X/3-EX/3\ge a)\le \exp(-a^2/2n)
+  $$
+
+### 6.4 Submartingales, supermartingales and the martingale convergence theorem
+
+**Definition** A stochastic process $(Z_n)$ with $Z_n\in L^1$ is a **submartingale** if $E[Z_{n+1}\mid Z_1,...,Z_n]\ge Z_n$; is a **supermartingale** if $E[Z_{n+1}\mid Z_1,...,Z_n]\le Z_n$.
+
+_Remark_ Submartingale embodies the concept of a superfair game and vice versa. 
+
+_Remark_ For a submartingale, $EZ_{n+1}\ge EZ_n$ and vice versa.
+
+**Theorem 6.4.1 Optional stopping theorem for super/submartingales** If $N$ is a stopping time for $Z_n$ s.t. any one of conditions in **Theorem 6.2.2** is satisfied, then $EZ_N\ge EZ_1$ for a submartingale and vice versa.
+
+Below are the most important result for martingale.
+
+**Theorem 6.4.6 The martingale convergence theorem** If $Z_n$ is a martingale s.t. $\exists M<\infty$, $EZ_n^2\le M\forall n$. Then $\lim_{n \to \infty} Z_n$ exists and is finite a.s..
+
+To prove this result, we need some preliminaries.
+
+> [!Note]
+>
+> **Lemma 6.4.2** If $Z_i$ is a submartingale and $N$ is a stopping time with $N\le n$​ a.s., then
+> $$
+> EZ_1\le EZ_N\le EZ_n
+> $$
+> <font color='red'>_proof of Lemma 6.4.2_</font> $EZ_N\ge EZ_1$ by **optional stopping theorem**. For another side, conditioned that $N=k$, we have 
+> $$
+> E[Z_n\mid Z_1,...,Z_N,N=k]=E[Z_n\mid Z_1,...,Z_k,N=k]=^1E[Z_n\mid Z_1,...,Z_k]\ge Z_k=Z_N
+> $$
+> $^1$ $N=k$ is measurable w.r.t. $\sigma(Z_1,...,Z_k)$.
+>
+> whence $EZ_n\ge EZ_N$. 
+>
+> **Lemma 6.4.3** If $Z_n$ is a martingale and $f$ is a convex function, then $f(Z_n)$ is a submartingale. 
+>
+> <font color='red'>_proof of Lemma 6.4.3_</font> 
+> $$
+> E[f(Z_{n+1})\mid Z_1,...,Z_n]\ge f(E[Z_{n+1}\mid Z_1,...,Z_n])=f(Z_n)
+> $$
+
+> [!Important]
+>
+> **Theorem 6.4.4 Kolmogorov's Inequality for submartingales** If $Z_n\ge 0$ is a submartingale, then 
+> $$
+> P(\max\{Z_1,...,Z_n \}>a)\le \frac{EZ_n}{a}
+> $$
+> <font color='red'>_proof of Theorem 6.4.4_</font> Let $N=\min\{i:Z_i>a \}\wedge n$. $N$ is a bounded stopping time, and $\max\{Z_1,...,Z_n\}>a\Leftrightarrow Z_N>a$. So 
+> $$
+> LHS=P(Z_N>a)\le_\text{Markov's inequality} \frac{EZ_N}{a}\le_\text{Lemma 6.4.2} \frac{EZ_n}{a}
+> $$
+> _Remark_ This says: for a martingale, the middle of process can be controlled by the end.
+
+> [!Note]
+>
+> **Corollary 6.4.5** Let $Z_n$ be a martingale then 
+>
+> (i) $P(\max\{|Z_1|,...,|Z_n| \}>a)\le E|Z_n|/a$
+>
+> (ii) $P(\max\{|Z_1|,...,|Z_n| \}>a)\le EZ_n^2/a^2$.
+>
+> <font color='red'>_proof of Corollary 6.4.5_</font> Notice $f(x)=|x|$ and $g(x)=x^2$ are both convex.
+
+<font color='red'>_proof of Theorem 6.4.6_</font> 
+
+- $\lim_{n \to \infty}EZ_n^2$ exists: $Z_n^2$ is a submartingale by **Lemma 6.4.3**, so $EZ_n^2$ is increasing. Meanwhile $EZ_n^2$ is bounded, so $\lim_{n \to \infty} EZ_n^2:=\mu$ exists.
+
+- Now we prove $Z_n$ is w.p.1 a Cauchy sequence. 
+
+  - First, by **Kolmogorov's inequality**,
+    $$
+    P(|Z_{m+k}-Z_m|>\epsilon\exists k\le n)\le E[(Z_{m+n}-Z_m)^2]/\epsilon^2=(EZ_{m+n}^2-EZ_m^2)/\epsilon^2
+    $$
+
+  - Pushing $n\to\infty$, we have 
+    $$
+    P(|Z_{m+k}-Z_m|>\epsilon\exists k)\le (\mu^2-EZ_m^2)/\epsilon^2
+    $$
+    which tends to $0$ as $m\to\infty$. So w.p.1. $Z_n$ is Cauchy. So $\lim_{n \to \infty} Z_n$ will exist and be finite.
+
+_Remark_ Commonly $L^2$ is dense in $L^1$, so we can relax the restriction to $L^1$ martingale.
+
+**Corollary 6.4.7** If $Z_n\ge 0$ is a martingale, then w.p.1 $\lim_{n \to \infty} Z_n$ exists and is finite. 
+
+**Example 6.4(A) Branching process** If $X_n$ is the population size of the $n$th generation in a branching process where every individual has $m$ offspring in average, then $Z_n=X_n/m^n$ is a nonnegative martingale. Then $Z_n$ converges, which indicates that either $X_n\to 0$ or $X_n\to\infty$ at exponential rate.
+
+**Example 6.4(B) A Gambling result** Consider a gambler playing a fair game,and at each play he must win/loss at least $1$. Denote his fortune by $Z_n$, which is a martingale, and he stops when he lost all money. So $N:=\min \{n:Z_n=0\}$ is a random time for the game. 
+
+By martingale convergence theorem, $\lim_{n \to \infty} Z_n$ exists and is finite a.s.. Since for $n<N$, $|Z_{n+1}-Z_n|\ge 1$, we have $N<\infty$ a.s., i.e., the gambler will finally go broke. 
+
+_Remark_ Even if one plays a fair game, he will finally go broke.
+
+An interesting application is to prove SLLN.
+
+**Theorem 6.4.8 SLLN** Let $X_i$ i.i.d. with mean $\mu$, and suppose $\Psi(t)=Ee^{tX}$ exists. Then $\lim_{n \to \infty} S_n/n=\mu$ a.s..
+
+<font color='red'>_proof of Theorem 6.4.8_</font> Our goal is to show $P(S_n/n>\mu+\epsilon\ i.o.)=0$. 
+
+- Let $g(t)=e^{t(\mu+\epsilon)}/\Psi(t)$, then $g(0)=1$, $g'(0)=\epsilon>0$. By this, pick $t_0>0$ s.t. $g(t_0)>1$.
+
+- Construct a martingale $e^{t_0 S_n}/\Psi^n(t_0)$ (one can verify directly), so by martingale convergence theorem, $\lim_{n \to \infty} e^{t_0 S_n}/\Psi^n(t_0)$ exists and finite.
+
+- Notice 
+  $$
+  \frac{S_n}{n}\ge \mu+\epsilon\Rightarrow \frac{e^{t_0 S_n}}{\Psi^n(t_0)}\ge \bigg(\frac{e^{t_0(\mu+\epsilon)}}{\Psi(t_0)}\bigg)^n=g(t_0)^n
+  $$
+  and LHS has limit a.s., while RHS$\to\infty$. So this can only happen for finite times.
+
+**Definition** The sequence of r.v.'s $X_n$ is said to be **uniformly integrable** if $\forall \epsilon>0,\exists y_\epsilon,\forall n, E|X_n|1_{|X_n|>y_\epsilon}<\epsilon$.
+
+**Lemma 6.4.9** If $X_n$ is uniformly integrable then they have uniform $L^1$ norm.
+
+_Remark_ From this, any uniformly integrable martingale has a finite limit. 
+
+**Doob type Martingale** Now we investigate Doob type martingale, $Z_n:=E[X\mid Y_1,...,Y_n]$, where $X,Z_i\in L^1$.
+
+**Proposition 1** $Z_n$ is uniformly integrable.
+
+> _proof_  By Jensen's inequality and notice since $\{|Z_n|>R\}$ is measurable w.r.t. $Y_1,...,Y_n$,
+> $$
+> E|Z_n1_{Z_n>R}|\le E[E[|X|\mid Y_1,...,Y_n]1_{Z_n>R}]=E[E[|X|1_{Z_n>R}\mid Y_1,...,Y_n]]=E|X|1_{Z_n>R}
+> $$
+> Split by whether $|X|>K$, we have 
+> $$
+> E|X|1_{|Z_n|>R}\le E|X|1_{|X|>K}+E|X|1_{|Z_n|>R}1_{|X|<K}\le E|X|1_{|X|>K}+KP(|Z_n|>R)
+> $$
+> by Markov inequality
+> $$
+> P(|Z_n|>R)\le \frac{E|Z_n|}{R}\le \frac{E[E[|X|\mid Y_1,...,Y_n]]}{R}=\frac{E|X|}{R}
+> $$
+> together we have 
+> $$
+> E|Z_n|1_{|Z_n|>R}\le E|X|1_{|X|>K}+\frac{K}{R} E|X|
+> $$
+> Since $X\in L^1$, pick $K$ s.t. $E|X|1_{|X|>K}<\epsilon/2$ and pick $R$ s.t. $KE|X|/R<\epsilon/2$, we have when $R$ is sufficiently large, $E|Z_n|1_{|Z_n|>R}\le\epsilon$. 
+
+**Proposition 2** $\lim_{n \to \infty}Z_n$ exists a.s., and the limit $Z=E[X\mid Y_1,...]\in L^1$.
+
+**Proposition 3** If $W_n$ is a uniformly integrable martingale, $W_n$ is a Doob type martingale.
+
+_proof_ Pick $W:=\lim_{n \to \infty} W_n$, then 
+$$
+E[W\mid W_1,...,W_k]=E[\lim_{n \to \infty} W_n\mid W_1,...,W_k]=\lim_{n \to \infty} E[W_n\mid W_1,...,W_k]=W_k
+$$
+
+### 6.5 A generalized Azuma inequality
+
+**Proposition 6.5.1** Let $Z_n$ be a martingale with mean $Z_0=0$, and $-\alpha\le Z_n-Z_{n-1}\le \beta$. Then for any $a,b>0$, $P(Z_n\ge a+bn\exists n)\le\exp(-8ab/(\alpha+\beta)^2)$.
+
+<font color='red'>_proof of Proposition 6.5.1_</font>
+
+- Construct $W_n=\exp(c(Z_n-a-bn))$. Notice $W_n=W_{n-1} \exp(c(Z_n-Z_{n-1}-b))$, so 
+  $$
+  E[W_n\mid W_1,...,W_{n-1}]=W_{n-1} e^{-cb}E\exp(c(Z_n-Z_{n-1})\mid Z_1,...,Z_{n-1})\le W_{n-1} e^{-cb+c^2(\alpha+\beta)^2/8}
+  $$
+  pick $c=8b/(\alpha+\beta)^2$, we have $E[W_n\mid W_1,...,W_{n-1}]\le W_{n-1}$, so $W_n$ is a supermartingale. 
+
+- Let $N=\min\{n: Z_n\ge a+bn\}\wedge k$, by Markov's inequality and optional stopping theorem, 
+  $$
+  P(Z_N\ge a+bn)=P(W_N\ge 1)\le EW_N\le EW_0=e^{-8ab/(\alpha+\beta)^2}
+  $$
+  push $k\to\infty$ and we get the result.
+
+**Corollary 6.5.2 The generalized Azuma Inequality** Let $Z_n$ be a martingale with mean $Z_0=0$. If $-\alpha\le Z_n-Z_{n-1}\le\beta\forall n\ge 1$, then for $c>0,m\in Z_{>0}$, $P(Z_n\ge nc\exists n\ge m)\le \exp(-2mc^2/(\alpha+\beta)^2)$.
+
+_Remark_ The Azuma's inequality gives the bound of tail distribution of $Z_m/m$, while the generalized one gives the bound for $n\ge m$.
+
+**Example 6.5(A)** Consider the coin that lands head with probability $p$. Let $S_n$ be the number of heads in the first $n$ flips. Then by the generalized Azuma inequality, since $Z_n=S_n-np$ is a martingale with mean $0$ and $Z_n-Z_{n-1}\in [-p,1-p]$, we have $P(Z_n\ge n\epsilon\exists n\ge m)\le \exp(-2m\epsilon^2)$.
+
+***
+
+Exercises
+
+6.2 For a martingale $Z_n$, let $X_i=Z_i-Z_{i-1}$, where $Z_0\equiv 0$. Then $var(Z_n)=\sum_{i=1}^{n} var(X_i)$.
+
+_proof_ Since $Z_n=X_1+...+X_n$, it suffices to show $cov(X_i,X_j)=0\forall i,j$.
+
+WLOG let $i<j$. Then
+$$
+EX_iX_j=E[E[X_iX_j\mid Z_1,...,Z_i]]=E[X_iE[Z_j-Z_{j-1}\mid Z_1,...,Z_i]]=0
+$$
+Meanwhile $EX_i=EX_j=0$.
+
+6.7 Let $X_i$ i.i.d. with mean $0$ and variance $\sigma^2$. Let $S_n=\sum_{i=1}^{n} X_i$. Then $Z_n=S_n^2-n\sigma^2$ is a martingale.
+
+_proof_ 
+$$
+E[Z_n\mid X_1,...,X_{n-1}]=E[(S_{n-1}+X_n)^2\mid X_1,...,X_{n-1}]-n\sigma^2=E[S_{n-1}^2-(n-1)\sigma^2]=Z_{n-1}
+$$
+6.22 Let $X_n$ be a Markov process for which $X_0\sim U(0,1)$, and conditional on $X_n$, $X_{n+1}=\begin{cases}\alpha X_n+1-\alpha&\text{ with probability }X_n\\\alpha X_n&\text{ with probability }1-X_n\end{cases}$, where $0<\alpha<1$. Determine the limit distribution of $X_n$.
+
+_Solution_ 
+
+1. One can verify directly $X_n$ is a bounded martingale. So by martingale convergence theorem, $\lim_{n \to \infty} X_n$ exists and is finite, say $X_\infty$.
+2. One can compute $E[X_{n+1}(1-X_{n+1})\mid X_n]=\alpha(2-\alpha)X_n(1-X_n)$, by iteration $E[X_n(1-X_n)]=[\alpha(2-\alpha)]^n E[X_0(1-X_0)]\to 0$. Since $X_n(1-X_n)\to X_\infty(1-X_\infty)$ a.s., and $0\le X_n(1-X_n)\le 1$, so by DCT, $EX_\infty (1-X_\infty)=0$, i.e., $X_\infty\in\{0,1 \}$ a.s..
+3. Since $EX_n=EX_0=1/2$, by $L^1$ convergence, $EX_\infty=1/2$. So $X_\infty\sim B(1,1/2)$.
+
+6.24 Consider a sequence of independent tosses of a coin and let P(head) be the probability of a head on any toss. Let $A=\{P(\text{head})=a \}$ and $B=\{P(\text{head})=b \}$. Let $X-i$ denote the outcome of $i$th toss and let  $Z_n=P(X_1,...,X_n\mid A)/P(X_1,...,X_n\mid B)$. Assume $B$ ois true.
+
+(a) $Z_n$ is a martingale: verify.
+
+(b) $\lim_{n \to \infty} Z_n$ exists a.s.: $Z_n\ge 0$ and $EZ_n=EZ_1=1$, so martingale convergence theorem holds.
+
+(c) $\lim_{n \to \infty} Z_n=0$ a.s.: Let $S_n$ be the heads of the first $n$ coins, then $Z_n=\frac{a^{S_n}(1-a)^{n-S_n}}{b^{S_n}(1-b)^{n-S_n}}$. So we have 
+$$
+\frac{\log Z_n}{n}=\frac{S_n}{n} \log \frac{a}{b}+(1-\frac{S_n}{n})\log\frac{1-a}{1-b}\to_{a.s.} b\log\frac{a}{b}+(1-b)\log \frac{1-a}{1-b}
+$$
+Since $\log x< x-1$ when $x\ne 1$, $RHS< 0$ when $a\ne b$, i.e., $\frac{\log Z_n}{n}$ has negative limit a.s., which indicates that $Z_n\to 0$ a.s.. 
+
+_Remark_ This corresponds to our assumption that wrong hypothesis will be found wrong after enough tests. Moreover, despite $EZ_n\equiv 1$, we still have $Z_n\to 0$ a.s.. 
+
+6.26 For a concrete example that martingale convergence theorem may not hold in general, consider $X_i$ i.i.d. with $P(X_i=-1)=1-2^{-i}$ and $P(X_i=2^i-1)=2^{-i}$. Notice $S_n$ is a martingale, bit $S_n\to-\infty$ a.s..
 

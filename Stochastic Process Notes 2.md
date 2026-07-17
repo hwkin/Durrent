@@ -148,7 +148,7 @@ Finally we just need to verify the definition of martingale, which is trivial gi
 
 Below are some further properties.
 
-**Proposition Reflection principle** Let $(X_t)_{t\geq 0}$ be a BM starting from 0, and $a\in\mathbb R$, $T=\inf\{ t\geq 0, X_t=a\}$, and $Z_t$ is defined that when $t\geq T$, it's $Z_a-X_t$, otherwise i's just $X_t$. Then $Z_t$ is also a BM starting from 0 with same distribution.
+**Proposition Reflection principle** Let $(X_t)_{t\geq 0}$ be a BM starting from 0, and $a\in\mathbb R$, $T=\inf\{ t\geq 0, X_t=a\}$, and $Z_t$ is defined that when $t\geq T$, it's $2a-X_t$, otherwise it's just $X_t$. Then $Z_t$ is also a BM starting from 0 with same distribution.
 
 <font color='red'>_proof_</font> By strong Markov property, conditionally $T<\infty$, set $\tilde X_t=X_{T+t}-X_T$, then $\tilde X_t$ is a $\mathcal F_{T+t}$ BM starting from 0 and independent of $\mathcal F_T$. The same is true for $-\tilde X_t$. So $X_t=X_{t\wedge T}+\tilde X_{(t-T)^+}\mathbb 1_{T<\infty}$ and $Z_t=X_{t\wedge T}-\tilde X_{(t-T)^+}\mathbb 1_{T<\infty}$ have same distribution.
 
