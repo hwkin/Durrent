@@ -90,6 +90,44 @@ _Remark_ Since when $X(t)\sim \mathcal N (0,c^2 t)$, $X(t)/c\sim\mathcal N(0,t)$
 
    Moreover, one can compute $EZ(t)=0$ and $cov(Z(s),Z(t))=s\wedge t-st$. So the proof is complete.
 
+4. **Scaling** 
+
+   - Let $W(t)=X(a^2t)/a$. $W(t)$ is also a BM.
+
+     _proof_ First $W(t)$ is a Gaussian process. Moreover,
+     $$
+     \begin{aligned}
+     EW(t)&=EX(a^2 t)/a=0\\
+     cov(W(t),W(s))&=cov(X(a^2 t),X(a^2 s))/a^2=s\wedge t
+     \end{aligned}
+     $$
+     So $W(t)$ is a BM.
+
+   - Let $Y(t)=tX(1/t)$. $Y(t)$ is also a BM.
+
+     _proof_ First $Y(t)$ is a Gaussian process. Moreover,
+     $$
+     \begin{aligned}
+     EY(t)&=EtX(1/t)=0\\
+     cov(Y(t),Y(s))&=ts\ cov(X(1/t),X(1/s))=ts(1/t\wedge 1/s)=s\wedge t
+     \end{aligned}
+     $$
+     So $Y(t)$ is also a BM.
+
+   - Let $Y(t)=X(t-s)-X(t),0\le s\le t$ be the time-reversed process. $Y(t)$ is also a BM.
+
+     _proof_  It's of course Gaussian, and
+     $$
+     \begin{aligned}
+     EX(t-s)-X(t)&=EX(t-s)-EX(t)=0\\
+     cov(X(t-s)-X(t),X(t-r)-X(t))&=cov(X(t-s),X(t-r))-cov(X(t-s),X(t))\\
+     &\ \ \ -cov(X(t),X(t-r))+cov(X(t),X(t))\\
+     &=(t-s)\wedge (t-r)-(t-s)-(t-r)+t\\
+     &=s\wedge r
+     \end{aligned}
+     $$
+     Or recall SRW is also time-reversible. 
+
 **Application of Brownian bridge** 
 
 **Definition** Let $X_i$ i.i.d. $\sim U(0,1)$ and $N_n(s)=\sum_{i=1}^{n} 1_{X_i\le s}$. Then $F_n(s)=N_n(s)/n$ is called the **empirical distribution function**. 
@@ -141,6 +179,9 @@ Moreover, if $X_i$ are i.i.d. $\sim F$ which is cts, $F(X_i)$ are i.i.d. $\sim U
    \begin{aligned}
    P(X(t)=0\exists t_1\le t\le t_2)&=2\frac{1}{\sqrt{2\pi t_1}}\int_0^{\infty}\int_x^\infty \frac{1}{\sqrt{2\pi(t_2-t_1)}}e^{-y^2/2(t_2-t_1)}dye^{-x^2/2t_1}dx\\&=1-\frac{2}{\pi}\arcsin\sqrt{t_1/t_2}\end{aligned}
    $$
+   Push $t_2\to\infty$, we have $P(X(t)=0\exists t\ge t_1)=1$.
+
+   _Remark_ Recall $tX(1/t)$ is also a BM, then by this, let $T=\inf\{t>0 X(t)=0 \}$, then $T=0$ a.s..
 
 4. **Positive time** 
 
@@ -228,6 +269,8 @@ One can derive an ODE from this. Assume $P(x)$ is analytic, we have
 $$
 P(x)=P(x)+P'(x)EY+\frac{P''(x)}{2}EY^2+o(h)\Rightarrow P'(x)\mu+\frac{P''(x)}{2}=0
 $$
+> $Y=\mu h+X$, where $X\sim \mathcal N(0,h)$. For $X$, $EX=0, EX^2=h,EX^k=o(h),k\ge 3$ from the ch.f.. For $Y$, $EY=\mu h, EY^2=\mu^2h^2+h$, $EY^k=o(h),k\ge 3$ by expanding.
+
 along with BC $P(A)=1$, $P(-B)=0$, the solution is given by 
 $$
 P(x)=\frac{e^{2\mu B}-e^{-2\mu x}}{e^{2\mu B}-e^{-2\mu A}}
@@ -266,10 +309,156 @@ _Setting_ Suppose two individuals that for a stake 筹码 are playing some game 
 
 The game is to watch a BM with $X(0)=1/2$. If $T_1<T_0$, player 1 wins, vice versa. The objective of each player is to maximize his expected return. Suppose each player plays optimally, i.e., a player can announce his strategy and another player can't do better even knowing this.
 
-_Optimal strategy_ Suppose initially player 1 is the doubled player. Then player 1 should double iff $X(t)\ge p^*$ and player 2 should accept the double iff $X(t)\le p^{**}$.
+_Optimal strategy_ When player 1 is the doubled player, he should double iff $X(t)\ge p^*$ and player 2 should accept the double iff $X(t)\le p^{**}$.
 
 _Lemma 1_ $p^*\le p^{**}$.
 
-_proof_ 
+_proof_ For any $p>p^{**}$, player 2 will quit immediately $X(t)=p$ and player 1 doubles. Since player 1 can guarantee himself an expected gain of the present stake by doubling, and player 2 can guarantee himself that player 1 will not gain more by quitting, it follows that player 1 must double. So $p>p^{*}$, and $p^*\le p^{**}$. 
 
 _Lemma 2_ $p^*=p^{**}$.
+
+_proof_ Suppose $p^*<p^{**}$. It turns out that player 1 had better wait until it hits $0$ or $p^{**}$. If it hits $p^{**}$ first, he can double and player 2 will accept, so the result will be the same as original strategy. If it hits $0$ first, if he didn't wait he loses doubled stake while otherwise he only loses original stake.
+
+So when player 1 has the option, his optimal strategy is to double at t iff $X(t)\le p^*$ and player 2's optimal strategy is to accept double at $t$ iff $X(t)\ge p^*$. To pick appropriate $p^*$, notice at $p^*$ if player 1 doubles, whether player 2 choose to accept shouldn't make any difference by continuity.
+
+Suppose now the stake is $1$ unit, $X(t)=p^*$, and player 1 doubles.
+
+- If player 2 quit, player 1 will gain $1$.
+
+- If player 2 accept, he will have the double option and will double when $X(t)$ hits $1-p^*$. If it hits $1$ first, he will lose $2$ and player 1 will gain 2; if it hits $1-p^*$ first, player 2 will double the stakes to $4$. Since it's indifferent for player $1$ to quit or accept, suppose he quits and player $1$ loses 2. 
+
+- Together we have 
+  $$
+  1=2\times\frac{p^*-(1-p^*)}{1-(1-p^*)}+(-2)\times\frac{1-p^*}{1-(1-p^*)}
+  $$
+  which gives $p^*=4/5$.
+
+**Example 8.4(C)**
+
+_Setting_ Suppose the production process changes its state in accordance with a BM with drift $\mu>0$. When it hits $B$, the process breaks down and a cost $R$ must be paid to return the process back to state $0$. Before it hits $B$, a cost $C$ can be paid to repair the process, whose result is that, if the state is $x$, the process goes to $0$ with probability $\alpha_x$ (i.e., succeed) and goes to $B$ with probability $1-\alpha_x$ (i.e., fail).
+
+_Optimal policy_ We only consider the strategy to fix when $0<x<B$, and pick appropriate $x$ to minimize the long-run cost rate. For these policies, the returns to $0$ constitute renewals. By reward renewal theorem, it's just 
+$$
+\frac{E[\text{cost of a cycle}]}{E[\text{length of a cycle}]}=\frac{C+R(1-\alpha_x)}{E[\text{time to reach }x]}
+$$
+Let $f(x)=E[\text{time to reach }x]$. By taking a small step we have, suppose $Y=X(h)-X(0)$,
+$$
+f(x)=h+E[f(x-Y)]+o(h)
+$$
+Though we can expand $f$ and get an ODE with BC, it's better to notice $f$ satisfies $f(x+y)=f(x)+f(y)$, since to hit $x+y$ it must hits $x$ before hitting $y$ starting from $x$. By Cauchy's equation, along with the equation and $f(0)=0$, we know $f(x)=x/\mu$. 
+
+So the rate is $\frac{\mu(C+R(1-\alpha_x))}{x}$. Meanwhile, the policy of never repairing has cost $R\mu/B$.
+
+**hitting time**
+
+Now we consider the distribution of $T_x,x>0$ for a BM with drift $\mu>0$ by computing $Ee^{-\theta T_x}$.
+
+**Proposition 8.4.1** $Ee^{-\theta T_x}=\exp(-x(\sqrt{\mu^2+2\theta}-\mu))$ when $\mu>0$.
+
+<font color='red'>_proof of Proposition 8.4.1_</font> Let $f(x)=Ee^{-\theta T_x}$.
+
+- As that in **Example 8.4(c)**, $f(x+y)=f(x)f(y)$. By Cauchy equation, $f(x)=e^{-cx}$.
+
+- To determine $c$, we need an ODE. Conditioned on $Y=X(h)-X(0)$ when $h\ll 1$, 
+  $$
+  f(x)=Ee^{-\theta(h+T_{x-Y})}+o(h)=e^{-\theta h}Ef(x-Y)+o(h)=e^{-\theta h}E[f(x)-Yf'(x)+\frac{Y^2}{2}f''(x)+o(h)]+o(h)=(1-\theta h+o(h))(f(x)-\mu h f'(x)+\frac{h}{2} f''(x))+o(h)
+  $$
+  which yields $\theta f(x)=-\mu f'(x)+\frac{1}{2}f''(x)$. This gives $c=\sqrt{\mu^2+2\theta}-\mu$.
+
+**limit average value of maximum variable** 
+
+**Proposition 8.4.2** $\lim_{t \to \infty}\frac{\max_{s\in [0,t]}X(s)}{t}=\mu$.
+
+<font color='red'>_proof of Proposition 8.4.2_</font> By stationary and independent increments, we can consider the first hit of $n$ as $n$th renewal. Let $N(t)$ be the number of renewals by $t$, we have 
+$$
+N(t)\le \max_{s\in[0,t]}X(s)\le N(t)+1
+$$
+Notice the interarrivals $T_n-T_{n-1}=_d T_1$ has mean $1/\mu$. By SLLN of renewal, $N(t)/t\to\mu$.
+
+#### 8.4.1 Using martingales to analyze BM
+
+**Proposition 8.4.3** Let $B(t)$ be a SBM. Then $Y(t)$ is a martingale with 
+
+(a) $Y(t)=B(t)$ (b) $Y(t)=B^2(t)-t$ (c) $Y(t)=\exp(cB(t)-c^2t/2)$.
+
+**hitting probability** 
+
+For $X(t)$ a BM with drift $\mu$, to compute $P(T_A<T_{-B})$, use the martingale $Y(t)=\exp(cX(t)-c\mu t-c^2 t/2)$. Pick $c=-2\mu$, $Y(t)=\exp(-2\mu X(t))$ is a martingale.
+
+Use optional stopping theorem on $Y(t)$ and $T_A\wedge T_{-B}$,
+$$
+\begin{aligned}
+1=EY(0)=EY(T_A\wedge T_{-B})=\exp(-2\mu A)P(T_A<T_{-B})+\exp(2\mu B)(1-P(T_A<T_{-B}))
+\end{aligned}
+$$
+which yields $P_A=\frac{e^{2\mu B}-1}{e^{2\mu B}-e^{-2\mu A}}$.
+
+**hitting time** 
+
+Use the martingale $Y(t)=X(t)-\mu t$, 
+$$
+0=EY(0)=EY(t)=EX(T)-\mu T=AP_A-B(1-P_A)-\mu ET
+$$
+which yields $ET=\frac{Ae^{2\mu B}+Be^{-2\mu A}-A-B}{\mu[e^{2\mu B}-e^{-2\mu A}]}$.
+
+### 8.5 Backward and forward diffusion equations
+
+_Recall_ The derivation of Kolmogorov's forward and backward is to condition on $X(t-h)$ and $X(h)$ respectively when $h=o(1)$.
+
+Now use the same technique for BM with drift to derivate differential equations about the density. Let $p(x,t,y)=f_{X(t)\mid X(0)=y}(x)$, for backward, 
+$$
+\begin{aligned}
+p(x,t,y)&=Ep_{X(t)\mid X(0)=y,X(h)}(x)=Ep(x,t-h,X(h))\\
+&=Ep(x,t,y)-h\partial_tp(x,t,y)+(X(h)-y)\partial_y p(x,t,y)+\frac{(X(h)-y)^2}{2}\partial_{yy} p(x,t,y)+o(h)\\
+&=p(x,t,y)-h\partial_t p(x,t,y)+\mu h \partial_y p(x,t,y)+\frac{h}{2}\partial_{yy} p(x,t,y)+o(h)\\
+\Rightarrow \partial_t p(x,t,y)&=\mu \partial_y p(x,t,y)+\frac{1}{2}\partial_{yy} p(x,t,y)
+\end{aligned}
+$$
+for forward, 
+$$
+\begin{aligned}
+p(x,t,y)&=Ep_{X(t)\mid X(0)=y,X(t-h)}(x)=Ef_W(x-X(t-h)),W\sim \mathcal N(\mu h,h)\\
+&=\int f_W(x-a)p(a,t-h,y)da\\
+&=\int f_W(x-a)[p(x,t,y)+(a-x)\partial_x p(x,t,y)-h\partial_t p(x,t,y)+\frac{(a-x)^2}{2}\partial_{xx}p(x,t,y)+...]da\\
+&=p(x,t,y)-\mu h\partial_x p(x,t,y)-h\partial_t p(x,t,y)+\frac{h}{2}\partial_{xx}p(x,t,y)+o(h)\\
+\Rightarrow \frac{1}{2}\partial_{xx}p(x,t,y)&=\mu \partial_x p(x,t,y)+\partial_t p(x,t,y)
+\end{aligned}
+$$
+
+***
+
+Exercises
+
+8.4 Let $Z(t)$ be a BM bridge, the $X(t)=(t+1)Z(t/(t+1))$ is a BM.
+
+_proof_ $X(t)$ is Gaussian. Then 
+$$
+\begin{aligned}
+EX(t)&=0\\
+cov(X(t),X(s))&=(t+1)(s+1)cov(Z(t/(t+1)),Z(s/(s+1)))=(t+1)(s+1)[t/(t+1)\wedge s/(s+1)-ts/(t+1)(s+1)]=s\wedge t-st
+\end{aligned}
+$$
+So $X(t)$ is a BM.
+
+8.7 Find the distribution of $\max_{0\le s\le t}X(s)-X(t)$.
+
+_Solution_ Consider the reversed process $X(t)-X(s)=_d X(s),0\le s\le t$.
+
+By this, $\max_{0\le s\le t}X(s)-X(t)=_d \max_{0\le s\le t}X(s)$.
+
+8.9 Let $M(t)=\max_{0\le s\le t}X(s)$, then $P(M(t)>a\mid M(t)=X(t))=e^{-a^2/2t}$.
+
+_Solution_ Also consider the reversed process $X(t)-X(s):=Y(s)$. Then $M(t)=X(t)$ corresponds to the event that $Y(s)\ge 0$, and the probability should be $\lim_{b \uparrow 0} P(X(t)\ge a\mid T_b>t)$.
+
+We have known $P(T_b>t)=1-2P(X(t)>|b|)$. For $P(X(t)\ge a, T_b>t)$, we have 
+$$
+P(X(t)\ge a,T_b>t)=P(X(t)\ge a)-P(X(t)\ge a,T_b\le t)=P(X(t)\ge a)-P(X(t)\le 2b-a)
+$$
+Which yields
+$$
+\lim_{b \uparrow 0} P(X(t)\ge a\mid T_b>t)=\lim_{b\uparrow 0}\frac{P(X(t)\ge a)-P(X(t)\le 2b-a)}{1-2P(X(t)\ge |b|)}=_\text{L'Hospital}\lim_{b\uparrow 0}\frac{(2\pi t)^{-1/2}e^{-(2b-a)^2/2t}}{(2\pi t)^{-1/2}e^{-b^2/2t}}=e^{-a^2/2t}
+$$
+8.14 Compute $P(T_1<T_{-1}<T_2)$ for a BM.
+
+_Solution_ Since $T_1<T_2$, we know $P(T_1<T_{-1},T_2)=P(T_1<T_{-1})=1/2$. As it reaches $1$, $P(T_{-1}<T_2)=1/3$. So the probability is $1/6$.
+
