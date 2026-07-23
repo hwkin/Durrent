@@ -379,3 +379,74 @@ _Remark_ The constructions give different processes. The chain watched only on $
 ### 2.8 Miscellaneous methods
 
 #### 2.8.1 Martingale methods
+
+The goal is to find martingales and apply optional stopping theorem.
+
+**Lemma 2.27** Let $P:\mathbf R^I\to \mathbf R^I$ be an operator with $(Pu)(i)=\sum_j p_{ij}u(j)$. Then for $A\subset I$ nonempty and $f\in \mathbf R^A$, the solution to Dirichlet problem $\begin{cases}(P-I)u=0,&\text{on} A^c\\u=f,&\text{on} A\end{cases}$ exists and is unique. The function satisfying $Pu=u$ is called **harmonic**.
+
+_proof_ If $u$ is a solution, then notice $M_t=f(X_{T_A\wedge t})$ is a martingale. This yields $f(i)=E_iM_0=E_i M_{T_A}=E_i f(X_{T_A})$. This gives both existence and uniqueness.
+
+**Corollary 2.28** If $h$ is harmonic on $I$, then $h$ is constant.
+
+_proof_ Pick $x\in I$ and fix $h(x)=c$. Notice $h\equiv c$ is a solution to the Dirichlet problem with BC $h(x)=c$, and it's unique. 
+
+**Lemma 2.29 The random target lemma** $\sum_j E_i T_j \pi_j$ doesn't depend on $i$. 
+
+_Remark_ We have computed that the sum equals $\sum_j Z_{jj}$ which is independent of $i$.
+
+_proof_ Let $g_j(i)=E_i T_j$. By conditioning on the first step we have 
+$$
+g_j(i)=1_{i\ne j}+1_{i\ne j}\sum_k p_{ik}g_j(k)
+$$
+Let $h(i)=\sum_j \pi_j g_j(i)$, we have 
+$$
+\begin{aligned}
+h(i)&=\sum_j \pi_j(1_{i\ne j}+1_{i\ne j}\sum_k p_{ik}g_j(k))\\&=1-\pi_i+\sum_{j,k}\pi_jp_{ik}g_j(k)1_{i\ne j}=1-\pi_i+\sum_k p_{ik}(h(k)-\pi_i g_i(k))\\&=\sum_k p_{ik} h(k)+1-\pi_i-\pi_i\sum_k p_{ik} g_i(k)=\sum_k p_{ik}h(k)+1-\pi_i-\pi_i(E_iT_i^+-1)\\&=\sum_k p_{ik}h(k)
+\end{aligned}
+$$
+So $h(i)$ is harmonic on $I$, so it doesn't depend on $i$.
+
+**Lemma 2.30** For any stopping time $S$ and any state $i,j,k$, let $N(j;t)$ denote the number of visits to $j$ before $t$ and $N(j,k;t)$ denote the number of transition from $j$ to $k$ before $t$, then $E_iN(j,k;S)=p_{jk}E_iN(j;S)$.
+
+_Remark_ One can prove this by direct computation.
+
+_proof_ Notice $N(j,k;t)-p_{jk}N(j;t)$ is a martingale. By optional stopping theorem the identity holds.
+
+**Lemma 2.31** Consider hitting time equation $\begin{cases}u=1+Pu&\text{on }A^c\\u=0&\text{on }A\end{cases}$ whose solution is $E_iT_A$. If $h$ is a super-solution, i.e., $\begin{cases}h\ge1+Ph&\text{on }A^c\\h\ge0&\text{on }A\end{cases}$, then $E_iT_A\le h(i)$.
+
+_proof_ Let $M_{t}=t+h(X_t)$, the hypothesis implies $M_t$ is a supermartingale. By optional stopping theorem, $h(i)=E_i M_0\ge E_i M_{T_A}\ge ET_A$. 
+
+#### 2.8.2 A comparison argument
+
+The goal is to obtain inequalities for a "hard" chain by compare that with an "easy" chain.
+
+**Lemma 2.32** Let $X_t$ be a discrete-time chain with $I=\{0,...,n\}$ such that $p_{ij}=0,j>i$. Write $m(i)=i-E_iX_1$ and suppose $0<m(1)\le m(2)...\le m(n)$. Then $E_nT_0\le\sum_{j=1}^{n} m(j)^{-1}$.
+
+_proof_ Write $h(i)=\sum_{j=1}^{i} m(j)^{-1}$, and extend $h$ to $[0,n]$ by linear interpolation. Then $h$ is concave. So we have 
+$$
+Ph(i)=E_ih(X_1)\le h(E_iX_1)=h(i-m(i))\le h(i)-h'(i)m(i)=h(i)-1
+$$
+By **Lemma 2.31**, $h(i)\le E_i T_0$. 
+
+_Idea_ The proof looks confusing. Actually we are comparing this with a cts-time chain. 
+
+Let $Y_t$ be a cts-time pure-death chain with rates $q_{i,i-1}=m(i)$. Then $E_i T_0=\sum_{j=1}^{i} m(j)^{-1}$. 
+
+For a cts-time chain $Z_t$, define $\mathcal L(f)(i)=\lim_{t\downarrow 0}\frac{E_i f(Z_t)-f(i)}{t}=\sum_j q_{ij}f(j)$ to be the **generator** operator, which is the instantaneous expected rate of change of $f$ defined on $Z_t$. In this case, $\mathcal L h(i)=-1$. 
+
+For $X_t$, the decreasing rate of $h$ in one step is $E_i h(i)-h(X_1)\ge 1$. So the mean time $E_nT_0^X\le E_n T_0^Y$. 
+
+#### 2.8.3 Wald equations
+
+**Lemma 2.33** 
+
+(a) Let $0=Y_0\le Y_1\le...$ be such that $E[Y_{i+1}-Y_i\mid Y_j,j\le i]\le c,i\ge 0$ for constant $c$. Then for any stopping time $T$, $EY_T\le cET$.
+
+(b) **Wald's equation for martingales** $\le c$ can be replaced by $=c$.
+
+(c) **Wald's equation** Especially $Y_n=\sum_{i=1}^{n} \xi_i$ for i.i.d. nonnegative $\xi_i$ then $EY_T=E\xi_i ET$.
+
+_proof_ (a) Notice $Y_i-ci$ is a supermartingale. So $E[Y_T-cT]\le EY_0=0$ by optional stopping theorem. (b) Now $Y_i=ci$ is a martingale. (c) Corollary from (b).
+
+
+
