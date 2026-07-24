@@ -189,7 +189,7 @@ In discrete time, consider $N_i(t)=\#\text{visits to state i before time }t$.
   E_\pi S_t^fS_t^g=\sum_i\sum_j f(i)g(j)\sum_{r=0}^{t-  1}\sum_{s=0}^{t-1}(P_\pi(X_r=i,X_s=j)-\pi_i\pi_j)
   $$
 
-By similar estimation, $\frac{E_\pi S_t^fS_t^g}{t}\to f\Gamma g$, where $\Gamma_{ij}=\pi_i Z_{ij}+\pi_jZ_{ji}+\pi_i\pi_j-\pi_i\delta_{ij}$ and $(f\Gamma g)_{ij}=f(i)\Gamma_{ij}g(j)$.
+  By similar estimation, $\frac{E_\pi S_t^fS_t^g}{t}\to f\Gamma g$, where $\Gamma_{ij}=\pi_i Z_{ij}+\pi_jZ_{ji}+\pi_i\pi_j-\pi_i\delta_{ij}$ and $f\Gamma g=\sum_{i,j}f(i)\Gamma_{ij}g(j)$.
 
 In continuous time, 
 
