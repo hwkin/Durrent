@@ -1,0 +1,195 @@
+{
+  "main": {
+    "id": "15c393ea28de25c9",
+    "type": "split",
+    "children": [
+      {
+        "id": "b2dce6f662774ca2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "faad66c79bd45ab8",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "cours-GA-online.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "cours-GA-online"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c91c236d5b94b439",
+    "type": "split",
+    "children": [
+      {
+        "id": "4219265c457fdde2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e1db803ef2e724e6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "8785269f9e8918c2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "b00610b9b84c5133",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "390147d6d926072a",
+    "type": "split",
+    "children": [
+      {
+        "id": "c14d4e846853480f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e64e4051b676282d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
+          {
+            "id": "c4fcf5424f90bc87",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "adcc3eb99b91d2c6",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "cb7c9d5604ddfd0e",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "ef6a0b2149bbdb87",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "faad66c79bd45ab8",
+  "lastOpenFiles": [
+    "cours-GA-online.pdf",
+    "Stochastic Process Ross/Ross's Stochastic Process II.md",
+    "images/reflection_principle_simple.png",
+    "Reversible Markov Chains and Random Walks on Graphs/Chapter 2 General Markov chains.md",
+    "Stochastic Process Ross/Ross's Stochastic Process Note IV.md",
+    "Stochastic Process Ross/Ross's Stochastic Process Note I.md",
+    "Durrent/PTE5_011119.pdf",
+    "Durrent/Chapter 3 Central Limit Theorems.md",
+    "Durrent/Chapter 3 Central Limit Theorem 2.md",
+    "Durrent/Chapter 2 Laws of Large Numbers.md",
+    "Durrent/Chapter 1 Measure Theory.md"
+  ]
+}
