@@ -788,7 +788,7 @@ E.g., if $(X_n)$ stationary sequence. $f:\Omega\rightarrow\mathbb R$, then $\fra
 
 ***Definition*** A measurable function $\phi:\Omega\rightarrow\Omega$ is **measure preserving** if $\mathbb P_*\varphi=\mathbb P$,.i.e., $\mathbb P(\varphi^{-1}(A))=\mathbb P(A)\forall A\in\mathcal F$. 
 
-**Example** (From PTE) Let $\phi$ be a measure preserving function, and let $\phi^0=id, \phi^1(\omega)=\omega, \phi^n(\omega)=\phi\circ\phi^{n-1}(\omega)$, then $(X_n)$ defined by $X_n(\omega)=X(\phi^n(\omega))$ is a stationary sequence when $X\in\mathcal F$, since let $B\in\mathcal R^{n+1}$ and $A=\{\omega: (X_0(\omega),...,X_n(\omega))\in B\}$, we have
+**Example** (From PTE) Let $\phi$ be a measure preserving function, and let $\phi^0=id, \phi^1(\omega)=\phi(\omega), \phi^n(\omega)=\phi\circ\phi^{n-1}(\omega)$, then $(X_n)$ defined by $X_n(\omega)=X(\phi^n(\omega))$ is a stationary sequence when $X\in\mathcal F$, since let $B\in\mathcal R^{n+1}$ and $A=\{\omega: (X_0(\omega),...,X_n(\omega))\in B\}$, we have
 $$
 \mathbb P((X_k,...,X_{k+n})\in B)=\mathbb P(\phi^k\omega\in A)=\mathbb P(\omega\in A)=\mathbb P((X_0,...,X_n)\in B)
 $$
@@ -812,9 +812,9 @@ If $\phi$ is not ergodic, the space can be split into two sets $A$ and $A^c$, ea
 >
 > **Theorem Levy's 0-1 law** If $\mathcal F_n$ is a filtration, $A\in\mathcal F_\infty$, then $\lim_{n\rightarrow\infty} \mathbb P(A|\mathcal F_n)=1_A$ a.s..
 
-**Example i.i.d. sequence** (From PTE) If $\Omega=\mathbb R^\mathbb N$, $\phi$ is the shift operator, then an invariant set $A$ has $\{omega:\omega\in A\}=\{\omega:\phi\omega \in A \}\in \sigma(X_1,...)$, so $A\in\cap_{n=1}^\infty\sigma(X_n,X_{n+1},...)=\mathcal T$, the tail $\sigma$-alg. By Kolmogorov's 0-1 law, $\mathbb P(A)=0\ or\ 1$.
+**Example i.i.d. sequence** (From PTE) If $\Omega=\mathbb R^\mathbb N$, $\phi$ is the shift operator, then an invariant set $A$ has $\{\omega:\omega\in A\}=\{\omega:\phi(\omega) \in A \}\in \sigma(X_1,...)$, so $A\in\cap_{n=1}^\infty\sigma(X_n,X_{n+1},...)=\mathcal T$, the tail $\sigma$-alg. By Kolmogorov's 0-1 law, $\mathbb P(A)=0\ \text{or}\ 1$.
 
-**Example Markov chains ** (From PTE) Suppose the state space $S$ is countable and stationary distribution has $\pi(x)>0\ \forall x\in S$, when all states are recurrent. Then we can write $S=\cup R_i$, where $R_i$ are disjoint irreducible closed sets. If $X_0\in R_i$, then $X_n\in R_i$ a.s., so $\{\omega: X_0(\omega)\in R_i\}\in\mathcal I$. This indicates not irreducible $\Rightarrow$ not ergodic.
+**Example Markov chains ** (From PTE) Suppose the state space $S$ is countable and stationary distribution $\pi(x)>0\ \forall x\in S$, when all states are recurrent. Then we can write $S=\cup R_i$, where $R_i$ are disjoint irreducible closed sets. If $X_0\in R_i$, then $X_n\in R_i$ a.s., so $\{\omega: X_0(\omega)\in R_i\}\in\mathcal I$. This indicates not irreducible $\Rightarrow$ not ergodic.
 
 On the other hand, if $A\in\mathcal I$, then $1_A\circ \theta_n=1_A$, where $\theta$ is shift operator. So if let $\mathcal F_n=\sigma(X_0,...,X_n)$, 
 $$
@@ -844,7 +844,7 @@ Usually, ergodic system get arbitrary close to any point in the state space. (i.
 $$
 \frac{1}{n}\sum_{k=0}^{n-1}X(\varphi^k\omega)\rightarrow\mathbb E[X|\mathcal I]
 $$
-a.s. and in $ L^1$.
+a.s. and in $L^1$.
 
 In particular, the limit is just constant $\mathbb EX$ if $\mathcal I$ is trivial.
 

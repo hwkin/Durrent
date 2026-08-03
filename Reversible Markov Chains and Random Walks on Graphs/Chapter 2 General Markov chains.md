@@ -447,6 +447,3 @@ For $X_t$, the decreasing rate of $h$ in one step is $E_i h(i)-h(X_1)\ge 1$. So 
 (c) **Wald's equation** Especially $Y_n=\sum_{i=1}^{n} \xi_i$ for i.i.d. nonnegative $\xi_i$ then $EY_T=E\xi_i ET$.
 
 _proof_ (a) Notice $Y_i-ci$ is a supermartingale. So $E[Y_T-cT]\le EY_0=0$ by optional stopping theorem. (b) Now $Y_i=ci$ is a martingale. (c) Corollary from (b).
-
-
-
