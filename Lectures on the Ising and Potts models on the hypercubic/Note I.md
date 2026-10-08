@@ -316,7 +316,7 @@ For an increasing event $A$ determined by $\Lambda_n$,
 $$
 \phi[A]=\mathbb E\phi[A\mid \mathcal F_{\Lambda_n}]=\mathbb E\phi_{\Lambda_n,p,q}^\xi[A]\le\mathbb E\phi_{\Lambda_n,p,q}^1[A]=\phi_{\Lambda_n,p,q}^1[A]
 $$
-the other side also holds, i.e., $\phi_{\Lambda_n,p,q}^0[A]\le\phi[A]\le\phi_{\Lambda_n,p,q}^1[A]$. Now push $n\to\infty$. This can be expanded to the events determined by finite many edges, moreover all events. 
+the other side also holds, i.e., $\phi_{\Lambda_n,p,q}^0[A]\le\phi[A]\le\phi_{\Lambda_n,p,q}^1[A]$. Now push $n\to\infty$. This can be expanded to the events determined by finite many edges, and all events. 
 
 When $\phi_{p,q}^0=\phi_{p,q}^1$, the unique measure is just $\phi_{p,q}^0$. When they are not equal, two of them can be such measure.
 
