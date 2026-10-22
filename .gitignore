@@ -1,6 +1,3 @@
-.agents/
-.obsidian/
-.venv/
-.tmp/
-.tmp-p5/
-.output/
+agents/
+obsidian/
+venv/

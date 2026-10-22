@@ -86,7 +86,7 @@ f_{00}=\sum_{n=1}^\infty p_{00}^{2n}=\sum_{n=1}^\infty \binom{2n}{n} p^n(1-p)^n
 $$
 when $n$ is large, by Stirling's formular the summands $\sim (4p(1-p))^n/\sqrt{\pi n}$. So the series converges when $p\ne 1/2$ and diverges when $p=1/2$. This corresponds that, when $p=1/2$ SRW is recurrent and otherwise transient.
 
-Moreover, for a symmetric SRW in d dimension, when $d=1,2$ all states are transient and when $d>2$ all states are transient.
+Moreover, for a symmetric SRW in d dimension, when $d=1,2$ all states are transient and when $d>2$ all states are recurrent.
 
 **Corollary 4.2.5** If $i\leftrightarrow j$ and $j$ is recurrent, then $f_{ij}=1$.
 
